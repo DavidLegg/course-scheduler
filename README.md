@@ -8,6 +8,7 @@ To-do List
 
 * Everything
 * No, really. Everything.
+* And you thought we were kidding. smh
 
 Motivation
 ----------
