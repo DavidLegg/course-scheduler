@@ -1,7 +1,7 @@
 Course Scheduler
 ================
 
-Course Scheduler is a web app to help UCI students schedule their classes.
+Course Scheduler is a web app to help students of UC Irvine schedule their classes.
 
 To-do List
 ----------
@@ -9,6 +9,13 @@ To-do List
 * Everything
 * No, really. Everything.
 * And you thought we were kidding. smh
+
+Real To-do List
+----------
+- [ ] Test the premise. (Develop scheduling algorithm)
+- [ ] Establish the basis. (Get basic function of app working with algorithm)
+- [ ] Debugging the basis.
+- [ ] Polish it and add any other features
 
 Motivation
 ----------
