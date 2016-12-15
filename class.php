@@ -3,6 +3,7 @@
 /**
 * Represents a particular lecture, lab, etc.
 * Assumes that Classes meet on a weekly schedule, and that the meeting time is the same every day.
+* Coreq's are classes that *must* be taken with this class. So, discussions have a lecture as a coreq, but not vice-versa.
 */
 class Class {
 
@@ -10,9 +11,11 @@ class Class {
   public $meetingStart;  // Time
   public $meetingEnd;    // Time
   public $finalDateTime; // DateTime
+  public $course;        // string
   public $type;          // string
+  public $coreqs;        // array(&Class => true)
 
-  public function __construct(array $meetDays = array(), Time $meetStart = NULL, Time $meetEnd = NULL, DateTime $final = NULL, string $meetType = "") {
+  public function __construct(array $meetDays = array(), Time $meetStart = NULL, Time $meetEnd = NULL, DateTime $final = NULL, string $courseName = "", string $meetType = "") {
     if ($meetDays) {
       if (!$meetStart || !$meetEnd) {
         throw new Exception("Class was given 'meetDays', but not 'meetStart' and 'meetEnd'.");
@@ -42,6 +45,7 @@ class Class {
     $this->$meetingStart  = $meetStart;
     $this->$meetingEnd    = $meetEnd;
     $this->$finalDateTime = $final;
+    $this->$course        = $courseName;
     $this->$type          = $meetType;
   }
 
@@ -67,6 +71,10 @@ class Class {
       if ($this->conflictsWith($class)) return true;
     }
     return false;
+  }
+
+  public function addCoreq(Class &$coreq) {
+    $this->$coreqs[&$coreq] = true;
   }
 }
 
