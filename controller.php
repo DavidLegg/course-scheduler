@@ -28,7 +28,20 @@ function appendTerm(){
 appendTerm();
 
 function getCoursesByDept($dept){
- //TODO: Magic 
+  global $baseQueryUrl;
+  $html_dept = file_get_contents($baseQueryUrl.'&Dept='.$dept);
+  $dom_dept = new DOMDocument;
+  $dom_dept->loadHTML($html_dept);
+  $xpath_dept = new DOMXPath($dom_dept);
+  
+  $allCoursesQuery = $xpath_dept->query('//td[@name="CourseTitle"]');
+  $allCourses = array();
+  
+  foreach($allCoursesQuery as $course){
+    array_push($allCourses, $course->nodeValue);
+  }
+  return $allCourses;
+  
 }
 
 
