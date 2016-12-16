@@ -2,7 +2,7 @@
 ini_set('display_errors', 1);
 global $xpath, $baseQueryUrl;
 $baseUrl = 'https://www.reg.uci.edu/perl/WebSoc';
-$baseQueryUrl = 'https://www.reg.uci.edu/perl/WebSoc?ShowFinals=1&ShowComments=0';
+$baseQueryUrl = $baseUrl.'?ShowFinals=1&ShowComments=0';
 
 $html = file_get_contents($baseUrl);
 $dom = new DOMDocument;
@@ -26,6 +26,10 @@ function appendTerm(){
 }
 
 appendTerm();
+
+function getCoursesByDept($dept){
+ //TODO: Magic 
+}
 
 
 
