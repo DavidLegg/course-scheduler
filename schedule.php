@@ -7,22 +7,37 @@ class Schedule {
 
   public $classes; // array(Class)
 
-  public function __construct(array $classArr = array()) {
-    $this->$classes = $classArr;
-  }
-
-  public function __construct(Schedule &$other, Class $addClass = NULL) {
-    $this->$classes = $other->$classes; // copy the classes
+  public function __construct($classSource = array() /*array(Class) or Schedule*/, Class $addClass = NULL) {
+    if ($classSource instanceof Schedule) {
+      $this->$classes = $other->$classes; // copy the classes
+    } else if (is_array($classSource)) {
+      $this->$classes = array();
+      foreach ($classSource as $class) {
+        if ($c instanceof Class) {
+          $this->$classes[] = $c;
+        } else {
+          throw new Exception("classSource must be an array of Class objects");
+        }
+      }
+    }
     if (!is_null($addClass)) {
       $this->$classes[] = $addClass;
     }
   }
 
-  public function hasClass(Class &$class) {
+  public function hasClass(&$classOrCode /*Class or string*/) {
+    if ($classOrCode instanceof Class) {
+      return $this->_hasClass($classOrCode);
+    } else {
+      return $this->_hasClassCode((string)$classOrCode);
+    }
+  }
+
+  private function _hasClass(Class &$class) {
     return in_array($class, $this->$classes);
   }
 
-  public function hasClass(string &$code) {
+  private function _hasClassCode(string &$code) {
     foreach ($this->$classes as $class) {
       if ($class->$code == $code) return true;
     }

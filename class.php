@@ -49,15 +49,25 @@ class Class {
     $this->$type          = $meetType;
   }
 
-  public function conflictsWith(Class $otherClass) {
-    foreach ($otherClass->$meetingDays as $day => $meets) {
+  public function conflictsWith($classOrSchedule) {
+    if ($classOrSchedule instanceof Class) {
+      return $this->_conflictsWithClass($classOrSchedule);
+    } else if ($classOrSchedule instanceof Schedule) {
+      return $this->_conflictsWithSchedule($classOrSchedule);
+    } else {
+      throw new Exception("classOrSchedule must be a Class or Schedule");
+    }
+  }
+
+  private function _conflictsWithClass(Class $class) {
+    foreach ($class->$meetingDays as $day => $meets) {
       if ($meets && $this->$meetingDays[$day]) {
         // Meets on the same day. Need to check the time
-        if ($otherClass->$meetingEnd   >= $this->$meetingStart &&
-            $otherClass->$meetingStart <= $this->$meetingEnd  ) {
+        if ($class->$meetingEnd   >= $this->$meetingStart &&
+            $class->$meetingStart <= $this->$meetingEnd  ) {
           // There is a conflict. Equivalent condition:
-          // !($otherClass->$meetingEnd   < $this->$meetingStart ||
-          //   $otherClass->$meetingStart > $this->$meetingEnd)
+          // !($class->$meetingEnd   < $this->$meetingStart ||
+          //   $class->$meetingStart > $this->$meetingEnd)
           return true;
         }
       }
@@ -66,7 +76,7 @@ class Class {
     return false;
   }
 
-  public function conflictsWith(Schedule $schedule) {
+  private function _conflictsWithSchedule(Schedule $schedule) {
     foreach ($schedule->$classes as $class) {
       if ($this->conflictsWith($class)) return true;
     }
@@ -75,6 +85,16 @@ class Class {
 
   public function addCoreq(Class &$coreq) {
     $this->$coreqs[&$coreq] = true;
+  }
+
+  public function duration(string $unit = 'seconds') {
+    return $this->$meetingEnd->difference($this->$meetingStart, $unit, true);
+  }
+
+  public function daysPerWeek() {
+    return array_reduce($this->$meetingDays, function ($sum,$meets) {
+      return $sum + ($meets ? 1 : 0);
+    }, 0);
   }
 }
 
