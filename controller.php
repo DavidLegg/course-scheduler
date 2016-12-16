@@ -34,7 +34,7 @@ function getCoursesByDept($dept){
   $dom_dept->loadHTML($html_dept);
   $xpath_dept = new DOMXPath($dom_dept);
   
-  $allCoursesQuery = $xpath_dept->query('//td[@name="CourseTitle"]');
+  $allCoursesQuery = $xpath_dept->query('//td[@class="CourseTitle"]');
   $allCourses = array();
   
   foreach($allCoursesQuery as $course){
