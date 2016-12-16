@@ -9,6 +9,7 @@ $dom->loadHTML($html);
 $xpath = new DOMXPath($dom);
 
 function getDropDownItems($name) {
+  global $xpath;
   $allOpts = $xpath->query('//select[@name="'.$name.'"]')[0];
   return $allOpts->getElementsByTagName("option");
 }
