@@ -43,16 +43,15 @@
                 $currentSchedule = new Schedule();
             }
             
-            echo "DEBUG: currentSchedule:"; var_dump($currentSchedule); //DEBUG
-            echo "DEBUG: sectionArr:"; var_dump($sectionArr); //DEBUG
+            echo "DEBUG: currentSchedule: "; var_dump($currentSchedule); echo "<br>"; //DEBUG
+            echo "DEBUG: this->sectionArr: "; var_dump($this->sectionArr); echo "<br>"; //DEBUG
             return $this->_buildSchedules($currentSchedule, $this->sectionArr);
         }
         
         private function _buildSchedules(Schedule $sched, array $sectionArr) {
             echo "DEBUG: --- Course::_buildSchedules ---<br>"; //DEBUG
-            echo "DEBUG: sched:"; var_dump($sched); //DEBUG
-            echo "DEBUG: sectionArr:"; var_dump($sectionArr); //DEBUG
-            echo "DEBUG: !sectionArr:"; var_dump(!$sectionArr); //DEBUG
+            echo "DEBUG: sched: "; var_dump($sched); echo "<br>"; //DEBUG
+            echo "DEBUG: sectionArr: "; var_dump($sectionArr); echo "<br>"; //DEBUG
             if (!$sectionArr) return array($sched);
             
             $sections = array_pop($sectionArr);
