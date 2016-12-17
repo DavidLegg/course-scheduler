@@ -52,6 +52,8 @@ function readCSV($file) {
 echo "readCSV function defined.<br>";
  $courses = readCSV("./testdata.csv");
  foreach ($courses as $name => $course) {
+     var_dump($course->buildSchedules());
+     echo "<br/><br/>";
    echo "<h2>$name</h2><br>";
    foreach ($course->sectionArr as $type => $classes) {
      echo "<h3>$type</h3><br>";
