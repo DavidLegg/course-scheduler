@@ -45,7 +45,7 @@
 
             if ($type == 'Lec') {
               $lastLecture = $sec;
-            } else {
+            } else if ($type != 'Lab') {
               echo "DEBUG: --- Adding corequisite: ---<br>"; //DEBUG
               echo "DEBUG: sec: ",$sec,"<br>"; //DEBUG
               echo "DEBUG: lastLecture: ",$lastLecture,"<br>"; //DEBUG
