@@ -91,7 +91,9 @@ class Section {
     $this->$coreqs[$coreq] = true;
   }
 
-  public function duration(string $unit = 'seconds') {
+  public function duration(string $unit = NULL) {
+    $unit = is_null($unit) ? 'seconds' : $unit;
+
     return $this->$end->difference($this->$start, $unit, true);
   }
 
