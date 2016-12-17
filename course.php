@@ -12,7 +12,7 @@ class Course {
   // then for the type(s) in the returned array, only the listed sectionss can be taken.
   //For example, Lecture A for a course might require Discussions 1-5, while Lec B requires Discussions 6-10.
 
-  function __construct(string $courseName, array $sections = NULL) {
+  function __construct($courseName, array $sections = NULL) {
     $sections = is_null($sections) ? array() : $sections;
 
     $this->sectionArr = array();
@@ -23,7 +23,7 @@ class Course {
       $this->sectionArr[$section->type][] = $section;
     }
 
-    $this->name = $courseName;
+    $this->name = (string)$courseName;
   }
 
   function addSection(Section $section) {

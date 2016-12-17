@@ -19,11 +19,11 @@ class Preferences
     }
   }
 
-  public function changeWeight(string $categoryName, float $weight) {
-    if (!array_key_exists($categoryName, $this->categories)) {
+  public function changeWeight($categoryName, $weight) {
+    if (!array_key_exists((string)$categoryName, $this->categories)) {
       throw new Exception('Invalid category name');
     }
-    $this->categories[$categoryName][1] = $weight;
+    $this->categories[(string)$categoryName][1] = $weight;
   }
 
   public function score(Schedule $schedule) {

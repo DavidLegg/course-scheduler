@@ -15,7 +15,7 @@ class Section {
   public $type;          // string
   public $coreqs;        // array(&Section => true)
 
-  public function __construct(array $meetDays = NULL, Time $meetStart = NULL, Time $meetEnd = NULL, DateTime $final = NULL, string $courseName = NULL, string $meetType = NULL) {
+  public function __construct(array $meetDays = NULL, Time $meetStart = NULL, Time $meetEnd = NULL, DateTime $final = NULL, $courseName = NULL, $meetType = NULL) {
     $meetDays   =is_null($meetDays)   ? array() : $meetDays;
     $courseName =is_null($courseName) ? ""      : $courseName;
     $meetType   =is_null($meetType)   ? ""      : $meetType;
@@ -49,8 +49,8 @@ class Section {
     $this->start  = $meetStart;
     $this->end    = $meetEnd;
     $this->finalDateTime = $final;
-    $this->course        = $courseName;
-    $this->type          = $meetType;
+    $this->course        = (string)$courseName;
+    $this->type          = (string)$meetType;
   }
 
   public function conflictsWith($sectionOrSchedule) {
@@ -91,7 +91,7 @@ class Section {
     $this->coreqs[$coreq] = true;
   }
 
-  public function duration(string $unit = NULL) {
+  public function duration($unit = NULL) {
     $unit = is_null($unit) ? 'seconds' : $unit;
 
     return $this->end->difference($this->start, $unit, true);

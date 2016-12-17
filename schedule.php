@@ -39,7 +39,7 @@ class Schedule {
     return in_array($section, $this->sections);
   }
 
-  private function _hasSectionCode(string &$code) {
+  private function _hasSectionCode(&$code) {
     foreach ($this->sections as $section) {
       if ($section->code == $code) return true;
     }
