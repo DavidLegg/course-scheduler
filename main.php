@@ -46,6 +46,9 @@
             if ($type == 'Lec') {
               $lastLecture = $sec;
             } else {
+              echo "DEBUG: --- Adding corequisite: ---<br>"; //DEBUG
+              echo "DEBUG: sec: ",$sec,"<br>"; //DEBUG
+              echo "DEBUG: lastLecture: ",$lastLecture,"<br>"; //DEBUG
               $sec->addCoreq($lastLecture);
             }
 
