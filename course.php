@@ -53,6 +53,7 @@
           foreach ($currentSchedules as $sched) {
             $output = array_merge($output, $this->_buildSchedules($sched));
           }
+          return $output;
         }
 
         private function _buildSchedules(Schedule $currentSchedule) {
