@@ -12,7 +12,9 @@ class Course {
   // then for the type(s) in the returned array, only the listed classes can be taken.
   //For example, Lecture A for a course might require Discussions 1-5, while Lec B requires Discussions 6-10.
 
-  function __construct(string $courseName, array $classes = array()) {
+  function __construct(string $courseName, array $classes = NULL) {
+    $classes = is_null($classes) ? array() : $classes;
+
     $this->$classArr = array();
     foreach ($classes as $class) {
       if (!array_key_exists($class->$type, $this->$classArr)) {

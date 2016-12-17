@@ -15,7 +15,11 @@ class Class {
   public $type;          // string
   public $coreqs;        // array(&Class => true)
 
-  public function __construct(array $meetDays = array(), Time $meetStart = NULL, Time $meetEnd = NULL, DateTime $final = NULL, string $courseName = "", string $meetType = "") {
+  public function __construct(array $meetDays = NULL, Time $meetStart = NULL, Time $meetEnd = NULL, DateTime $final = NULL, string $courseName = NULL, string $meetType = NULL) {
+    $meetDays   =is_null($meetDays)   ? array() : $meetDays;
+    $courseName =is_null($courseName) ? ""      : $courseName;
+    $meetType   =is_null($meetType)   ? ""      : $meetType;
+
     if ($meetDays) {
       if (!$meetStart || !$meetEnd) {
         throw new Exception("Class was given 'meetDays', but not 'meetStart' and 'meetEnd'.");

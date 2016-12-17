@@ -5,7 +5,10 @@
 * Guarantees correct comparison of times by fixing date.
 */
 class Time extends DateTime {
-  public function __construct($hoursOrString, int $minutes = 0, int $seconds = 0) {
+  public function __construct($hoursOrString, int $minutes = NULL, int $seconds = NULL) {
+    $minutes = is_null($minutes) ? 0 : $minutes;
+    $seconds = is_null($seconds) ? 0 : $seconds;
+
     if (is_string($hoursOrString)) {
       parent::__construct("1/1/2000 ".$hoursOrString); //let the DateTime constructor handle parsing
     } else {
@@ -25,7 +28,10 @@ class Time extends DateTime {
     return $this->format("g:i a");
   }
 
-  public function difference(Time $other, string $unit = "seconds", bool $absolute = false) {
+  public function difference(Time $other, string $unit = NULL, bool $absolute = NULL) {
+    $unit = is_null($unit) ? "seconds" : $unit;
+    $absolute = is_null($absolute) ? false : $absolute;
+
     $inl = $this->diff($other, $absolute); //DateInterval
 
     switch (strtolower($unit)) {

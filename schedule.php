@@ -7,7 +7,9 @@ class Schedule {
 
   public $classes; // array(Class)
 
-  public function __construct($classSource = array() /*array(Class) or Schedule*/, Class $addClass = NULL) {
+  public function __construct($classSource = NULL /*array(Class) or Schedule*/, Class $addClass = NULL) {
+    $classSource = is_null($classSource) ? array() : $classSource;
+
     if ($classSource instanceof Schedule) {
       $this->$classes = $other->$classes; // copy the classes
     } else if (is_array($classSource)) {

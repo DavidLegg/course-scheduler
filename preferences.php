@@ -7,7 +7,9 @@ class Preferences
 {
   protected $categories; // array(string => array(callable, float)) : array(name => array(category, weighting))
 
-  public function __construct(array $preferenceCategories = array()) {
+  public function __construct(array $preferenceCategories = NULL) {
+    $preferenceCategories = is_null($preferenceCategories) ? array() : $preferenceCategories;
+
     $this->$categories = array();
     foreach ($preferenceCategories as $prefCat) {
       if (array_key_exists($prefCat->$name, $this->$categories)) {
