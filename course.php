@@ -15,7 +15,7 @@ class Course {
   function __construct(string $courseName, array $sections = NULL) {
     $sections = is_null($sections) ? array() : $sections;
 
-    $this->$classArr = array();
+    $this->$sectionArr = array();
     foreach ($sections as $section) {
       if (!array_key_exists($section->$type, $this->$sectionArr)) {
         $this->$sectionArr[$section->$type] = array();
