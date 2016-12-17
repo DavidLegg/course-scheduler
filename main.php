@@ -37,7 +37,8 @@ function readCSV($file) {
     $startTime = new Time($start);
     $endTime   = new Time($end);
     $final = preg_replace("/-\d{1,2}:\d{2}/","",$final); //trim out ending time
-    $finalDateTime = new DateTime($final);
+//      var_dump($final);
+      $finalDateTime = new DateTime($final);
     if (!array_key_exists($course, $courses)) {
       $courses[$course] = new Course($course);
     }
@@ -50,13 +51,13 @@ function readCSV($file) {
 }
 echo "readCSV function defined.<br>";
  $courses = readCSV("./testdata.csv");
-// foreach ($courses as $name => $course) {
-//   echo "<h2>$name</h2><br>";
-//   foreach ($course->classArr as $type => $classes) {
-//     echo "<h3>$type</h3><br>";
-//     foreach ($classes as $c) {
-//       var_dump($c);
-//     }
-//   }
-// }
+ foreach ($courses as $name => $course) {
+   echo "<h2>$name</h2><br>";
+   foreach ($course->sectionArr as $type => $classes) {
+     echo "<h3>$type</h3><br>";
+     foreach ($classes as $c) {
+       var_dump($c);
+     }
+   }
+ }
 ?>
