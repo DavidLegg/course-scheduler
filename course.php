@@ -51,7 +51,7 @@ class Course {
     $sections = array_pop($sectionArr);
     // if (!is_empty(array_intersect($sections,$sched->sections))) {
     foreach ($sections as $section) {
-      if ($sched->hasSection($section)) {
+      if ($schedule.hasSection($section)) {
         // the schedule already contains this 'type' of section, skip the process at this level.
         return $this->_buildSchedules($sched, $sectionArr);
       }
@@ -64,13 +64,12 @@ class Course {
       // Note: since any section conflicts with itself, this check also stops duplicates (e.g., from coreq additions)
 
       $newSched = new Schedule($sched, $section);
-        if (is_array($section->coreqs) || is_object($section->coreqs))
-            foreach ($section->coreqs as $req => $x) {
-                if ($newSched->hasSection($req)) continue; // section already present
-                if ($newSched->hasCourseType($req)) break 2; // has the 'type' of this req for this req's course, but not this one. Excludes req    .
-                if ($req->conflictsWith($newSched)) break 2; // break out of coreq loop *and* this section loop.
-                $newSched = new Schedule($newSched, $req); // else, add section to schedule
-            }
+      foreach ($section->coreqs as $req => $x) {
+        if ($newSched->hasSection($req)) continue; // section already present
+        if ($newSched->hasCourseType($req)) break 2; // has the 'type' of this req for this req's course, but not this one. Excludes req.
+        if ($req->conflictsWith($newSched)) break 2; // break out of coreq loop *and* this section loop.
+        $newSched = new Schedule($newSched, $req); // else, add section to schedule
+      }
       //now we've guaranteed all coreqs have been added.
 
       $output += $this->_buildSchedules($newSched, $sectionArr); //compute next level

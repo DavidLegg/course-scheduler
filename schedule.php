@@ -11,7 +11,7 @@ class Schedule {
     $sectionSource = is_null($sectionSource) ? array() : $sectionSource;
 
     if ($sectionSource instanceof Schedule) {
-      $this->sections = $sectionSource->sections; // copy the sections
+      $this->sections = $other->sections; // copy the sections
     } else if (is_array($sectionSource)) {
       $this->sections = array();
       foreach ($sectionSource as $section) {
