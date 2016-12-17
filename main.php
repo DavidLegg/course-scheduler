@@ -50,12 +50,20 @@
         return $courses;
     }
     echo "readCSV function defined.<br>";
-    $courses = readCSV("./testdata.csv");
+    $courses = readCSV(ROOT_PATH."testdata.csv");
+
+    function print_section(Section $section) {
+      echo $section->course," ",$section->type,": ";
+      foreach ($section->days as $day => $meets) {
+        if ($meets) echo substr($day,0,2)," ";
+      }
+      echo $section->start," - ",$section->end,".";
+    }
     
     $schedules = array();
     
     foreach ($courses as $name => $course) {
-        echo "<h2>$name</h2><br>";
+        echo "<h2>$name</h2>";
         if (empty($schedules))
             $schedules = $course->buildSchedules();
         else{
@@ -66,10 +74,11 @@
             }
             $schedules = $newSchedules;
         }
-        foreach ($course->sectionArr as $type => $classes) {
-            echo "<h3>$type</h3><br>";
-            foreach ($classes as $c) {
-                var_dump($c);
+        foreach ($course->sectionArr as $type => $sections) {
+            echo "<h3>$type</h3>";
+            foreach ($sections as $s) {
+                // var_dump($c);
+                print_section($s);
             }
         }
     }
