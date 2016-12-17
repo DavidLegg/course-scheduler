@@ -79,7 +79,7 @@
                 
                 $newSched = new Schedule($sched, $section);
                 if (is_array($section->coreqs) || is_object($section->coreqs))
-                    foreach ($section->coreqs as $req => $x) {
+                    foreach ($section->coreqs as $req) {
                         if ($newSched->hasSection($req)) continue; // section already present
                         if ($newSched->hasCourseType($req)) break 2; // has the 'type' of this req for this req's course, but not this one. Excludes req.
                         if ($req->conflictsWith($newSched)) break 2; // break out of coreq loop *and* this section loop.
