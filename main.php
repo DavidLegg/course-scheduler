@@ -61,6 +61,7 @@
         }
 
         $schedules = $course->buildSchedules($schedules); //build all possible schedules
+        echo "DEBUG: schedules: array("; foreach($schedules as $v) echo "<br>",$v,","; echo ")<br>"; //DEBUG
     }
 
     echo "<hr><hr><h2>Schedules</h2>";
