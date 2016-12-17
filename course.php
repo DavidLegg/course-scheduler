@@ -60,9 +60,6 @@
         }
         
         private function _buildSchedules_base(Schedule $sched, array $sectionArr) {
-            echo "DEBUG: --- Course::_buildSchedules_base ---<br>"; //DEBUG
-            echo "DEBUG: sched: ",$sched,"<br>"; //DEBUG
-            echo "DEBUG: sectionArr: array("; foreach($sectionArr as $k => $v) echo $k," => ",$v,","; echo ")<br>"; //DEBUG
             if (!$sectionArr) return array($sched);
             
             $sections = array_pop($sectionArr);
@@ -92,7 +89,6 @@
                 $output = array_merge($output, $this->_buildSchedules($newSched, $sectionArr)); //compute next level
             }
             
-            echo "DEBUG: output: array("; foreach($output as $v) echo $v,","; echo ")<br>"; //DEBUG
             return $output;
         }
     }
