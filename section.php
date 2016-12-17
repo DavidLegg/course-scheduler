@@ -91,6 +91,7 @@ class Section {
   }
 
   public function addCoreq(Section &$coreq) {
+      //Warning here using Object as an array index (Illegal Offset)
     $this->coreqs[$coreq] = true;
   }
 

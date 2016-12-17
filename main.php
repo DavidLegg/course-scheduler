@@ -1,5 +1,5 @@
 <?php
-    error_reporting(E_ALL);
+    error_reporting(E_ERROR);
     ini_set('display_errors', 1);
     echo "Hello, world!<br>PHP is running correctly.";
     if (!defined('ROOT_PATH')) define('ROOT_PATH',__DIR__.'/');
