@@ -13,12 +13,14 @@ class Section {
   public $finalDateTime; // DateTime
   public $course;        // string
   public $type;          // string
+  public $code;          // string
   public $coreqs;        // array(&Section => true)
 
-  public function __construct(array $meetDays = NULL, Time $meetStart = NULL, Time $meetEnd = NULL, DateTime $final = NULL, $courseName = NULL, $meetType = NULL) {
-    $meetDays   =is_null($meetDays)   ? array() : $meetDays;
-    $courseName =is_null($courseName) ? ""      : $courseName;
-    $meetType   =is_null($meetType)   ? ""      : $meetType;
+  public function __construct(array $meetDays = NULL, Time $meetStart = NULL, Time $meetEnd = NULL, DateTime $final = NULL, $courseName = NULL, $meetType = NULL, $sectionCode = NULL) {
+    $meetDays    = is_null($meetDays)   ? array() : $meetDays;
+    $courseName  = is_null($courseName) ? ""      : $courseName;
+    $meetType    = is_null($meetType)   ? ""      : $meetType;
+    $sectionCode = is_null($sectionCode) ? "" : $sectionCode;
 
     if ($meetDays) {
       if (!$meetStart || !$meetEnd) {
@@ -49,8 +51,9 @@ class Section {
     $this->start  = $meetStart;
     $this->end    = $meetEnd;
     $this->finalDateTime = $final;
-    $this->course        = (string)$courseName;
-    $this->type          = (string)$meetType;
+    $this->course = (string)$courseName;
+    $this->type   = (string)$meetType;
+    $this->code   = (string)$sectionCode;
   }
 
   public function conflictsWith($sectionOrSchedule) {

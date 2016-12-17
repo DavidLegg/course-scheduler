@@ -41,7 +41,7 @@
                 $courses[$course] = new Course($course);
             }
             $courses[$course]->addSection(new Section(
-                                                      $days, $startTime, $endTime, $finalDateTime, $course, $type
+                                                      $days, $startTime, $endTime, $finalDateTime, $course, $type, $code
                                                       ));
         }
         fclose($handle);
