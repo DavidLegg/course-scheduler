@@ -19,6 +19,7 @@
             throw new Exception("Could not open file.");
         }
         $courses = array(); //name => course
+        $lastLecture = NULL;
         $dayCodes = array(
                           "M" => "monday",
                           "Tu" => "tuesday",
@@ -40,9 +41,15 @@
             if (!array_key_exists($course, $courses)) {
                 $courses[$course] = new Course($course);
             }
-            $courses[$course]->addSection(new Section(
-                                                      $days, $startTime, $endTime, $finalDateTime, $course, $type, $code
-                                                      ));
+            $sec = new Section($days, $startTime, $endTime, $finalDateTime, $course, $type, $code);
+
+            if ($type == 'Lec') {
+              $lastLecture = $sec;
+            } else {
+              $sec->addCoreq($lastLecture);
+            }
+
+            $courses[$course]->addSection($sec);
         }
         fclose($handle);
         return $courses;
