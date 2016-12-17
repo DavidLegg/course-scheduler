@@ -88,7 +88,7 @@ class Section {
   }
 
   public function addCoreq(Section &$coreq) {
-    $this->$coreqs[&$coreq] = true;
+    $this->$coreqs[$coreq] = true;
   }
 
   public function duration(string $unit = 'seconds') {
