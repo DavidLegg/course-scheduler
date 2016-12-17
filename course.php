@@ -37,17 +37,30 @@
          * Builds all possible schedules based on the current schedule,
          * incorporating one of each necessary 'type' of Section for this Course.
          */
-        public function buildSchedules(Schedule $currentSchedule = NULL) {
-            echo "DEBUG: --- Course::buildSchedules ---<br>"; //DEBUG
-            if (is_null($currentSchedule)) {
-                $currentSchedule = new Schedule();
-            }
-            
-            return $this->_buildSchedules($currentSchedule, $this->sectionArr);
+        public function buildSchedules($currentSchedules = NULL /* array(Schedule) or Schedule */) {
+          $currentSchedules = is_null($currentSchedules) ? new Schedule() : $currentSchedules;
+          if ($currentSchedules instanceof Schedule) {
+            return $this->_buildSchedules($currentSchedules);
+          } else if (is_array($currentSchedules)) {
+            return $this->_buildSchedulesArray($currentSchedules);
+          } else {
+            throw new Exception("currentSchedules must be Schedule or array(Schedule)");
+          }
+        }
+
+        private function _buildSchedulesArray(array $currentSchedules) {
+          $output = array();
+          foreach ($currentSchedules as $sched) {
+            $output = array_merge($output, $this->_buildSchedules($sched));
+          }
+        }
+
+        private function _buildSchedules(Schedule $currentSchedule) {
+            return $this->_buildSchedules_base($currentSchedule, $this->sectionArr);
         }
         
-        private function _buildSchedules(Schedule $sched, array $sectionArr) {
-            echo "DEBUG: --- Course::_buildSchedules ---<br>"; //DEBUG
+        private function _buildSchedules_base(Schedule $sched, array $sectionArr) {
+            echo "DEBUG: --- Course::_buildSchedules_base ---<br>"; //DEBUG
             echo "DEBUG: sched: ",$sched,"<br>"; //DEBUG
             echo "DEBUG: sectionArr: array("; foreach($sectionArr as $k => $v) echo $k," => ",$v,","; echo ")<br>"; //DEBUG
             if (!$sectionArr) return array($sched);
@@ -56,7 +69,7 @@
             foreach ($sections as $section) {
                 if ($sched->hasSection($section)) {
                     // the schedule already contains this 'type' of section, skip the process at this level.
-                    return $this->_buildSchedules($sched, $sectionArr);
+                    return $this->_buildSchedules_base($sched, $sectionArr);
                 }
             }
             
