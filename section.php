@@ -102,6 +102,15 @@ class Section {
       return $sum + ($meets ? 1 : 0);
     }, 0);
   }
+
+  public function __toString() {
+    $output = $this->code.": ".$this->course." ".$this->type.": ";
+    foreach ($this->days as $day => $meets) {
+      if ($meets) $output .= substr($day,0,2)." ";
+    }
+    $output .= $this->start." - ".$this->end.".";
+    return $output;
+  }
 }
 
 ?>

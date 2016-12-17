@@ -49,22 +49,6 @@
     }
     echo "readCSV function defined.<br>";
     $courses = readCSV(ROOT_PATH."testdata.csv");
-
-    function print_section(Section $section) {
-      echo $section->course," ",$section->type,": ";
-      foreach ($section->days as $day => $meets) {
-        if ($meets) echo substr($day,0,2)," ";
-      }
-      echo $section->start," - ",$section->end,".";
-    }
-
-    function print_schedule(Schedule $sched) {
-      foreach ($sched->sections as $s) {
-        echo "&nbsp;&nbsp;&nbsp;";
-        print_section($s);
-        echo "<br>";
-      }
-    }
     
     // $schedules = array();
     // foreach ($courses as $name => $course) {
@@ -93,8 +77,7 @@
         foreach ($course->sectionArr as $type => $sections) {
             echo "<h3>$type</h3>";
             foreach ($sections as $s) {
-                print_section($s);
-                echo "<br>";
+                echo $s,"<br>"; //use default section toString
             }
         }
     }
@@ -108,8 +91,7 @@
 
     echo "<h2>Schedules</h2>";
     foreach ($schedules as $sched) {
-      echo "<hr>";
-      print_schedule($sched);
+      echo "<hr>",$sched;
     }
     
     

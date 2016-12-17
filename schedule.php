@@ -53,6 +53,14 @@ class Schedule {
     }
     return false;
   }
+
+  public function __toString() {
+    $output = "Schedule: ";
+    foreach ($this->sections as $s) {
+      $output .= "<br>&nbsp;&nbsp;&nbsp;".$s; // use default toString
+    }
+    return $output;
+  }
 }
 
 ?>
