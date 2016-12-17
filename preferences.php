@@ -28,7 +28,8 @@ class Preferences
 
   public function score(Schedule $schedule) {
     $score = 0.0;
-    foreach ($this->categories as list($evaluate,$weight)) {
+    foreach ($this->categories as $pair) {
+      list($evaluate,$weight) = $pair;
       $score += $evaluate($schedule) * $weight;
     }
     return $score;

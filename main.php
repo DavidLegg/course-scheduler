@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 
 echo "Hello, world!<br>PHP is running correctly.";
 
-define('ROOT_PATH',__DIR__.'/');
+if (!defined('ROOT_PATH')) define('ROOT_PATH',__DIR__.'/');
 
 require_once ROOT_PATH.'time.php';
 require_once ROOT_PATH.'section.php';
