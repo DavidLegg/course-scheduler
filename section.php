@@ -41,7 +41,7 @@ class Section {
       'sunday'    => false
     );
     foreach ($this->days as $day => $meets) {
-      if (array_key_exsts($meetDays, $day) && $meetDays[$day]) {
+      if (array_key_exists($day,$meetDays) && $meetDays[$day]) {
         $this->days[$day] = true;
       }
     }
