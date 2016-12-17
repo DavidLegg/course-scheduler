@@ -10,10 +10,10 @@ $StandardPreferences = Preferences(array(
   PreferenceCategory('mornings', function($sched) {
     $cutoff = Time(11,00);
     $score  = 0.0;
-    foreach ($sched->$sections as $s) {
-      if ($s->$start <= $cutoff) {
+    foreach ($sched->sections as $s) {
+      if ($s->start <= $cutoff) {
         // earlier sections score "more" than those just before the cutoff
-        $score += ($cutoff->difference($s->$start, 'hours', true) * $s->daysPerWeek());
+        $score += ($cutoff->difference($s->start, 'hours', true) * $s->daysPerWeek());
       }
     }
     // score should be in the 0-20 range
@@ -22,10 +22,10 @@ $StandardPreferences = Preferences(array(
   PreferenceCategory('evenings', function($sched) {
     $cutoff = Time(16,00);
     $score  = 0.0;
-    foreach ($sched->$sections as $s) {
-      if ($s->$end <= $cutoff) {
+    foreach ($sched->sections as $s) {
+      if ($s->end <= $cutoff) {
         // later sections score "more" than those just after the cutoff
-        $score += ($cutoff->difference($s->$end, 'hours', true) * $s->daysPerWeek());
+        $score += ($cutoff->difference($s->end, 'hours', true) * $s->daysPerWeek());
       }
     }
     // score should be in the 0-20 range
@@ -33,8 +33,8 @@ $StandardPreferences = Preferences(array(
   }),
   PreferenceCategory('mondays', function($sched) {
     $score = 0.0;
-    foreach ($sched->$sections as $s) {
-      if ($s->$days['monday']) {
+    foreach ($sched->sections as $s) {
+      if ($s->days['monday']) {
         // longer sections score "more" than shorter ones.
         $score += $s->duration('hours');
       }
@@ -44,8 +44,8 @@ $StandardPreferences = Preferences(array(
   }),
   PreferenceCategory('fridays', function($sched) {
     $score = 0.0;
-    foreach ($sched->$sections as $s) {
-      if ($s->$days['friday']) {
+    foreach ($sched->sections as $s) {
+      if ($s->days['friday']) {
         // longer sections score "more" than shorter ones.
         $score += $s->duration('hours');
       }
@@ -64,9 +64,9 @@ $StandardPreferences = Preferences(array(
       'saturday'  => 0.0,
       'sunday'    => 0.0
     );
-    foreach ($sched->$sections as $s) {
+    foreach ($sched->sections as $s) {
       $dur = $s->duration('hours');
-      foreach ($s->$days as $day => $meets) {
+      foreach ($s->days as $day => $meets) {
         if ($meets) $hoursByDay[$day] += $dur;
       }
     }

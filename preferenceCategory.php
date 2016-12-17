@@ -9,8 +9,8 @@ class PreferenceCategory
   public $evaluate; // callable(Schedule) => float
 
   function __construct(string $categoryName, callable $evaluator) {
-    $this->$name      = $categoryName;
-    $this->$evalutate = $evaluator;
+    $this->name      = $categoryName;
+    $this->evalutate = $evaluator;
   }
 }
 

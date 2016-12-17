@@ -10,25 +10,25 @@ class Preferences
   public function __construct(array $preferenceCategories = NULL) {
     $preferenceCategories = is_null($preferenceCategories) ? array() : $preferenceCategories;
 
-    $this->$categories = array();
+    $this->categories = array();
     foreach ($preferenceCategories as $prefCat) {
-      if (array_key_exists($prefCat->$name, $this->$categories)) {
+      if (array_key_exists($prefCat->name, $this->categories)) {
         throw new Exception('PreferenceCategory names were not unique');
       }
-      $this->$categories[$prefCat->$name] = array($prefCat->$evaluate, 0.0);
+      $this->categories[$prefCat->name] = array($prefCat->evaluate, 0.0);
     }
   }
 
   public function changeWeight(string $categoryName, float $weight) {
-    if (!array_key_exists($categoryName, $this->$categories)) {
+    if (!array_key_exists($categoryName, $this->categories)) {
       throw new Exception('Invalid category name');
     }
-    $this->$categories[$categoryName][1] = $weight;
+    $this->categories[$categoryName][1] = $weight;
   }
 
   public function score(Schedule $schedule) {
     $score = 0.0;
-    foreach ($this->$categories as list($evaluate,$weight)) {
+    foreach ($this->categories as list($evaluate,$weight)) {
       $score += $evaluate($schedule) * $weight;
     }
     return $score;

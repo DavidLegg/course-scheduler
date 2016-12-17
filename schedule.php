@@ -11,19 +11,19 @@ class Schedule {
     $sectionSource = is_null($sectionSource) ? array() : $sectionSource;
 
     if ($sectionSource instanceof Schedule) {
-      $this->$sections = $other->$sections; // copy the sections
+      $this->sections = $other->sections; // copy the sections
     } else if (is_array($sectionSource)) {
-      $this->$sections = array();
+      $this->sections = array();
       foreach ($sectionSource as $section) {
         if ($section instanceof Section) {
-          $this->$sections[] = $section;
+          $this->sections[] = $section;
         } else {
           throw new Exception("sectionSource must be an array of Section objects");
         }
       }
     }
     if (!is_null($addSection)) {
-      $this->$sections[] = $addSection;
+      $this->sections[] = $addSection;
     }
   }
 
@@ -36,20 +36,20 @@ class Schedule {
   }
 
   private function _hasSection(Section &$section) {
-    return in_array($section, $this->$sections);
+    return in_array($section, $this->sections);
   }
 
   private function _hasSectionCode(string &$code) {
-    foreach ($this->$sections as $section) {
-      if ($section->$code == $code) return true;
+    foreach ($this->sections as $section) {
+      if ($section->code == $code) return true;
     }
     return false;
   }
 
   public function hasCourseType(Section &$section) {
-    foreach ($this->$sections as $s) {
-      if ($s->$course == $section->$course &&
-          $s->$type   == $section->$type) return true;
+    foreach ($this->sections as $s) {
+      if ($s->course == $section->course &&
+          $s->type   == $section->type) return true;
     }
     return false;
   }

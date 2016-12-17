@@ -72,10 +72,10 @@ class Time extends DateTime {
         throw new Exception("Unrecognized unit of time.");
     }
 
-    return (($inl->$d * $conv['d']) +
-            ($inl->$h * $conv['h']) +
-            ($inl->$i * $conv['i']) +
-            ($inl->$s * $conv['s'])) * ($inl->$invert ? -1 : 1);
+    return (($inl->d * $conv['d']) +
+            ($inl->h * $conv['h']) +
+            ($inl->i * $conv['i']) +
+            ($inl->s * $conv['s'])) * ($inl->invert ? -1 : 1);
 
   }
 }

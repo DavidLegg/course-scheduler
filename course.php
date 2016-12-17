@@ -15,22 +15,22 @@ class Course {
   function __construct(string $courseName, array $sections = NULL) {
     $sections = is_null($sections) ? array() : $sections;
 
-    $this->$sectionArr = array();
+    $this->sectionArr = array();
     foreach ($sections as $section) {
-      if (!array_key_exists($section->$type, $this->$sectionArr)) {
-        $this->$sectionArr[$section->$type] = array();
+      if (!array_key_exists($section->type, $this->sectionArr)) {
+        $this->sectionArr[$section->type] = array();
       }
-      $this->$sectionArr[$section->$type][] = $section;
+      $this->sectionArr[$section->type][] = $section;
     }
 
-    $this->$name = $courseName
+    $this->name = $courseName;
   }
 
   function addSection(Section $section) {
-    if (!array_key_exists($section->$type, $this->$sectionArr)) {
-      $this->$sectionArr[$section->$type] = array();
+    if (!array_key_exists($section->type, $this->sectionArr)) {
+      $this->sectionArr[$section->type] = array();
     }
-    $this->sectionArr[$section->$type][] = $section;
+    $this->sectionArr[$section->type][] = $section;
   }
 
   /**
@@ -42,14 +42,14 @@ class Course {
       $currentSchedule = new Schedule();
     }
 
-    return $this->_buildSchedules($currentSchedule, $this->$sectionArr);
+    return $this->_buildSchedules($currentSchedule, $this->sectionArr);
   }
 
   private function _buildSchedules(Schedule $sched, array $sectionArr) {
     if (!$sectionArr) return array($sched);
 
     $sections = array_pop($sectionArr);
-    // if (!is_empty(array_intersect($sections,$sched->$sections))) {
+    // if (!is_empty(array_intersect($sections,$sched->sections))) {
     foreach ($sections as $section) {
       if ($schedule.hasSection($section)) {
         // the schedule already contains this 'type' of section, skip the process at this level.
@@ -64,7 +64,7 @@ class Course {
       // Note: since any section conflicts with itself, this check also stops duplicates (e.g., from coreq additions)
 
       $newSched = new Schedule($sched, $section);
-      foreach ($section->$coreqs as $req => $x) {
+      foreach ($section->coreqs as $req => $x) {
         if ($newSched->hasSection($req)) continue; // section already present
         if ($newSched->hasCourseType($req)) break 2; // has the 'type' of this req for this req's course, but not this one. Excludes req.
         if ($req->conflictsWith($newSched)) break 2; // break out of coreq loop *and* this section loop.

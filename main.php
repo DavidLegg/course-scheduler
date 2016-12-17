@@ -64,7 +64,7 @@ echo "<br>All classes loaded correctly.<br>";
 
 // foreach ($courses as $name => $course) {
 //   echo "<h2>$name</h2><br>";
-//   foreach ($course->$classArr as $type => $classes) {
+//   foreach ($course->classArr as $type => $classes) {
 //     echo "<h3>$type</h3><br>";
 //     foreach ($classes as $c) {
 //       var_dump($c);
