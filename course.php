@@ -7,12 +7,12 @@
 class Course {
   
   public $name; // string
-  protected $classArr; // array(string => array(Class)) : Class->type => {Class}
+  public $classArr; // array(string => array(Class)) : Class->type => {Class}
   //If a class code is a key in the restrictions,
   // then for the type(s) in the returned array, only the listed classes can be taken.
   //For example, Lecture A for a course might require Discussions 1-5, while Lec B requires Discussions 6-10.
 
-  function __construct(string $courseName = "", array $classes = array()) {
+  function __construct(string $courseName, array $classes = array()) {
     $this->$classArr = array();
     foreach ($classes as $class) {
       if (!array_key_exists($class->$type, $this->$classArr)) {
@@ -22,6 +22,13 @@ class Course {
     }
 
     $this->$name = $courseName
+  }
+
+  function addClass(Class $class) {
+    if (!array_key_exists($class->$type, $this->$classArr)) {
+      $this->$classArr[$class->$type] = array();
+    }
+    $this->$classArr[$class->$type][] = $class;
   }
 
   /**
