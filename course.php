@@ -30,7 +30,7 @@ class Course {
     if (!array_key_exists($section->$type, $this->$sectionArr)) {
       $this->$sectionArr[$section->$type] = array();
     }
-    $this->$sectionArr[$section->$type][] = $section;
+    $this->sectionArr[$section->$type][] = $section;
   }
 
   /**
