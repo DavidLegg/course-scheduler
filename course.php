@@ -38,7 +38,7 @@
          * incorporating one of each necessary 'type' of Section for this Course.
          */
         public function buildSchedules($currentSchedules = NULL /* array(Schedule) or Schedule */) {
-          $currentSchedules = is_null($currentSchedules) ? new Schedule() : $currentSchedules;
+          $currentSchedules = is_null($currentSchedules) || empty($currentSchedules) ? new Schedule() : $currentSchedules;
           if ($currentSchedules instanceof Schedule) {
             return $this->_buildSchedules($currentSchedules);
           } else if (is_array($currentSchedules)) {
