@@ -43,15 +43,13 @@
                 $currentSchedule = new Schedule();
             }
             
-            echo "DEBUG: currentSchedule: ",$currentSchedule,"<br>"; //DEBUG
-            echo "DEBUG: this->sectionArr: "; var_dump($this->sectionArr); echo "<br>"; //DEBUG
             return $this->_buildSchedules($currentSchedule, $this->sectionArr);
         }
         
         private function _buildSchedules(Schedule $sched, array $sectionArr) {
             echo "DEBUG: --- Course::_buildSchedules ---<br>"; //DEBUG
             echo "DEBUG: sched: ",$sched,"<br>"; //DEBUG
-            echo "DEBUG: sectionArr: array("; foreach($sectionArr as $k => $v) echo $k," => ",$v; echo ")<br>"; //DEBUG
+            echo "DEBUG: sectionArr: array("; foreach($sectionArr as $k => $v) echo $k," => ",$v,","; echo ")<br>"; //DEBUG
             if (!$sectionArr) return array($sched);
             
             $sections = array_pop($sectionArr);
@@ -78,7 +76,7 @@
                     }
                 //now we've guaranteed all coreqs have been added.
                 
-                $output += $this->_buildSchedules($newSched, $sectionArr); //compute next level
+                $output = array_merge($output, $this->_buildSchedules($newSched, $sectionArr)); //compute next level
             }
             
             echo "DEBUG: output: array("; foreach($output as $v) echo $v,","; echo ")<br>"; //DEBUG
