@@ -49,29 +49,8 @@
     }
     echo "readCSV function defined.<br>";
     $courses = readCSV(ROOT_PATH."testdata.csv");
-    
-    // $schedules = array();
-    // foreach ($courses as $name => $course) {
-    //     echo "<h2>$name</h2>";
-    //     if (empty($schedules))
-    //         $schedules = $course->buildSchedules();
-    //     else{
-    //         $newSchedules = array();
-    //         foreach($schedules as $schedule)
-    //         {
-    //             $newSchedules = array_merge($newSchedules, $course->buildSchedules($schedule));
-    //         }
-    //         $schedules = $newSchedules;
-    //     }
-    //     foreach ($course->sectionArr as $type => $sections) {
-    //         echo "<h3>$type</h3>";
-    //         foreach ($sections as $s) {
-    //             print_section($s);
-    //             echo "<br>";
-    //         }
-    //     }
-    // }
 
+    $schedules = array();
     foreach ($courses as $name => $course) {
         echo "<h2>$name</h2>";
         foreach ($course->sectionArr as $type => $sections) {
@@ -80,18 +59,11 @@
                 echo $s,"<br>"; //use default section toString
             }
         }
+
+        $schedules = $course->buildSchedules($schedules); //build all possible schedules
     }
 
-    echo "<hr><hr><br>";
-
-    $schedules = $courses['Math 9']->buildSchedules();
-    // Correctly, schedules has 1 element.
-    $schedules = $courses['Soc Sci H1F']->buildSchedules($schedules);
-    // Should build 5 schedules
-    $schedules = $courses['Stats 67']->buildSchedules($schedules);
-    // Should build lots of schedules...
-
-    echo "<h2>Schedules</h2>";
+    echo "<hr><hr><h2>Schedules</h2>";
     foreach ($schedules as $sched) {
       echo "<hr>",$sched;
     }
