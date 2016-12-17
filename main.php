@@ -66,34 +66,46 @@
       }
     }
     
-    $schedules = array();
-    
+    // $schedules = array();
+    // foreach ($courses as $name => $course) {
+    //     echo "<h2>$name</h2>";
+    //     if (empty($schedules))
+    //         $schedules = $course->buildSchedules();
+    //     else{
+    //         $newSchedules = array();
+    //         foreach($schedules as $schedule)
+    //         {
+    //             $newSchedules = array_merge($newSchedules, $course->buildSchedules($schedule));
+    //         }
+    //         $schedules = $newSchedules;
+    //     }
+    //     foreach ($course->sectionArr as $type => $sections) {
+    //         echo "<h3>$type</h3>";
+    //         foreach ($sections as $s) {
+    //             print_section($s);
+    //             echo "<br>";
+    //         }
+    //     }
+    // }
+
     foreach ($courses as $name => $course) {
         echo "<h2>$name</h2>";
-        if (empty($schedules))
-            $schedules = $course->buildSchedules();
-        else{
-            $newSchedules = array();
-            foreach($schedules as $schedule)
-            {
-                $newSchedules = array_merge($newSchedules, $course->buildSchedules($schedule));
-            }
-            $schedules = $newSchedules;
-        }
         foreach ($course->sectionArr as $type => $sections) {
             echo "<h3>$type</h3>";
             foreach ($sections as $s) {
-                // var_dump($c);
                 print_section($s);
                 echo "<br>";
             }
         }
     }
-    
-    echo "<br/><br/>";
-    echo "<h2>Schedules</h2><br>";
+
+    echo "<hr><hr><br>";
+
+    $schedules = $courses['Math 9']->buildSchedules();
+
+    echo "<h2>Schedules</h2>";
     foreach ($schedules as $sched) {
-      echo "<h3>------</h3>";
+      echo "<hr>";
       print_schedule($sched);
     }
     
