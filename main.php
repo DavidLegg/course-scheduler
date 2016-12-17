@@ -27,17 +27,15 @@
                           "F" => "friday"
                           );
         while (($line = fgets($handle, 4096)) !== false) {
-            list($course,$type,$shortDays,$times,$final,$code) = explode(',', $line);
+            list($course,$type,$shortDays,$start,$end,$final,$code) = explode(',', $line);
             
             $days = array();
             foreach ($dayCodes as $short => $long) {
                 $days[$long] = is_int(strpos($shortDays,$short)); //shortDays has short
             }
-            list($start,$end) = explode('-',$times);
             $startTime = new Time($start);
             $endTime   = new Time($end);
             $final = preg_replace("/-\d{1,2}:\d{2}/","",$final); //trim out ending time
-            //      var_dump($final);
             $finalDateTime = new DateTime($final);
             if (!array_key_exists($course, $courses)) {
                 $courses[$course] = new Course($course);
@@ -59,6 +57,14 @@
       }
       echo $section->start," - ",$section->end,".";
     }
+
+    function print_schedule(Schedule $sched) {
+      foreach ($sched->sections as $s) {
+        echo "&nbsp;&nbsp;&nbsp;";
+        print_section($s);
+        echo "<br>";
+      }
+    }
     
     $schedules = array();
     
@@ -79,13 +85,17 @@
             foreach ($sections as $s) {
                 // var_dump($c);
                 print_section($s);
+                echo "<br>";
             }
         }
     }
     
     echo "<br/><br/>";
     echo "<h2>Schedules</h2><br>";
-    var_dump($schedules);
+    foreach ($schedules as $sched) {
+      echo "<h3>------</h3>";
+      print_schedule($sched);
+    }
     
     
     
