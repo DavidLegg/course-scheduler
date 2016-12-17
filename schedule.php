@@ -1,55 +1,55 @@
 <?php
 
 /**
-* Represents a possible schedule, with a set of non-conflicting classes.
+* Represents a possible schedule, with a set of non-conflicting sections.
 */
 class Schedule {
 
-  public $classes; // array(Class)
+  public $sections; // array(Section)
 
-  public function __construct($classSource = NULL /*array(Class) or Schedule*/, Class $addClass = NULL) {
-    $classSource = is_null($classSource) ? array() : $classSource;
+  public function __construct($sectionSource = NULL /*array(Section) or Schedule*/, Section $addSection = NULL) {
+    $sectionSource = is_null($sectionSource) ? array() : $sectionSource;
 
-    if ($classSource instanceof Schedule) {
-      $this->$classes = $other->$classes; // copy the classes
-    } else if (is_array($classSource)) {
-      $this->$classes = array();
-      foreach ($classSource as $class) {
-        if ($c instanceof Class) {
-          $this->$classes[] = $c;
+    if ($sectionSource instanceof Schedule) {
+      $this->$sections = $other->$sections; // copy the sections
+    } else if (is_array($sectionSource)) {
+      $this->$sections = array();
+      foreach ($sectionSource as $section) {
+        if ($section instanceof Section) {
+          $this->$sections[] = $section;
         } else {
-          throw new Exception("classSource must be an array of Class objects");
+          throw new Exception("sectionSource must be an array of Section objects");
         }
       }
     }
-    if (!is_null($addClass)) {
-      $this->$classes[] = $addClass;
+    if (!is_null($addSection)) {
+      $this->$sections[] = $addSection;
     }
   }
 
-  public function hasClass(&$classOrCode /*Class or string*/) {
-    if ($classOrCode instanceof Class) {
-      return $this->_hasClass($classOrCode);
+  public function hasSection(&$sectionOrCode /*Section or string*/) {
+    if ($sectionOrCode instanceof Section) {
+      return $this->_hasSection($sectionOrCode);
     } else {
-      return $this->_hasClassCode((string)$classOrCode);
+      return $this->_hasSectionCode((string)$sectionOrCode);
     }
   }
 
-  private function _hasClass(Class &$class) {
-    return in_array($class, $this->$classes);
+  private function _hasSection(Section &$section) {
+    return in_array($section, $this->$sections);
   }
 
-  private function _hasClassCode(string &$code) {
-    foreach ($this->$classes as $class) {
-      if ($class->$code == $code) return true;
+  private function _hasSectionCode(string &$code) {
+    foreach ($this->$sections as $section) {
+      if ($section->$code == $code) return true;
     }
     return false;
   }
 
-  public function hasCourseType(Class &$class) {
-    foreach ($this->$classes as $c) {
-      if ($c->$course == $class->$course &&
-          $c->$type   == $class->$type) return true;
+  public function hasCourseType(Section &$section) {
+    foreach ($this->$sections as $s) {
+      if ($s->$course == $section->$course &&
+          $s->$type   == $section->$type) return true;
     }
     return false;
   }

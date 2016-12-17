@@ -1,17 +1,19 @@
 <?php
 
-require_once './preferenceCategory.php';
-require_once './preferences.php';
-require_once './time.php';
+define(ROOT_PATH,__DIR__.'/');
+
+require_once ROOT_PATH.'preferenceCategory.php';
+require_once ROOT_PATH.'preferences.php';
+require_once ROOT_PATH.'time.php';
 
 $StandardPreferences = Preferences(array(
   PreferenceCategory('mornings', function($sched) {
     $cutoff = Time(11,00);
     $score  = 0.0;
-    foreach ($sched->$classes as $c) {
-      if ($c->$meetingStart <= $cutoff) {
-        // earlier classes score "more" than those just before the cutoff
-        $score += ($cutoff->difference($c->$meetingStart, 'hours', true) * $c->daysPerWeek());
+    foreach ($sched->$sections as $s) {
+      if ($s->$start <= $cutoff) {
+        // earlier sections score "more" than those just before the cutoff
+        $score += ($cutoff->difference($s->$start, 'hours', true) * $s->daysPerWeek());
       }
     }
     // score should be in the 0-20 range
@@ -20,10 +22,10 @@ $StandardPreferences = Preferences(array(
   PreferenceCategory('evenings', function($sched) {
     $cutoff = Time(16,00);
     $score  = 0.0;
-    foreach ($sched->$classes as $c) {
-      if ($c->$meetingEnd <= $cutoff) {
-        // later classes score "more" than those just after the cutoff
-        $score += ($cutoff->difference($c->$meetingEnd, 'hours', true) * $c->daysPerWeek());
+    foreach ($sched->$sections as $s) {
+      if ($s->$end <= $cutoff) {
+        // later sections score "more" than those just after the cutoff
+        $score += ($cutoff->difference($s->$end, 'hours', true) * $s->daysPerWeek());
       }
     }
     // score should be in the 0-20 range
@@ -31,10 +33,10 @@ $StandardPreferences = Preferences(array(
   }),
   PreferenceCategory('mondays', function($sched) {
     $score = 0.0;
-    foreach ($sched->$classes as $c) {
-      if ($c->$meetingDays['monday']) {
-        // longer classes score "more" than shorter ones.
-        $score += $c->duration('hours');
+    foreach ($sched->$sections as $s) {
+      if ($s->$days['monday']) {
+        // longer sections score "more" than shorter ones.
+        $score += $s->duration('hours');
       }
     }
     // score should be in the 0-12 range, double to keep in line with other scores
@@ -42,10 +44,10 @@ $StandardPreferences = Preferences(array(
   }),
   PreferenceCategory('fridays', function($sched) {
     $score = 0.0;
-    foreach ($sched->$classes as $c) {
-      if ($c->$meetingDays['friday']) {
-        // longer classes score "more" than shorter ones.
-        $score += $c->duration('hours');
+    foreach ($sched->$sections as $s) {
+      if ($s->$days['friday']) {
+        // longer sections score "more" than shorter ones.
+        $score += $s->duration('hours');
       }
     }
     // score should be in the 0-12 range, double to keep in line with other scores
@@ -62,9 +64,9 @@ $StandardPreferences = Preferences(array(
       'saturday'  => 0.0,
       'sunday'    => 0.0
     );
-    foreach ($sched->$classes as $c) {
-      $dur = $c->duration('hours');
-      foreach ($c->$meetingDays as $day => $meets) {
+    foreach ($sched->$sections as $s) {
+      $dur = $s->duration('hours');
+      foreach ($s->$days as $day => $meets) {
         if ($meets) $hoursByDay[$day] += $dur;
       }
     }

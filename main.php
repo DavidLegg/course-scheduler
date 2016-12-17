@@ -4,11 +4,13 @@ ini_set('display_errors', 1);
 
 echo "Hello, world!<br>PHP is running correctly.";
 
-require_once './time.php';
-require_once './class.php';
-require_once './course.php';
-require_once './schedule.php';
-require_once './standardPreferences.php';
+define(ROOT_PATH,__DIR__.'/');
+
+require_once ROOT_PATH.'time.php';
+require_once ROOT_PATH.'section.php';
+require_once ROOT_PATH.'course.php';
+require_once ROOT_PATH.'schedule.php';
+require_once ROOT_PATH.'standardPreferences.php';
 
 echo "<br>All classes loaded correctly.<br>";
 // 
