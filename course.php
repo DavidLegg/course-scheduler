@@ -38,18 +38,24 @@
          * incorporating one of each necessary 'type' of Section for this Course.
          */
         public function buildSchedules(Schedule $currentSchedule = NULL) {
+            echo "DEBUG: --- Course::buildSchedules ---<br>"; //DEBUG
             if (is_null($currentSchedule)) {
                 $currentSchedule = new Schedule();
             }
             
+            echo "DEBUG: currentSchedule:"; var_dump($currentSchedule); //DEBUG
+            echo "DEBUG: sectionArr:"; var_dump($sectionArr); //DEBUG
             return $this->_buildSchedules($currentSchedule, $this->sectionArr);
         }
         
         private function _buildSchedules(Schedule $sched, array $sectionArr) {
+            echo "DEBUG: --- Course::_buildSchedules ---<br>"; //DEBUG
+            echo "DEBUG: sched:"; var_dump($sched); //DEBUG
+            echo "DEBUG: sectionArr:"; var_dump($sectionArr); //DEBUG
+            echo "DEBUG: !sectionArr:"; var_dump(!$sectionArr); //DEBUG
             if (!$sectionArr) return array($sched);
             
             $sections = array_pop($sectionArr);
-            // if (!is_empty(array_intersect($sections,$sched->sections))) {
             foreach ($sections as $section) {
                 if ($sched->hasSection($section)) {
                     // the schedule already contains this 'type' of section, skip the process at this level.

@@ -104,6 +104,7 @@
     $schedules = $courses['Math 9']->buildSchedules();
     // Correctly, schedules has 1 element.
     $schedules = $courses['Soc Sci H1F']->buildSchedules($schedules[0]);
+    // Should build 5 schedules
 
     echo "<h2>Schedules</h2>";
     foreach ($schedules as $sched) {
