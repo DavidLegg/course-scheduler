@@ -29,12 +29,17 @@ appendTerm();
 
 function getCoursesByDept($dept){
   global $baseQueryUrl;
-  $html_dept = file_get_contents($baseQueryUrl.'&Dept='.$dept);
+  $requestStr=$baseQueryUrl.'&Dept='. urlencode($dept);
+  //echo($requestStr);
+  $html_dept = file_get_contents($requestStr);
   $dom_dept = new DOMDocument;
   $dom_dept->loadHTML($html_dept);
   $xpath_dept = new DOMXPath($dom_dept);
   
+  
+
   $allCoursesQuery = $xpath_dept->query('//td[@class="CourseTitle"]');
+//var_dump($allCoursesQuery);
   $allCourses = array();
   
   foreach($allCoursesQuery as $course){
