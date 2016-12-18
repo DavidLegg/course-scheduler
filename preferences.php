@@ -32,11 +32,9 @@ class Preferences
   }
 
   public function score(Schedule $schedule) {
-    echo "DEBUG: this->categories: "; var_dump($this->categories); echo "<br>"; //DEBUG
     $score = 0.0;
     foreach ($this->categories as $pair) {
       list($evaluate,$weight) = $pair;
-      echo "DEBUG: evaluate: "; var_dump($evaluate); echo "<br>"; //DEBUG
       $score += $evaluate($schedule) * $weight; //emits a warning: $evaluate is not a callable?
     }
     return $score;
