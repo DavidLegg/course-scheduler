@@ -55,8 +55,10 @@
         return $courses;
     }
     echo "readCSV function defined.<br>";
+    
+    echo "<h1>Schedules Test: David</h1>";
     $courses = readCSV(ROOT_PATH."testdata.csv");
-
+    
     $schedules = array();
     foreach ($courses as $name => $course) {
         echo "<h2>$name</h2>";
@@ -79,4 +81,20 @@
       echo "<hr>Score:",$standardPreferences->score($sched),"<br>",$sched;
     }    
     
+    echo "<h1>Schedules Test: Alex</h1>";
+    $courses = readCSV(ROOT_PATH."testdata_air.csv");
+    
+    $schedules = array();
+    foreach ($courses as $name => $course) {
+        echo "<h2>$name</h2>";
+        foreach ($course->sectionArr as $type => $sections) {
+            echo "<h3>$type</h3>";
+            foreach ($sections as $s) {
+                echo $s,"<br>"; //use default section toString
+            }
+        }
+        
+        $schedules = $course->buildSchedules($schedules); //build all possible schedules
+    }
+
 ?>
