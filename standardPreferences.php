@@ -7,7 +7,7 @@ require_once ROOT_PATH.'preferences.php';
 require_once ROOT_PATH.'time.php';
 
 $standardPreferences = new Preferences(array(
-  new PreferenceCategory('mornings', function($sched) {
+  array('mornings', function($sched) {
     $cutoff = Time(11,00);
     $score  = 0.0;
     foreach ($sched->sections as $s) {
@@ -19,7 +19,7 @@ $standardPreferences = new Preferences(array(
     // score should be in the 0-20 range
     return $score;
   }),
-  new PreferenceCategory('evenings', function($sched) {
+  array('evenings', function($sched) {
     $cutoff = Time(16,00);
     $score  = 0.0;
     foreach ($sched->sections as $s) {
@@ -31,7 +31,7 @@ $standardPreferences = new Preferences(array(
     // score should be in the 0-20 range
     return $score;
   }),
-  new PreferenceCategory('mondays', function($sched) {
+  array('mondays', function($sched) {
     $score = 0.0;
     foreach ($sched->sections as $s) {
       if ($s->days['monday']) {
@@ -42,7 +42,7 @@ $standardPreferences = new Preferences(array(
     // score should be in the 0-12 range, double to keep in line with other scores
     return $score * 2;
   }),
-  new PreferenceCategory('fridays', function($sched) {
+  array('fridays', function($sched) {
     $score = 0.0;
     foreach ($sched->sections as $s) {
       if ($s->days['friday']) {
@@ -53,7 +53,7 @@ $standardPreferences = new Preferences(array(
     // score should be in the 0-12 range, double to keep in line with other scores
     return $score * 2;
   }),
-  new PreferenceCategory('balance', function($sched) {
+  array('balance', function($sched) {
     $score = 0.0;
     $hoursByDay = array(
       'monday'    => 0.0,

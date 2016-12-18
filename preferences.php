@@ -7,15 +7,20 @@ class Preferences
 {
   protected $categories; // array(string => array(callable, float)) : array(name => array(category, weighting))
 
-  public function __construct(array $preferenceCategories = NULL) {
-    $preferenceCategories = is_null($preferenceCategories) ? array() : $preferenceCategories;
+  public function __construct(array $preferenceArray = NULL) {
+    $preferenceArray = is_null($preferenceArray) ? array() : $preferenceArray;
 
     $this->categories = array();
-    foreach ($preferenceCategories as $prefCat) {
-      if (array_key_exists($prefCat->name, $this->categories)) {
+    foreach ($preferenceArray as $list) {
+      list($name, $fn) = $list;
+      $weight = array_key_exists(2, $list) ? $list[2] : 0.0;
+      if (array_key_exists($name, $this->categories)) {
         throw new Exception('PreferenceCategory names were not unique');
       }
-      $this->categories[$prefCat->name] = array($prefCat->evaluate, 0.0);
+      if (!(is_string($name) && is_callable($fn) && is_numeric($weight))) {
+        throw new Exception("Invalid type given to Preferences");
+      }
+      $this->categories[$name] = array($fn, $weight);
     }
   }
 
@@ -27,6 +32,7 @@ class Preferences
   }
 
   public function score(Schedule $schedule) {
+    echo "DEBUG: this->categories: "; var_dump($this->categories); echo "<br>"; //DEBUG
     $score = 0.0;
     foreach ($this->categories as $pair) {
       list($evaluate,$weight) = $pair;
