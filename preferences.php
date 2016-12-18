@@ -41,8 +41,9 @@ class Preferences
   }
 
   public function sort(array &$schedules) {
-    usort($schedules, function ($s1, $s2) use ($this) {
-      return $this->score($s1) < $this->score($s2);
+    $that = $this; //to dodge the restriction against 'use'ing $this
+    usort($schedules, function ($s1, $s2) use ($that) {
+      return $that->score($s1) < $that->score($s2);
     });
   }
 
