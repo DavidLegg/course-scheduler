@@ -42,7 +42,7 @@ class Preferences
 
   public function sort(array &$schedules) {
       //Fatal error: Cannot use $this as lexical variable in /var/www/arcompware/createscheduletest/scheduler/preferences.php on line v
-    usort($schedules, function ($s1, $s2) use ($this) {
+    usort($schedules, function ($s1, $s2) /*use ($this)*/ {
       return $this->score($s1) < $this->score($s2);
     });
   }
