@@ -30,7 +30,7 @@ class Preferences
     $score = 0.0;
     foreach ($this->categories as $pair) {
       list($evaluate,$weight) = $pair;
-      $score += $evaluate($schedule) * $weight;
+      $score += call_user_func($evaluate, $schedule) * $weight;
     }
     return $score;
   }
