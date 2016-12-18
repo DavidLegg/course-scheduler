@@ -76,7 +76,7 @@
     echo "Ranked by:<br>",$standardPreferences,"<br>";
     $standardPreferences->sort($schedules);
     foreach ($schedules as $sched) {
-      echo "<hr>",$sched;
+      echo "<hr>Score:",$standardPreferences->score($sched),"<br>",$sched;
     }    
     
 ?>
