@@ -109,6 +109,13 @@ $standardPreferences = new Preferences(array(
       }
     }
     return $score;
+  }),
+  array('openings', function($sched) {
+    $score = 0.0;
+    foreach ($sched->sections as $s) {
+      $score += $s->openings;
+    }
+    return $score;
   })
 ));
 

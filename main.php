@@ -29,7 +29,7 @@
                           "F" => "friday"
                           );
         while (($line = fgets($handle, 4096)) !== false) {
-            list($course,$type,$shortDays,$start,$end,$final,$code) = explode(',', $line);
+            list($course,$type,$shortDays,$start,$end,$final,$code,$openings) = explode(',', $line);
             
             $days = array();
             foreach ($dayCodes as $short => $long) {
@@ -42,7 +42,7 @@
             if (!array_key_exists($course, $courses)) {
                 $courses[$course] = new Course($course);
             }
-            $sec = new Section($days, $startTime, $endTime, $finalDateTime, $course, $type, $code);
+            $sec = new Section($days, $startTime, $endTime, $finalDateTime, $course, $type, $code, $openings);
 
             if ($type == 'Lec') {
               $lastLecture = $sec;
