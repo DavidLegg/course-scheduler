@@ -93,7 +93,7 @@ $standardPreferences = new Preferences(array(
         if ($meets) $sectionsByDay[$day][] = $s;
       }
     }
-    array_walk($sectionsByDay, function(&$sectionx, $day) {
+    array_walk($sectionsByDay, function(&$sections, $day) {
       usort($sections, function($s1,$s2) {
         return $s1->start > $s2->start;
       });
