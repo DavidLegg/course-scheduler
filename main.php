@@ -77,12 +77,10 @@
 
     echo "<hr><hr><h2>Schedules (",count($schedules),")</h2>";
     echo "Ranked by:<br>",$standardPreferences,"<br>";
-    echo "Scoring: ",$schedules[0],"<br>";
-    $standardPreferences->score($schedules[0]);
-    // $standardPreferences->sort($schedules);
-    // foreach ($schedules as $sched) {
-    //   echo "<hr>Score:",$standardPreferences->score($sched),"<br>",$sched;
-    // }
+    $standardPreferences->sort($schedules);
+    foreach ($schedules as $sched) {
+      echo "<hr>Score:",$standardPreferences->score($sched),"<br>",$sched;
+    }
     
     echo "<h1>Schedules Test: Alex</h1>";
     echo "<h3>Writing 39C not included</h3>";
