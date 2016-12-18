@@ -76,6 +76,39 @@ $standardPreferences = new Preferences(array(
     }
     // score should be in the 0-25 or 0-30 range, estimated
     return $score;
+  }),
+  array('gaps', function($sched) {
+    $score = 0.0;
+    $sectionsByDay = array(
+      'monday'    => array(),
+      'tuesday'   => array(),
+      'wednesday' => array(),
+      'thursday'  => array(),
+      'friday'    => array(),
+      'saturday'  => array(),
+      'sunday'    => array()
+    );
+    foreach ($sched->sections as $s) {
+      foreach ($s as $day => $meets) {
+        if ($meets) $sectionsByDay[$day][] = $s;
+      }
+    }
+    array_walk($sectionsByDay, function(&$sectionx, $day) {
+      usort($sections, function($s1,$s2) {
+        return $s1->start > $s2->start;
+      });
+    });
+    // now, all classes are chronological by day. Figure out the gaps:
+    foreach ($sectionsByDay as $sections) {
+      $prevEnd = NULL;
+      foreach ($sections as $sec) {
+        if (!is_null($prevEnd)) {
+          $score += $sec->start->difference($prevEnd, 'hours', true);
+        }
+        $prevEnd = $sec->end;
+      }
+    }
+    return $score;
   })
 ));
 
