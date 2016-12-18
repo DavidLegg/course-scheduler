@@ -40,13 +40,10 @@ class Preferences
     return $score;
   }
 
-  public function sort(array $schedules) {
-    // make an array(schedule => score)
-    $schedToScore = array_combine($schedules, array_map(array($this, 'score'), $schedules));
-    // sort it by decreasing values, preserving keys
-    arsort($schedToScore);
-    // return the keys (schedules) sorted by their scores, descending.
-    return array_keys($schedToScore);
+  public function sort(array &$schedules) {
+    usort($schedules, function ($s1, $s2) {
+      return $this->score($s1) < $this->score($s2);
+    });
   }
 
   public function __toString() {

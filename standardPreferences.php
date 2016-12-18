@@ -22,7 +22,7 @@ $standardPreferences = new Preferences(array(
     $cutoff = new Time(16,00);
     $score  = 0.0;
     foreach ($sched->sections as $s) {
-      if ($s->end <= $cutoff) {
+      if ($s->end >= $cutoff) {
         // later sections score "more" than those just after the cutoff
         $score += ($cutoff->difference($s->end, 'hours', true) * $s->daysPerWeek());
       }
