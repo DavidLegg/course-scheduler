@@ -7,7 +7,7 @@ require_once ROOT_PATH.'time.php';
 
 $standardPreferences = new Preferences(array(
   array('mornings', function($sched) {
-    $cutoff = Time(11,00);
+    $cutoff = new Time(11,00);
     $score  = 0.0;
     foreach ($sched->sections as $s) {
       if ($s->start <= $cutoff) {
@@ -19,7 +19,7 @@ $standardPreferences = new Preferences(array(
     return $score;
   }),
   array('evenings', function($sched) {
-    $cutoff = Time(16,00);
+    $cutoff = new Time(16,00);
     $score  = 0.0;
     foreach ($sched->sections as $s) {
       if ($s->end <= $cutoff) {
