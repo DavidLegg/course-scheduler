@@ -41,7 +41,7 @@ class Preferences
   }
 
   public function sort(array &$schedules) {
-    usort($schedules, function ($s1, $s2) {
+    usort($schedules, function ($s1, $s2) use ($this) {
       return $this->score($s1) < $this->score($s2);
     });
   }
