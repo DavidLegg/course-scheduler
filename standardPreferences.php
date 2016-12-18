@@ -6,7 +6,7 @@ require_once ROOT_PATH.'preferenceCategory.php';
 require_once ROOT_PATH.'preferences.php';
 require_once ROOT_PATH.'time.php';
 
-$StandardPreferences = new Preferences(array(
+$standardPreferences = new Preferences(array(
   new PreferenceCategory('mornings', function($sched) {
     $cutoff = Time(11,00);
     $score  = 0.0;

@@ -43,6 +43,14 @@ class Preferences
     // return the keys (schedules) sorted by their scores, descending.
     return array_keys($schedToScore);
   }
+
+  public function __toString() {
+    $output = "Preferences:";
+    foreach ($this->categories as $name => $pair) {
+      $output .= "<br/>&nbsp;&nbsp;&nbsp;".$name.": ".$pair[1];
+    }
+    return $output;
+  }
 }
 
 

@@ -46,9 +46,6 @@
             if ($type == 'Lec') {
               $lastLecture = $sec;
             } else if ($type != 'Lab') {
-              echo "DEBUG: --- Adding corequisite: ---<br>"; //DEBUG
-              echo "DEBUG: sec: ",$sec,"<br>"; //DEBUG
-              echo "DEBUG: lastLecture: ",$lastLecture,"<br>"; //DEBUG
               $sec->addCoreq($lastLecture);
             }
 
@@ -73,13 +70,13 @@
         $schedules = $course->buildSchedules($schedules); //build all possible schedules
     }
 
+    $standardPreferences->changeWeight('mornings', 5);
+
     echo "<hr><hr><h2>Schedules (",count($schedules),")</h2>";
+    echo "Ranked by:<br>",$standardPreferences,"<br>";
+    $standardPreferences->sort($schedules);
     foreach ($schedules as $sched) {
       echo "<hr>",$sched;
-    }
+    }    
     
-    
-    
-    
-    
-    ?>
+?>
