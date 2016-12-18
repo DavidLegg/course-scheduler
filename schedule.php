@@ -55,11 +55,13 @@ class Schedule {
   }
 
   public function __toString() {
-    $output = "Schedule: ";
+    $output = "";
+    $codes  = "";
     foreach ($this->sections as $s) {
       $output .= "<br>&nbsp;&nbsp;&nbsp;".$s; // use default toString
+      $codes  .= $s->code . ",";
     }
-    return $output;
+    return "Schedule: ".substr($codes,0,-1).$output;
   }
 }
 
