@@ -82,6 +82,7 @@
     }    
     
     echo "<h1>Schedules Test: Alex</h1>";
+    echo "<h3>Writing 39C not included</h3>";
     $courses = readCSV(ROOT_PATH."testdata_air.csv");
     
     $schedules = array();
@@ -96,5 +97,10 @@
         
         $schedules = $course->buildSchedules($schedules); //build all possible schedules
     }
+    
+    foreach ($schedules as $sched) {
+        echo "<hr>",$sched;
+    }
+    
 
 ?>
