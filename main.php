@@ -3,6 +3,10 @@
     ini_set('display_errors', 1);
     echo "Hello, world!<br>PHP is running correctly.";
     if (!defined('ROOT_PATH')) define('ROOT_PATH',__DIR__.'/');
+
+    define('DEBUG', 1);
+
+    require_once ROOT_PATH.'debug.php';
     require_once  ROOT_PATH.'time.php';
     require_once  ROOT_PATH.'section.php';
     require_once  ROOT_PATH.'course.php';

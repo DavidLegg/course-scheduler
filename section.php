@@ -7,7 +7,7 @@
 */
 class Section {
 
-  public $days;          // array(string)
+  public $days;          // array(string => bool)
   public $start;         // Time
   public $end;           // Time
   public $finalDateTime; // DateTime

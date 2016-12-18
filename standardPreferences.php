@@ -78,7 +78,6 @@ $standardPreferences = new Preferences(array(
     return $score;
   }),
   array('gaps', function($sched) {
-    echo "DEBUG: --- gaps scoring function ---<br>"; //DEBUG
     $score = 0.0;
     $sectionsByDay = array(
       'monday'    => array(),
@@ -90,27 +89,21 @@ $standardPreferences = new Preferences(array(
       'sunday'    => array()
     );
     foreach ($sched->sections as $s) {
-      foreach ($s as $day => $meets) {
+      foreach ($s->days as $day => $meets) {
         if ($meets) $sectionsByDay[$day][] = $s;
       }
     }
-    echo "DEBUG: (pre-sort) sectionsByDay: "; var_dump($sectionsByDay); echo "<br>"; //DEBUG
     array_walk($sectionsByDay, function(&$sections, $day) {
       usort($sections, function($s1,$s2) {
         return $s1->start > $s2->start;
       });
     });
-    echo "DEBUG: (post-sort) sectionsByDay: "; var_dump($sectionsByDay); echo "<br>"; //DEBUG
     // now, all classes are chronological by day. Figure out the gaps:
     foreach ($sectionsByDay as $sections) {
-      echo "DEBUG: --- scoring new day ---<br>"; //DEBUG
       $prevEnd = NULL;
       foreach ($sections as $sec) {
-        echo "DEBUG: sec: ",$sec,"<br>"; //DEBUG
         if (!is_null($prevEnd)) {
-          echo "DEBUG: prevEnd: ",$prevEnd,"<br>"; //DEBUG
           $score += $sec->start->difference($prevEnd, 'hours', true);
-          echo "DEBUG: score: ",$score,"<br>"; //DEBUG
         }
         $prevEnd = $sec->end;
       }
