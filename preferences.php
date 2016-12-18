@@ -30,7 +30,8 @@ class Preferences
     $score = 0.0;
     foreach ($this->categories as $pair) {
       list($evaluate,$weight) = $pair;
-      $score += call_user_func($evaluate, $schedule) * $weight;
+      echo "DEBUG: evaluate: "; var_dump($evaluate); echo "<br>"; //DEBUG
+      $score += $evaluate($schedule) * $weight; //emits a warning: $evaluate is not a callable?
     }
     return $score;
   }
