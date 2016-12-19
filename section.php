@@ -15,7 +15,7 @@ class Section {
   public $type;          // string
   public $code;          // string
   public $openings;      // int
-  public $coreqs;        // array(&Section => true)
+  public $coreqs;        // array(Section)
 
   public function __construct(array $meetDays = NULL, Time $meetStart = NULL, Time $meetEnd = NULL, DateTime $final = NULL, $courseName = NULL, $meetType = NULL, $sectionCode = NULL, $secOpenings = NULL) {
     $meetDays    = is_null($meetDays)    ? array() : $meetDays;

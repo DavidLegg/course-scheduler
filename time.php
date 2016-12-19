@@ -23,6 +23,23 @@ class Time extends DateTime {
     throw new Exception("Cannot set Date in a Time object.");
   }
 
+  public function add(DateInterval $interval) {
+    parent::add($interval);
+    $this->setDate(2000,1,1); // just rollover extra time.
+    return $this;
+  }
+
+  public function addition($amount, $unit = NULL) {
+    $unit = is_null($unit) ? 'seconds' : $unit;
+    if (!preg_match('/^(s(ec(ond)?)?s?|'.
+                    'm(in(ute)?)?s?|'.
+                    'h((ou)?r)?s?$/',$unit)) {
+      throw new Exception("Unrecognized unit of time");
+    }
+    $spec = 'P'.((int)$amount).strtoupper($unit[0]);
+    return $this->add(new DateInterval($spec));
+  }
+ 
   public function __toString() {
     // The most useful format for this type
     return $this->format("g:i a");

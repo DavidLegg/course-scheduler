@@ -8,9 +8,6 @@
         
         public $name; // string
         public $sectionArr; // array(string => array(Section)) : Section->type => {Section}
-        //If a section code is a key in the restrictions,
-        // then for the type(s) in the returned array, only the listed sectionss can be taken.
-        //For example, Lecture A for a course might require Discussions 1-5, while Lec B requires Discussions 6-10.
         
         function __construct($courseName, array $sections = NULL) {
             $sections = is_null($sections) ? array() : $sections;
