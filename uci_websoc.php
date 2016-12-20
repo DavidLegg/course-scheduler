@@ -102,6 +102,7 @@
         // Note that this function will also work with multiple courses,
         // by passing in the course as the root node.
         private static function _makeCourse($courseXml, $deptName) {
+            //Commented to be more flexible when getting multiple courses at a time
 //            $courseXml  = $xml->xpath('//course[1]')[0]; //assume only one course
             $courseName = $deptName.' '.$courseXml['course_number'].': '.$courseXml['course_title'];
             
