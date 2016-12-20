@@ -1,6 +1,6 @@
 <?php
 ini_set('display_errors', 1);
-require_once('controller.php');
+require_once('../controller.php');
 $courses = getCoursesByDept($_GET['option']);
 //var_dump($_GET['option']);
 //var_dump($courses);
