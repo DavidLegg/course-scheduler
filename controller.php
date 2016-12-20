@@ -28,32 +28,14 @@
         global $baseQueryUrl;
         $term = getDropDownItems('YearTerm')[0];
         $termId = $term->getAttribute('value');
-        $baseQueryUrl .= '&YearTerm='.$termId;
+        UCI_WebSoc::setYearTerm($termId);
     }
     
     appendTerm();
     
     function getCoursesByDept($dept){
         global $baseQueryUrl;
-//        UCI_WebSoc::getCoursesByDept($dept)->asXML();
-        var_dump(UCI_WebSoc::getCoursesByDept($dept));
-        $requestStr=$baseQueryUrl.'&Dept='. urlencode($dept);
-        //  echo($requestStr);
-        $xml_dept = file_get_contents($requestStr);
-        $dom_dept = new DOMDocument;
-        $dom_dept->loadXML($xml_dept);
-        $xpath_dept = new DOMXPath($dom_dept);
-        
-        
-        $allCoursesQuery = $xpath_dept->query('//course');
-        //var_dump($allCoursesQuery);
-        $allCourses = array();
-        
-        foreach($allCoursesQuery as $course){
-            array_push($allCourses, array($dept,$course->getAttribute('course_number'),$course->getAttribute('course_title')));
-        }
-        return $allCourses;
-        
+        return UCI_WebSoc::getCoursesByDept($dept);
     }
     
     
