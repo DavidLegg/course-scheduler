@@ -7,8 +7,7 @@ $courses = getCoursesByDept($_GET['option']);
 //var_dump($courses);
 foreach($courses as $course){
 //    echo $course;
-    list($dept, $num, $title) = $course;
-  echo '<option value="',$dept, ' ', $num,'">',$dept,' ',$num,' - ',$title,'</option>';
+  echo '<option value="',$course->name,'">',$course->name,'</option>';
 }
 
 ?>
