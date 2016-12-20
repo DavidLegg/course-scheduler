@@ -1,12 +1,11 @@
 <?php
-    
     ini_set('display_errors', 1);
     
     if (!defined('ROOT_PATH')) define('ROOT_PATH', __DIR__.'/');
     
     require_once ROOT_PATH.'uci_websoc.php';
     
-    global $xpath, $baseQueryUrl;
+    global $xpath, $baseQueryUrl, $addedCourses, $availableCourses;
     $baseUrl = 'https://www.reg.uci.edu/perl/WebSoc';
     $baseQueryUrl = $baseUrl.'?Submit=Display+XML+Results&ShowFinals=1&ShowComments=0';
     
@@ -15,6 +14,7 @@
     $dom->loadHTML($html);
     $xpath = new DOMXPath($dom);
     
+   
     
     function getDropDownItems($name) {
         global $xpath;
@@ -34,8 +34,11 @@
     appendTerm();
     
     function getCoursesByDept($dept){
-        global $baseQueryUrl;
-        return UCI_WebSoc::getCoursesByDept($dept);
+//        $courses = array();
+        $courses = UCI_WebSoc::getCoursesByDept($dept);
+        $_SESSION['availableCourses'] += $courses;
+//        var_dump($_SESSION['availableCourses']);
+        return $courses;
     }
     
     
