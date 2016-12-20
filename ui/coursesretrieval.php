@@ -1,12 +1,13 @@
 <?php
-    session_start();
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
     require_once('../controller.php');
+    session_start();
 //    //global $addedCourses;
 //    
-    echo "LOL";
+//    echo "LOL";
     var_dump( $_GET['_param']);
+    echo "<br/>";
     switch($_GET['_action']){
         case 'coursebydept':
             $courses = getCoursesByDept($_GET['_param']);
@@ -22,6 +23,12 @@
             $_SESSION['addedCourses'][$_GET['_param']] = $_SESSION['availableCourses'][$_GET['_param']];
             foreach($_SESSION['addedCourses'] as $name => $course){
                 echo '<li id="',$name,'">',$name,'</li>';
+            }
+            break;
+        case 'schedule':
+            $schedules = generateSchedules();
+            foreach ($schedules as $sched) {
+                echo $sched,"<hr>";
             }
             break;
         default:

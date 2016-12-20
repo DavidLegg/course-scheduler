@@ -4,6 +4,12 @@
     if (!defined('ROOT_PATH')) define('ROOT_PATH', __DIR__.'/');
     
     require_once ROOT_PATH.'uci_websoc.php';
+    require_once  ROOT_PATH.'time.php';
+    require_once  ROOT_PATH.'section.php';
+    require_once  ROOT_PATH.'course.php';
+    require_once  ROOT_PATH.'schedule.php';
+    require_once  ROOT_PATH.'standardPreferences.php';
+
     
     global $xpath, $baseQueryUrl, $addedCourses, $availableCourses;
     $baseUrl = 'https://www.reg.uci.edu/perl/WebSoc';
@@ -41,6 +47,13 @@
         return $courses;
     }
     
+    function generateSchedules(){
+        $schedules = array();
+        foreach ($_SESSION['addedCourses'] as $course) {
+            $schedules = $course->buildSchedules($schedules); //build all possible schedules
+        }
+        return $schedules;
+    }
     
     
     ?>
