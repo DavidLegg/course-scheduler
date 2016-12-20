@@ -29,6 +29,7 @@
         
         public static function getCoursesByDept($dept){
             $courses = array();
+//            $xml = new SimpleXMLElement("<lol></lol>");
             $xml = UCI_WebSoc::_sendCourseRequest($dept);
             
             foreach ($xml->xpath('//course') as $courseXML)
