@@ -23,6 +23,10 @@
                                                "F" => "friday"
                                                );
         
+        public static function setYearTerm($yt){
+            UCI_WebSoc::$yearTerm = $yt;
+        }
+        
         public static function getCoursesByDept($dept){
             $courses = array();
             $xml = UCI_WebSoc::_sendCourseRequest($dept);
@@ -119,7 +123,7 @@
                                UCI_WebSoc::_makeDays((string)($secXml->xpath('//sec_days')[0])), // array meetDays
                                $start, // Time meetStart
                                $end, // Time meetEnd
-                               UCI_WebSoc::_makeFinal($secXml->xpath('//sec_final')[0]), // DateTime final
+                               UCI_WebSoc::_makeFinal((!$secXml->xpath('//sec_final'))?'':$secXml->xpath('//sec_final')[0]), // DateTime final
                                $courseName, // string courseName
                                (string)($secXml->sec_type), // string meetType
                                (string)($secXml->course_code), // string sectionCode
