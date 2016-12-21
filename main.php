@@ -72,7 +72,7 @@
     }
 
     $courses = array();
-    foreach (array('Social Science H1F', 'Physics 7D', 'Math 9', 'Stats 67') as $courseName) {
+    foreach (array('Soc Sci H1F', 'Physics 7D', 'Math 9', 'Stats 67') as $courseName) {
         $courses[] = UCI_WebSoc::getCourse($courseName);
     }
 
