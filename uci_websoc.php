@@ -53,6 +53,8 @@
             $courses = $xml->xpath('//course');     //temp vars are work-around for php<5.4,
             $depts   = $xml->xpath('//department'); //which cannot dereference function result
             $schools = $xml->xpath('//school'); //which cannot dereference function result
+            
+            echo '<br/>';
             if ($courses === FALSE) {
               throw new Exception("No listings for this course.");
             }
@@ -60,7 +62,8 @@
         }
         
         private static function _parseCourseName($name) {
-            preg_match("/(.+)\s*(\w+)$/",$name,$matches);
+            
+            preg_match("/(.+)\s+(\w+)$/",$name,$matches);
             if (count($matches) < 3) {
                 throw new Exception("Invalid name format");
             }
@@ -116,7 +119,6 @@
             //Commented to be more flexible when getting multiple courses at a time
 //            $courseXml  = $xml->xpath('//course[1]')[0]; //assume only one course
             $courseName = $deptName.' '.$courseXml['course_number'].': '.$courseXml['course_title'].' ('.$schoolName.')';
-//            var_dump($courseName);
             $course = new Course($courseName);
             $coreqs = array(); //code => coreq's code
             foreach($courseXml->section as $sectionXml) {
@@ -127,12 +129,15 @@
         }
         
         private static function _makeSection($secXml, $courseName, &$coreqs) {
+            var_dump((string)($secXml->course_code));
             //Fixed xpaths
             $secTimes  = $secXml->xpath('sec_meetings/sec_meet/sec_time'); //work-around for php<5.4
             $coreqCode = $secXml->xpath('sec_linkage/sec_group_backward_ptr');
             $secDays   = $secXml->xpath('sec_meetings/sec_meet/sec_days');
-            $secFinal  = $secXml->xpath('sec_meetings/sec_meet/sec_final');
+            $secFinal  = $secXml->xpath('sec_final');
 
+            var_dump($secFinal);
+            echo '<br/>';
             list($start,$end) = UCI_WebSoc::_makeTimes((string)($secTimes[0]));
             $coreqCode = (string)($coreqCode[0]);
             if ((int)$coreqCode != 0) {
@@ -173,6 +178,7 @@
         }
         
         private static function _makeFinal($finalXml) {
+            if ($finalXml == '') return new DateTime();
             $final_date = (string)$finalXml->sec_final_date;
             $final_time = (string)($finalXml->sec_final_time);
             if (!isset($final_date) || $final_date == "TBA" || !isset($final_time))
