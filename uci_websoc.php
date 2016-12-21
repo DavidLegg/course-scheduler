@@ -42,7 +42,7 @@
         public static function getCourse($name) {
             list($dept,$num) = UCI_WebSoc::_parseCourseName($name);
             $name    = (string)$name;
-            $xml     = UCI_WebSoc::_sendCouseRequest($dept,$num);
+            $xml     = UCI_WebSoc::_sendCourseRequest($dept,$num);
             $courses = $xml->xpath('//course[1]');     //temp vars are work-around for php<5.4,
             $depts   = $xml->xpath('//department[1]'); //which cannot dereference function result
             return UCI_WebSoc::_makeCourse($courses[0],$depts[0]['dept_case']);
@@ -121,7 +121,7 @@
             $coreqCode = $secXml->xpath('//sec_group_backward_ptr');
             $secDays   = $secXml->xpath('//sec_days');
             $secFinal  = $secXml->xpath('//sec_final');
-            
+
             list($start,$end) = UCI_WebSoc::_makeTimes((string)($secTimes[0]));
             $coreqCode = (string)($coreqCode[0]);
             if ((int)$coreqCode != 0) {
