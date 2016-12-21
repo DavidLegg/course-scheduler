@@ -109,7 +109,7 @@
     
     echo "<h1>Courses from Web (Alex)</h1>";
     echo "<h3>Writing 39C included</h3>";
-    echo "<h3>The different course codes here are fine since they're the same courses</h3>";
+    echo "<h3>The different CSE course codes here are fine since they're the same courses</h3>";
     foreach ($courses as $name => $course) {
         echo "<h2>$name</h2>";
         foreach ($course->sectionArr as $type => $sections) {
