@@ -16,12 +16,12 @@
         private static $url = 'https://www.reg.uci.edu/perl/WebSoc';
         private static $yearTerm = '2017-03'; //TODO: figure out how this number is calculated, and automate it.
         private static $dayCodes = array(
-    "M"  => "monday",
-                                               "Tu" => "tuesday",
-    "W"  => "wednesday",
-                                               "Th" => "thursday",
-    "F"  => "friday"
-                                               );
+          "M"  => "monday",
+          "Tu" => "tuesday",
+          "W"  => "wednesday",
+          "Th" => "thursday",
+          "F"  => "friday"
+        );
         
         public static function setYearTerm($yt){
             UCI_WebSoc::$yearTerm = $yt;
@@ -29,7 +29,6 @@
         
         public static function getCoursesByDept($dept){
             $courses = array();
-//            $xml = new SimpleXMLElement("<lol></lol>");
             $xml = UCI_WebSoc::_sendCourseRequest($dept);
             
             foreach ($xml->xpath('//course') as $courseXML)
@@ -41,10 +40,12 @@
         }
         
         public static function getCourse($name) {
-            $name            = (string)$name;
             list($dept,$num) = UCI_WebSoc::_parseCourseName($name);
-            $xml             = UCI_WebSoc::_sendCouseRequest($dept,$num);
-            return UCI_WebSoc::_makeCourse($xml->xpath('//course[1]')[0],$xml->xpath('//department[1]')[0]['dept_case']);
+            $name    = (string)$name;
+            $xml     = UCI_WebSoc::_sendCouseRequest($dept,$num);
+            $courses = $xml->xpath('//course[1]');     //temp vars are work-around for php<5.4,
+            $depts   = $xml->xpath('//department[1]'); //which cannot dereference function result
+            return UCI_WebSoc::_makeCourse($courses[0],$depts[0]['dept_case']);
         }
         
         private static function _parseCourseName($name) {
@@ -116,16 +117,21 @@
         }
         
         private static function _makeSection($secXml, $courseName, &$coreqs) {
-            list($start,$end) = UCI_WebSoc::_makeTimes((string)($secXml->xpath('//sec_time')[0]));
-            $coreqCode = (string)($secXml->xpath('//sec_group_backward_ptr')[0]);
+            $secTimes  = $secXml->xpath('//sec_time'); //work-around for php<5.4
+            $coreqCode = $secXml->xpath('//sec_group_backward_ptr');
+            $secDays   = $secXml->xpath('//sec_days');
+            $secFinal  = $secXml->xpath('//sec_final');
+            
+            list($start,$end) = UCI_WebSoc::_makeTimes((string)($secTimes[0]));
+            $coreqCode = (string)($coreqCode[0]);
             if ((int)$coreqCode != 0) {
                 $coreqs[(string)($secXml->course_code)] = $coreqCode;
             }
             return new Section(
-                               UCI_WebSoc::_makeDays((string)($secXml->xpath('//sec_days')[0])), // array meetDays
+                               UCI_WebSoc::_makeDays((string)($secDays[0])), // array meetDays
                                $start, // Time meetStart
                                $end, // Time meetEnd
-                               UCI_WebSoc::_makeFinal((!$secXml->xpath('//sec_final'))?'':$secXml->xpath('//sec_final')[0]), // DateTime final
+                               UCI_WebSoc::_makeFinal((!$secFinal)?'':$secFinal[0]), // DateTime final
                                $courseName, // string courseName
                                (string)($secXml->sec_type), // string meetType
                                (string)($secXml->course_code), // string sectionCode
