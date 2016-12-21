@@ -23,6 +23,7 @@ class Time extends DateTime {
     throw new Exception("Cannot set Date in a Time object.");
   }
 
+// Strict Standards: Declaration of Time::add() should be compatible with DateTime::add($interval)
   public function add(DateInterval $interval) {
     parent::add($interval);
 //    $this->setDate(2000,1,1); // just rollover extra time. (Commented to execute the rest) 
