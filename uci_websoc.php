@@ -43,8 +43,11 @@
             list($dept,$num) = UCI_WebSoc::_parseCourseName($name);
             $name    = (string)$name;
             $xml     = UCI_WebSoc::_sendCourseRequest($dept,$num);
-            $courses = $xml->xpath('//course[1]');     //temp vars are work-around for php<5.4,
-            $depts   = $xml->xpath('//department[1]'); //which cannot dereference function result
+            $courses = $xml->xpath('//course');     //temp vars are work-around for php<5.4,
+            $depts   = $xml->xpath('//department'); //which cannot dereference function result
+            if ($courses === FALSE) {
+              throw new Exception("No listings for this course.");
+            }
             return UCI_WebSoc::_makeCourse($courses[0],$depts[0]['dept_case']);
         }
         
