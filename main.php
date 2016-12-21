@@ -87,11 +87,11 @@
         }
     }
 
-    echo "<h1>Schedules Test: Alex</h1>";
+    
+    echo "<hr/><h1>Courses from CSV (Alex)</h1>";
     echo "<h3>Writing 39C not included</h3>";
     $courses = readCSV(ROOT_PATH."testdata_air.csv");
     
-    $schedules = array();
     foreach ($courses as $name => $course) {
         echo "<h2>$name</h2>";
         foreach ($course->sectionArr as $type => $sections) {
@@ -100,14 +100,26 @@
                 echo $s,"<br>"; //use default section toString
             }
         }
-        
-        $schedules = $course->buildSchedules($schedules); //build all possible schedules
     }
     
-    echo "<hr><hr><h2>Schedules (",count($schedules),")</h2>";
-    foreach ($schedules as $sched) {
-        echo "<hr>",$sched;
+    $courses = array();
+    foreach (array('CSE 90', 'CSE 70A', 'Math 3D', 'Writing 39C') as $courseName) {
+        $courses[$courseName] = UCI_WebSoc::getCourse($courseName);
     }
+    
+    echo "<h1>Courses from Web (Alex)</h1>";
+    echo "<h3>Writing 39C included</h3>";
+    echo "<h3>The different course codes here are fine since they're the same courses</h3>";
+    foreach ($courses as $name => $course) {
+        echo "<h2>$name</h2>";
+        foreach ($course->sectionArr as $type => $sections) {
+            echo "<h3>$type</h3>";
+            foreach ($sections as $s) {
+                echo $s,"<br>"; //use default section toString
+            }
+        }
+    }
+    
     
 
 ?>
