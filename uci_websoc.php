@@ -29,14 +29,21 @@
         
         public static function getCoursesByDept($dept){
             $courses = array();
+            $len = 0;
             $xml = UCI_WebSoc::_sendCourseRequest($dept);
             
-            foreach ($xml->xpath('//course') as $courseXML)
-            {
-                $course = UCI_WebSoc::_makeCourse($courseXML, $dept);
-                $courses[$course->name] = $course;
+            //Iterate by school
+            foreach($xml->xpath('//school') as $schoolXML){
+                $schoolName = $schoolXML['school_name'];
+                foreach ($schoolXML->xpath('department/course') as $courseXML)
+                {
+                    $course = UCI_WebSoc::_makeCourse($courseXML, $dept,$schoolName);
+                    array_push($courses, $course);
+//                    $courses[$course->name] = $course;
+                    ++$len;
+                }
             }
-            return $courses;
+            return array($courses, $len);
         }
         
         public static function getCourse($name) {
@@ -45,14 +52,15 @@
             $xml     = UCI_WebSoc::_sendCourseRequest($dept,$num);
             $courses = $xml->xpath('//course');     //temp vars are work-around for php<5.4,
             $depts   = $xml->xpath('//department'); //which cannot dereference function result
+            $schools = $xml->xpath('//school'); //which cannot dereference function result
             if ($courses === FALSE) {
               throw new Exception("No listings for this course.");
             }
-            return UCI_WebSoc::_makeCourse($courses[0],$depts[0]['dept_case']);
+            return UCI_WebSoc::_makeCourse($courses[0],$depts[0]['dept_case'],$schools[0]['school_name']);
         }
         
         private static function _parseCourseName($name) {
-    preg_match("/(.+)\s*(\w+)$/",$name,$matches);
+            preg_match("/(.+)\s*(\w+)$/",$name,$matches);
             if (count($matches) < 3) {
                 throw new Exception("Invalid name format");
             }
@@ -99,17 +107,16 @@
             if ($result === FALSE) { //type-sensitive comparison
                 throw new Exception("An error occured while accessing UCI WebSOC");
             }
-//            var_dump( htmlspecialchars($result));
             return simplexml_load_string($result);
         }
         
         // Note that this function will also work with multiple courses,
         // by passing in the course as the root node.
-        private static function _makeCourse($courseXml, $deptName) {
+        private static function _makeCourse($courseXml, $deptName, $schoolName) {
             //Commented to be more flexible when getting multiple courses at a time
 //            $courseXml  = $xml->xpath('//course[1]')[0]; //assume only one course
-            $courseName = $deptName.' '.$courseXml['course_number'].': '.$courseXml['course_title'];
-            
+            $courseName = $deptName.' '.$courseXml['course_number'].': '.$courseXml['course_title'].' ('.$schoolName.')';
+//            var_dump($courseName);
             $course = new Course($courseName);
             $coreqs = array(); //code => coreq's code
             foreach($courseXml->section as $sectionXml) {
@@ -120,10 +127,11 @@
         }
         
         private static function _makeSection($secXml, $courseName, &$coreqs) {
-            $secTimes  = $secXml->xpath('//sec_time'); //work-around for php<5.4
-            $coreqCode = $secXml->xpath('//sec_group_backward_ptr');
-            $secDays   = $secXml->xpath('//sec_days');
-            $secFinal  = $secXml->xpath('//sec_final');
+            //Fixed xpaths
+            $secTimes  = $secXml->xpath('sec_meetings/sec_meet/sec_time'); //work-around for php<5.4
+            $coreqCode = $secXml->xpath('sec_linkage/sec_group_backward_ptr');
+            $secDays   = $secXml->xpath('sec_meetings/sec_meet/sec_days');
+            $secFinal  = $secXml->xpath('sec_meetings/sec_meet/sec_final');
 
             list($start,$end) = UCI_WebSoc::_makeTimes((string)($secTimes[0]));
             $coreqCode = (string)($coreqCode[0]);
@@ -153,7 +161,7 @@
         private static function _makeTimes($timeStr) {
 //            var_dump($timeStr);
             if (!isset($timeStr)||$timeStr == "TBA"||$timeStr == "")
-                return array(new Time(), new Time());
+                return array(new Time(""), new Time(""));
             list($startStr,$endStr) = explode('-', $timeStr);
             $start = new Time($startStr);
             $end   = new Time($endStr);
