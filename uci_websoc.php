@@ -129,15 +129,12 @@
         }
         
         private static function _makeSection($secXml, $courseName, &$coreqs) {
-            var_dump((string)($secXml->course_code));
             //Fixed xpaths
             $secTimes  = $secXml->xpath('sec_meetings/sec_meet/sec_time'); //work-around for php<5.4
             $coreqCode = $secXml->xpath('sec_linkage/sec_group_backward_ptr');
             $secDays   = $secXml->xpath('sec_meetings/sec_meet/sec_days');
             $secFinal  = $secXml->xpath('sec_final');
 
-            var_dump($secFinal);
-            echo '<br/>';
             list($start,$end) = UCI_WebSoc::_makeTimes((string)($secTimes[0]));
             $coreqCode = (string)($coreqCode[0]);
             if ((int)$coreqCode != 0) {
