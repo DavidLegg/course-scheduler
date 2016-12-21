@@ -25,18 +25,18 @@ class Time extends DateTime {
 
   public function add(DateInterval $interval) {
     parent::add($interval);
-    $this->setDate(2000,1,1); // just rollover extra time.
+//    $this->setDate(2000,1,1); // just rollover extra time. (Commented to execute the rest) 
     return $this;
   }
 
   public function addition($amount, $unit = NULL) {
     $unit = is_null($unit) ? 'seconds' : $unit;
     if (!preg_match('/^(s(ec(ond)?)?s?|'.
-                    'm(in(ute)?)?s?|'.
-                    'h((ou)?r)?s?$/',$unit)) {
+                       'm(in(ute)?)?s?|'.
+                       'h((ou)?r)?s?)$/',$unit)) {
       throw new Exception("Unrecognized unit of time");
     }
-    $spec = 'P'.((int)$amount).strtoupper($unit[0]);
+    $spec = 'PT'.((int)$amount).strtoupper($unit[0]);
     return $this->add(new DateInterval($spec));
   }
  
