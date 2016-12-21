@@ -14,11 +14,11 @@ class UCI_WebSoc implements WebSocInterface {
   private static const $url = 'https://www.reg.uci.edu/perl/WebSoc';
   private static const $yearTerm = '2017-03'; //TODO: figure out how this number is calculated, and automate it.
   private static const $dayCodes = array(
-    "M" => "monday",
+    "M"  => "monday",
     "Tu" => "tuesday",
-    "W" => "wednesday",
+    "W"  => "wednesday",
     "Th" => "thursday",
-    "F" => "friday"
+    "F"  => "friday"
   );
 
   public static function getCourse($name) {
@@ -29,7 +29,7 @@ class UCI_WebSoc implements WebSocInterface {
   }
 
   private static function _parseCourseName($name) {
-    preg_match("/(.+?)\s*(\d+\w*)$/",$name,$matches);
+    preg_match("/(.+)\s*(\w+)$/",$name,$matches);
     if (count($matches) < 3) {
       throw new Exception("Invalid name format");
     }
