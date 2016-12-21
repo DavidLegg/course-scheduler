@@ -1,4 +1,5 @@
 <?php
+    error_reporting(E_ALL);
     ini_set('display_errors', 1);
     
     if (!defined('ROOT_PATH')) define('ROOT_PATH', __DIR__.'/');
@@ -41,10 +42,13 @@
     
     function getCoursesByDept($dept){
 //        $courses = array();
-        $courses = UCI_WebSoc::getCoursesByDept($dept);
-        $_SESSION['availableCourses'] += $courses;
+        list($courses,$len) = UCI_WebSoc::getCoursesByDept($dept);
+        $_SESSION['availableCourses'] = array_merge($_SESSION['availableCourses'],$courses);
+//        foreach($courses as $name => $course){
+//            $_SESSION['availableCourses'][$name] = $course;
+//        }
 //        var_dump($_SESSION['availableCourses']);
-        return $courses;
+        return array_slice($_SESSION['availableCourses'], $len*-1, $len, true);
     }
     
     function generateSchedules(){
