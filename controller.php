@@ -21,6 +21,9 @@
     $dom->loadHTML($html);
     $xpath = new DOMXPath($dom);
     
+    if (!isset($_SESSION['availableCourses'])) $_SESSION['availableCourses']  = array();
+    if (!isset($_SESSION['addedCourses'])) $_SESSION['addedCourses']  = array();
+    
    
     
     function getDropDownItems($name) {
