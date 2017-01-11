@@ -165,9 +165,9 @@
             if (!isset($timeStr)||$timeStr == "TBA"||$timeStr == "")
                 return array(new Time(""), new Time(""));
             list($startStr,$endStr) = explode('-', $timeStr);
+            if (substr($endStr,-1) === 'p') $endStr .= 'm'; // make p into pm
             $start = new Time($startStr);
             $end   = new Time($endStr);
-            if (substr($end,-1) === 'p') $end .= 'm'; // make p into pm
             if ($end->difference($start, 'hours', true) > 12) {
                 // start must actually be in the afternoon
                 $start->addition(12, 'hours'); // so change to PM.
