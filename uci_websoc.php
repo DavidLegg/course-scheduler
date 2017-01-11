@@ -14,7 +14,7 @@
         //static const not allowed
         //const can only be public
         private static $url = 'https://www.reg.uci.edu/perl/WebSoc';
-        private static $yearTerm = '2017-03'; //TODO: figure out how this number is calculated, and automate it.
+        private static $yearTerm = '2017-03'; //TODO: figure out how this number is calculated, and automate it. Alternatively, retrieve this from a web-scrape on the webSoc search page, either on page start-up or once per some time period.
         private static $dayCodes = array(
           "M"  => "monday",
           "Tu" => "tuesday",
@@ -167,6 +167,7 @@
             list($startStr,$endStr) = explode('-', $timeStr);
             $start = new Time($startStr);
             $end   = new Time($endStr);
+            if (substr($end,-1) === 'p') $end .= 'm'; // make p into pm
             if ($end->difference($start, 'hours', true) > 12) {
                 // start must actually be in the afternoon
                 $start->addition(12, 'hours'); // so change to PM.
