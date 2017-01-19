@@ -1,5 +1,6 @@
 <?php
     error_reporting(E_ALL);
+    
     ini_set('display_errors', 1);
     
     if (!defined('ROOT_PATH')) define('ROOT_PATH', __DIR__.'/');
@@ -10,6 +11,7 @@
     require_once  ROOT_PATH.'course.php';
     require_once  ROOT_PATH.'schedule.php';
     require_once  ROOT_PATH.'standardPreferences.php';
+    session_start();
 
     
     global $xpath, $baseQueryUrl, $addedCourses, $availableCourses;
