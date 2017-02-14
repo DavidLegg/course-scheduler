@@ -24,7 +24,7 @@
 				About
 			</div>
 			<div id="container">
-				<p>ZotScheduler was made by us. Eventually this about page will be more interesting. Developed by David Legg and Alex I. Ramirez.
+				<p>ZotScheduler is a tool that generates class schedules for students. Eventually, this about page will be more interesting. Developed by David Legg and Alex I. Ramirez.
 </p>
 			</div>
 		</div>
