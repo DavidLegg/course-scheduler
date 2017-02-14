@@ -11,6 +11,7 @@
     require_once  ROOT_PATH.'course.php';
     require_once  ROOT_PATH.'schedule.php';
     require_once  ROOT_PATH.'standardPreferences.php';
+    session_start();
     
     global $xpath, $baseQueryUrl, $addedCourses, $availableCourses;
     $baseUrl = 'https://www.reg.uci.edu/perl/WebSoc';
@@ -21,8 +22,8 @@
     $dom->loadHTML($html);
     $xpath = new DOMXPath($dom);
     
-    if (!isset($_SESSION['availableCourses'])) $_SESSION['availableCourses']  = array();
-    if (!isset($_SESSION['addedCourses'])) $_SESSION['addedCourses']  = array();
+//    if (!isset($_SESSION['availableCourses'])) $_SESSION['availableCourses']  = array();
+//    if (!isset($_SESSION['addedCourses'])) $_SESSION['addedCourses']  = array();
     
    
     
@@ -47,6 +48,7 @@
     function getCoursesByDept($dept){
 //        $courses = array();
         list($courses,$len) = UCI_WebSoc::getCoursesByDept($dept);
+        if (!isset($_SESSION['availableCourses'])) $_SESSION['availableCourses']  = array();
         $_SESSION['availableCourses'] = array_merge($_SESSION['availableCourses'],$courses);
 //        foreach($courses as $name => $course){
 //            $_SESSION['availableCourses'][$name] = $course;
@@ -61,6 +63,18 @@
             $schedules = $course->buildSchedules($schedules); //build all possible schedules
         }
         return $schedules;
+    }
+    
+    function listAddedCourses(){
+        if (!isset($_SESSION['addedCourses']) || empty($_SESSION['addedCourses']))
+            echo "<p>Select some courses first. Then they'll appear here.</p>";
+        else{
+            foreach($_SESSION['addedCourses'] as $name => $course){
+                echo '<li id="',$name,'" style="color:#0039ad;">',$course->name,' <a onclick="delPopCourses('.$name.');" href="javascript:void(0)">[X]</a></li>';
+            }
+            echo '<button type="button" onClick="generateSchedules();" >Schedule classes</button>';
+            echo '<script>generateSchedules();</script>';
+        }
     }
     
     
