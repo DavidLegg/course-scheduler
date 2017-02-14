@@ -11,8 +11,6 @@
     require_once  ROOT_PATH.'course.php';
     require_once  ROOT_PATH.'schedule.php';
     require_once  ROOT_PATH.'standardPreferences.php';
-    session_start();
-
     
     global $xpath, $baseQueryUrl, $addedCourses, $availableCourses;
     $baseUrl = 'https://www.reg.uci.edu/perl/WebSoc';
