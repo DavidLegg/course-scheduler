@@ -1,10 +1,13 @@
 <?php
-    session_start();
+    
     error_reporting(E_ALL);
     ini_set('display_errors', 1);
 //    phpinfo();
-    $_SESSION['availableCourses'] = array();
-    $_SESSION['addedCourses'] = array();
+    
+//    if (!isset($_SESSION['availableCourses']))
+//        $_SESSION['availableCourses'] = array();
+//    if (!isset($_SESSION['addedCourses']))
+//        $_SESSION['addedCourses'] = array();
     require_once('scheduler/controller.php');
     
     
@@ -54,6 +57,55 @@
                                        });
                    });
         }
+
+        function delPopCourses(str) {
+            jQuery(function($) {
+                   $( document ).ready(function() {
+                                       $.ajax({
+                                              type: "GET",
+                                              url: "scheduler/ui/coursesretrieval.php",
+                                              data:{_action:'delcourse', _param:str}, //name is a $_GET variable name here,
+                                              // and 'youwant' is its value to be passed
+                                              success: function(data){
+                                              $("#addedCourses").html(data)
+                                              
+                                              }
+                                              });
+                                       });
+                   });
+        }
+
+        function generateSchedules() {
+            jQuery(function($) {
+                   $( document ).ready(function() {
+                                       $.ajax({
+                                              type: "GET",
+                                              url: "scheduler/ui/coursesretrieval.php",
+                                              data:{_action:'schedule', _param:'0'}, //name is a $_GET variable name here,
+                                              // and 'youwant' is its value to be passed
+                                              success: function(data){
+//                                              $("#schedules").html(data);
+                                              }
+                                              });
+                                       
+                                       $.ajax({
+                                              type: "GET",
+                                              contentType: "application/json; charset=utf-8",
+                                              url: "scheduler/ui/coursesretrieval.php",
+                                              dataType:"json",
+                                              data:{_action:'schedview', _param:'0'}, //name is a $_GET variable name here,
+                                              // and 'youwant' is its value to be passed 
+                                              success: function(data){
+                                              $('#calendar').fullCalendar('removeEvents');
+                                              $("#calendar").fullCalendar( 'addEventSource', data );
+                                              
+                                              }
+                                              
+                                              });
+                                       });
+                   });
+        }
+
         </script>
 
 	</head>
@@ -79,7 +131,6 @@
 					<div id="home-left" class="left">
 						<div class="box">
 							<h2>Select your courses</h2>
-                            <hr/>
 
                             <table class="course_choice">
                                 <tr>
@@ -120,9 +171,21 @@
                                     </td>
                                 </tr>
                             </table>
+
+                            <hr/>
+
+                            <h2>Added Courses</h2>
+                            <ul id="addedCourses">
+                                <?php
+                                    echo listAddedCourses();
+                                ?>
+
+                            </ul>
+
 						</div>
 						<div class="box">
 							<h2>How to use</h2>
+                            <p>Come on, man (or woman)!</p>
 						</div>
 					</div>
 
