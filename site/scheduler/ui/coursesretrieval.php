@@ -1,6 +1,6 @@
 <?php
     require_once('../controller.php');
-    session_start();
+//    session_start();
     error_reporting(E_ALL);
     
     ini_set('display_errors', 1);
@@ -43,10 +43,13 @@
                 var_dump($_SESSION['availableCourses']);
                 break;
             case 'addcourse':
+                if (!isset($_SESSION['addedCourses'])) $_SESSION['addedCourses']  = array();
                 $_SESSION['addedCourses'][$_GET['_param']] = $_SESSION['availableCourses'][$_GET['_param']];
-                foreach($_SESSION['addedCourses'] as $name => $course){
-                    echo '<li id="',$name,'" style="color:#0039ad;">',$course->name,'</li>';
-                }
+                listAddedCourses();
+                break;
+            case 'delcourse':
+                unset($_SESSION['addedCourses'][$_GET['_param']]);
+                listAddedCourses();
                 break;
             case 'schedule':
                 $schedules = generateSchedules();
