@@ -47,6 +47,13 @@
                                     <td class="courses_1">Department:</td>
                                     <td class="courses_2">
                                         <select name="Dept" id="dept" onChange="populateCourses(this.value)" class="class_select">
+                                            <?php
+                                                $options = getDropDownItems('Dept');
+                                                $optCount = 0;
+                                                foreach($options as $option){
+                                                    if ($optCount++>0) echo $dom->saveHTML($option);
+                                                }
+                                            ?>
                                         </select>
                                     </td>
                                 </tr>
