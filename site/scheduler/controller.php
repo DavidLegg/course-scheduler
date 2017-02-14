@@ -28,9 +28,9 @@
     
     function getDropDownItems($name) {
         global $xpath;
-           var_dump($name);
+//           var_dump($name);
         $allOpts = $xpath->query('//select[@name="'.$name.'"]');
-        var_dump($allOpts);
+//        var_dump($allOpts);
         $allOpts = $allOpts->item(0);
         //   var_dump($allOpts);
         return $allOpts->getElementsByTagName("option");
