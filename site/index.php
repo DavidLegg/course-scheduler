@@ -17,6 +17,45 @@
 <link rel="stylesheet" id="screenr-fonts-css" href="https://fonts.googleapis.com/css?family=Open%2BSans%3A400%2C300%2C300italic%2C400italic%2C600%2C600italic%2C700%2C700italic%7CMontserrat%3A400%2C700&amp;subset=latin%2Clatin-ext" type="text/css" media="all">
 		<link rel="stylesheet" type="text/css" href="libs/fullcalendar/fullcalendar.css">
 		<script src='libs/fullcalendar/lib/jquery.min.js'></script>
+
+        <script type="text/javascript" >
+
+
+        function populateCourses(str) {
+            jQuery(function($) {
+                   $( document ).ready(function() {
+                                       $.ajax({
+                                              type: "GET",
+                                              url: "scheduler/ui/coursesretrieval.php",
+                                              data:{_action:'coursebydept', _param:str}, //name is a $_GET variable name here,
+                                              // and 'youwant' is its value to be passed
+                                              success: function(data){
+                                              $("#course").html(data)
+                                              
+                                              }
+                                              });
+                                       });
+                   });
+        }
+
+        function populateAddedCourses(str) {
+            jQuery(function($) {
+                   $( document ).ready(function() {
+                                       $.ajax({
+                                              type: "GET",
+                                              url: "scheduler/ui/coursesretrieval.php",
+                                              data:{_action:'addcourse', _param:str}, //name is a $_GET variable name here,
+                                              // and 'youwant' is its value to be passed 
+                                              success: function(data){
+                                              $("#addedCourses").html(data)
+                                              
+                                              }
+                                              });
+                                       });
+                   });
+        }
+        </script>
+
 	</head>
 
 	<body>
@@ -46,15 +85,20 @@
                                 <tr>
                                     <td class="courses_1">Department:</td>
                                     <td class="courses_2">
-                                        <select name="Dept" id="dept" onChange="populateCourses(this.value)" class="class_select">
-                                            <?php
-                                                $options = getDropDownItems('Dept');
-                                                $optCount = 0;
-                                                foreach($options as $option){
-                                                    if ($optCount++>0) echo $dom->saveHTML($option);
-                                                }
-                                            ?>
-                                        </select>
+                                        <?php
+                                            echo '<select name="Dept" id="dept" onChange="populateCourses(this.value)" class="class_select">';
+                                            $options = getDropDownItems('Dept');
+                                            $optCount = 0;
+                                            foreach($options as $option){
+                                                if ($optCount++>0) echo $dom->saveHTML($option);
+                                            }
+                                            echo '</select>';
+                                            echo "<script>
+                                            var sel = document.getElementById('dept');
+                                            populateCourses(sel.value);
+                                            </script>";
+                                        ?>
+
                                     </td>
                                 </tr>
 
