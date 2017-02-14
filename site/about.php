@@ -2,6 +2,7 @@
 
 	<head>
 		<title>ZotScheduler: Coming Soon</title>
+<meta name="theme-color" content="#eeee22">
 		<link rel="stylesheet" type="text/css" href="style.css">
 <link rel="stylesheet" id="screenr-fonts-css" href="https://fonts.googleapis.com/css?family=Open%2BSans%3A400%2C300%2C300italic%2C400italic%2C600%2C600italic%2C700%2C700italic%7CMontserrat%3A400%2C700&amp;subset=latin%2Clatin-ext" type="text/css" media="all">
 	</head>
