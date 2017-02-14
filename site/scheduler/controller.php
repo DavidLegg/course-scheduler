@@ -30,16 +30,18 @@
     
     function getDropDownItems($name) {
         global $xpath;
-        //   var_dump($name);
-        $allOpts = $xpath->query('//select[@name="'.$name.'"]')[0];
+           var_dump($name);
+        $allOpts = $xpath->query('//select[@name="'.$name.'"]');
+        var_dump($allOpts);
+        $allOpts = $allOpts->item(0);
         //   var_dump($allOpts);
         return $allOpts->getElementsByTagName("option");
     }
     
     function appendTerm(){
         global $baseQueryUrl;
-        $term = getDropDownItems('YearTerm')[0];
-        $termId = $term->getAttribute('value');
+        $term = getDropDownItems('YearTerm');
+        $termId = $term->item(0)->getAttribute('value');
         UCI_WebSoc::setYearTerm($termId);
     }
     
