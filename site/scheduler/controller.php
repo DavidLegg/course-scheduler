@@ -65,7 +65,7 @@
         return $schedules;
     }
     
-    function listAddedCourses(){
+    function listAddedCourses($first = false){
         if (!isset($_SESSION['addedCourses']) || empty($_SESSION['addedCourses']))
             echo "<p>Select some courses first. Then they'll appear here.</p>";
         else{
@@ -73,7 +73,7 @@
                 echo '<li id="',$name,'" style="color:#0039ad;">',$course->name,' <a onclick="delPopCourses('.$name.');" href="javascript:void(0)">[X]</a></li>';
             }
             echo '<button type="button" onClick="generateSchedules();" >Schedule classes</button>';
-            echo '<script>generateSchedules();</script>';
+            if ($first) echo '<script>generateSchedules();</script>';
         }
     }
     
