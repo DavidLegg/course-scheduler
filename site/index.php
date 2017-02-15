@@ -79,10 +79,7 @@
         }
 
         function getSchedText(index){
-            jQuery(function($){
-                   $( document ).ready(function() {
-                        
-                       $.ajax({
+                       return $.ajax({
                               type: "GET",
                               url: "scheduler/ui/coursesretrieval.php",
                               data:{_action:'schedule', _param:index.toString()}, //name is a $_GET variable name here,
@@ -92,12 +89,6 @@
                                 return true;
                               }
                         });
-                       
-                                       
-                    });
-                   
-                   
-            });
         }
 
         function generateSchedules() {
