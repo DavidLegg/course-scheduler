@@ -10,6 +10,7 @@
 //        $_SESSION['addedCourses'] = array();
     require_once('scheduler/controller.php');
     
+    $first = true;
     
 ?>
 <html>
@@ -17,6 +18,7 @@
 	<head>
 		<title>ZotScheduler</title>
         <meta name="theme-color" content="#eeee22">
+        <meta name="viewport" content="width=device-width">
 		<link rel="stylesheet" type="text/css" href="style.css">
 <link rel="stylesheet" id="screenr-fonts-css" href="https://fonts.googleapis.com/css?family=Open%2BSans%3A400%2C300%2C300italic%2C400italic%2C600%2C600italic%2C700%2C700italic%7CMontserrat%3A400%2C700&amp;subset=latin%2Clatin-ext" type="text/css" media="all">
 		<link rel="stylesheet" type="text/css" href="libs/fullcalendar/fullcalendar.css">
@@ -24,7 +26,7 @@
 
         <script type="text/javascript" >
 
-
+        var selectedSched = 0;
         function populateCourses(str) {
             jQuery(function($) {
                    $( document ).ready(function() {
@@ -76,18 +78,35 @@
                    });
         }
 
+        function getSchedText(index){
+            jQuery(function($){
+                   $( document ).ready(function() {
+                                       
+                       $.ajax({
+                              type: "GET",
+                              url: "scheduler/ui/coursesretrieval.php",
+                              data:{_action:'schedule', _param:index.toString()}, //name is a $_GET variable name here,
+                              // and 'youwant' is its value to be passed
+                              success: function(data){
+                              $(".fc-clear").html(data);
+                              
+                              }
+                        });
+                       
+                                       
+                    });
+                   
+                   
+            });
+        }
+
         function generateSchedules() {
             jQuery(function($) {
                    $( document ).ready(function() {
-                                       $.ajax({
-                                              type: "GET",
-                                              url: "scheduler/ui/coursesretrieval.php",
-                                              data:{_action:'schedule', _param:'0'}, //name is a $_GET variable name here,
-                                              // and 'youwant' is its value to be passed
-                                              success: function(data){
-//                                              $("#schedules").html(data);
-                                              }
-                                              });
+                                       $("#calendar").fullCalendar('removeEvents');
+                                       $("#calendar").fullCalendar( 'gotoDate', '2017-01-02' );
+                                       selectedSched = 0;
+                                       getSchedText(selectedSched);
                                        
                                        $.ajax({
                                               type: "GET",
@@ -97,7 +116,7 @@
                                               data:{_action:'schedview', _param:'0'}, //name is a $_GET variable name here,
                                               // and 'youwant' is its value to be passed 
                                               success: function(data){
-                                              $('#calendar').fullCalendar('removeEvents');
+                                              
                                               $("#calendar").fullCalendar( 'addEventSource', data );
                                               
                                               }
@@ -119,6 +138,7 @@
 					<ul id="nav">
 						<li><a href="index.php">Home</a></li>
 						<li><a href="about.php">About</a></li>
+                        <li><a href="index.php#help">Help</a></li>
 					</ul>
 				</div>
 			</div>
@@ -178,15 +198,12 @@
                             <h2>Added Courses</h2>
                             <ul id="addedCourses">
                                 <?php
-                                    echo listAddedCourses();
+                                    echo listAddedCourses($first);
+                                    $first = false;
                                 ?>
 
                             </ul>
 
-						</div>
-						<div class="box">
-							<h2>How to use</h2>
-                            <p>Come on, man (or woman)!</p>
 						</div>
 					</div>
 
@@ -205,11 +222,12 @@
         								weekends: false,
         								defaultView: "agendaWeek",
         								slotDuration:"00:20:00",
-        								minTime:"06:00:00",
+        								minTime:"08:00:00",
         								defaultDate:"2017-01-02",
         								timezone:"America/Los_Angeles",
         								allDaySlot:false,
-									columnFormat:'ddd',
+                                        height:650,
+                                        columnFormat:'ddd',
         								header: {
              									left:"title",
              									center:"",
@@ -239,16 +257,30 @@
 								/*,
 								events:[{"title":"(20000) AC ENG 20A: ACADEMIC WRITING (School of Humanities) Lec","start":"2017-01-03T14:00:00-0800","end":"2017-01-03T15:20:00-0800"},{"title":"(20000) AC ENG 20A: ACADEMIC WRITING (School of Humanities) Lec","start":"2017-01-05T14:00:00-0800","end":"2017-01-05T15:20:00-0800"},{"title":"(20164) AC ENG 28: GRAMMAR (School of Humanities) Lec","start":"2017-01-03T09:30:00-0800","end":"2017-01-03T10:50:00-0800"},{"title":"(20164) AC ENG 28: GRAMMAR (School of Humanities) Lec","start":"2017-01-05T09:30:00-0800","end":"2017-01-05T10:50:00-0800"}]*/
 
-   								 })
+                                    });
 
+                              $('.fc-prev-button').click(function(){
+                                                         getSchedText(--selectedSched);
+                                                         });
+                              
+                              $('.fc-next-button').click(function(){
+                                                         getSchedText(++selectedSched);
+                                                         });
 							});
+
 						</script>
-						
+
 
 						<div id="calendar"></div>
 						<!—- End Calendar —>
 
 					</div>
+                    <div class="left" id="help">
+                        <div class="box">
+                        <h2>How to use</h2>
+                        <p>Come on, man (or woman)!</p>
+                        </div>
+                    </div>
 				</div>
 			</div>
 
