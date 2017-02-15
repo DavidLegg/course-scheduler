@@ -146,7 +146,6 @@
 		</header>
 		<div id="content">
 			<div id="container">
-				<p>ZotScheduler is a tool that generates class schedules for students. Coming soon!</p>
 
 				<div class="columns">
 					<div id="home-left" class="left">
@@ -278,7 +277,7 @@
                     <div class="left" id="help">
                         <div class="box">
                         <h2>How to use</h2>
-                        <p>Come on, man (or woman)!</p>
+                        <p>Instructions coming soon!</p>
                         </div>
                     </div>
 				</div>
