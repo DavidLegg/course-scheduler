@@ -98,7 +98,7 @@
                                 $end->setTime($section->end->format('H'), $section->end->format('i'));
                                 
                                 $curr_sect = [
-                                    "title" => '('.$section->code.') ' . $section->course . ' ' . $section->type,
+                                    "title" => '('.$section->code.') ' . substr($section->course, 0, strpos($section->course, ":")) . ' ' . $section->type,
                                     "start" => $start->format(DateTime::ISO8601),
                                     "end"   => $end->format(DateTime::ISO8601)
                                 ];
