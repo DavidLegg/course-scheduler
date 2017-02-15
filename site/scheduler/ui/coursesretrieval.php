@@ -68,7 +68,7 @@
                 else
                 {
                     if (empty($schedules))
-                        echo "No possible schedules";
+                        echo "<span style='color:red'>No possible schedules.</span>";
                     else if (isset($schedules[$_GET['_param']])){
                             echo $schedules[$_GET['_param']];
                     }
