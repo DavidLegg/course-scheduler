@@ -129,6 +129,7 @@ a {
 
 .left{
 	float:left;
+    width: 49%;
 }
 
 .box{
@@ -136,17 +137,17 @@ a {
 }
 
 #home-left{
-	width: 49%;
-	height:100%
+	
 }
 
 .right{
 	float:right;
 	border:solid 1px #ccc;
+    width:49%;
 }
 
 #home-right{
-	width:49%;
+	
 	padding:20px 0px 0px 0px;
 }
 
@@ -166,10 +167,13 @@ a {
 	clear: both;
 }
 
-@media screen and (max-width: 480px) {
+@media all and (max-width: 480px) {
     .left, .right {
         float: none;
         width: auto;
+    }
+    #home-left, #home-right{
+        width:auto;
     }
 }
 
@@ -185,4 +189,9 @@ a {
 
 .courses_2{
     width:100%;
+}
+
+.fc-clear{
+    text-align:left;
+    font-size:0.8em;
 }
