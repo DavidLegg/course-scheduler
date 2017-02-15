@@ -81,15 +81,15 @@
         function getSchedText(index){
             jQuery(function($){
                    $( document ).ready(function() {
-                                       
+                        
                        $.ajax({
                               type: "GET",
                               url: "scheduler/ui/coursesretrieval.php",
                               data:{_action:'schedule', _param:index.toString()}, //name is a $_GET variable name here,
                               // and 'youwant' is its value to be passed
                               success: function(data){
-                              $(".fc-clear").html(data);
-                              
+                                $(".fc-clear").html(data);
+                                return true;
                               }
                         });
                        
@@ -106,24 +106,27 @@
                                        $("#calendar").fullCalendar('removeEvents');
                                        $("#calendar").fullCalendar( 'gotoDate', '2017-01-02' );
                                        selectedSched = 0;
-                                       getSchedText(selectedSched);
-                                       
-                                       $.ajax({
-                                              type: "GET",
-                                              contentType: "application/json; charset=utf-8",
-                                              url: "scheduler/ui/coursesretrieval.php",
-                                              dataType:"json",
-                                              data:{_action:'schedview', _param:'0'}, //name is a $_GET variable name here,
-                                              // and 'youwant' is its value to be passed 
-                                              success: function(data){
-                                              
-                                              $("#calendar").fullCalendar( 'addEventSource', data );
-                                              
-                                              }
-                                              
-                                              });
-                                       });
-                   });
+                                       $(".fc-clear").html('Loading schedules...');
+                                       $.when(
+                                             getSchedText(selectedSched)
+                                        ).then( function() {
+                                               $.ajax({
+                                                      type: "GET",
+                                                      contentType: "application/json; charset=utf-8",
+                                                      url: "scheduler/ui/coursesretrieval.php",
+                                                      dataType:"json",
+                                                      data:{_action:'schedview', _param:'0'}, //name is a $_GET variable name here,
+                                                      // and 'youwant' is its value to be passed
+                                                      success: function(data){
+                                                      
+                                                        $("#calendar").fullCalendar( 'addEventSource', data );
+                                                      
+                                                      }
+                                                      
+                                                });
+                                        });
+                      });
+             });
         }
 
         </script>
