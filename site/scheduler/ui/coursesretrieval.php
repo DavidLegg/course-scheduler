@@ -67,8 +67,10 @@
                 }
                 else
                 {
-                    if (isset($schedules[$_GET['_param']])){
-                        echo $schedules[$_GET['_param']];
+                    if (empty($schedules))
+                        echo "No possible schedules";
+                    else if (isset($schedules[$_GET['_param']])){
+                            echo $schedules[$_GET['_param']];
                     }
                 }
                 break;
