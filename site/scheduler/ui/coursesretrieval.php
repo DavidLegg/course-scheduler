@@ -54,14 +54,22 @@
             case 'schedule':
                 $schedules = generateSchedules();
                 $_SESSION['schedules'] = $schedules;
-                echo "Course Selection: ";
-                $courseList = '';
-                foreach ($_SESSION['addedCourses'] as $course){
-                    $courseList .= $course->name . ", ";
+                if ($_GET['_param'] == -1){
+                    echo "Course Selection: ";
+                    $courseList = '';
+                    foreach ($_SESSION['addedCourses'] as $course){
+                        $courseList .= $course->name . ", ";
+                    }
+                    echo '<span style="color:#0039ad;">',substr($courseList, 0, -2), "</span><br/>";
+                    foreach ($schedules as $sched) {
+                        echo $sched,"<hr>";
+                    }
                 }
-                echo '<span style="color:#0039ad;">',substr($courseList, 0, -2), "</span><br/>";
-                foreach ($schedules as $sched) {
-                    echo $sched,"<hr>";
+                else
+                {
+                    if (isset($schedules[$_GET['_param']])){
+                        echo $schedules[$_GET['_param']];
+                    }
                 }
                 break;
             case 'schedview':
