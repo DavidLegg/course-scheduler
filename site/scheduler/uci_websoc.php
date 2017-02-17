@@ -27,22 +27,30 @@
             UCI_WebSoc::$yearTerm = $yt;
         }
         
-        public static function getCoursesByDept($dept){
+        public static function getYearTerm(){
+            return UCI_WebSoc::$yearTerm;
+        }
+        
+        public static function getCoursesByDept($dept, $term=false){
+            if ($term == false) $term= UCI_WebSoc::$yearTerm;
             $courses = array();
             $len = 0;
-            $xml = UCI_WebSoc::_sendCourseRequest($dept);
+            $xml = UCI_WebSoc::_sendCourseRequest($dept, '', $term);
+            
+//            var_dump($xml);
             
             //Iterate by school
             foreach($xml->xpath('//school') as $schoolXML){
                 $schoolName = $schoolXML['school_name'];
                 foreach ($schoolXML->xpath('department/course') as $courseXML)
                 {
-                    $course = UCI_WebSoc::_makeCourse($courseXML, $dept,$schoolName);
+                    $course = UCI_WebSoc::_makeCourse($courseXML, $dept,$schoolName, $term);
                     array_push($courses, $course);
 //                    $courses[$course->name] = $course;
                     ++$len;
                 }
             }
+//            var_dump($len);
             return array($courses, $len);
         }
         
@@ -71,9 +79,10 @@
             return array($dept,$num);
         }
         
-        private static function _sendCourseRequest($dept,$num='') {
+        private static function _sendCourseRequest($dept,$num='',$term=false) {
+            if ($term == false) $term= UCI_WebSoc::$yearTerm;
             $data = array( // copied from intercepted request
-                          'YearTerm'         => UCI_WebSoc::$yearTerm,
+                          'YearTerm'         => $term,
                           // 'ShowComments'     => 'on', //don't need this
                           'ShowFinals'       => 'on',
                           'Breadth'          => 'ANY',
@@ -115,11 +124,12 @@
         
         // Note that this function will also work with multiple courses,
         // by passing in the course as the root node.
-        private static function _makeCourse($courseXml, $deptName, $schoolName) {
+        private static function _makeCourse($courseXml, $deptName, $schoolName, $term=false) {
             //Commented to be more flexible when getting multiple courses at a time
 //            $courseXml  = $xml->xpath('//course[1]')[0]; //assume only one course
+            if ($term == false) $term= UCI_WebSoc::$yearTerm;
             $courseName = $deptName.' '.$courseXml['course_number'].': '.$courseXml['course_title'].' ('.$schoolName.')';
-            $course = new Course($courseName);
+            $course = new Course($courseName, $term);
             $coreqs = array(); //code => coreq's code
             foreach($courseXml->section as $sectionXml) {
                 $course->addSection(UCI_WebSoc::_makeSection($sectionXml,$courseName,$coreqs));

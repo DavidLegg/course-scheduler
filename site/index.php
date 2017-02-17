@@ -50,15 +50,30 @@
 							<h2>Select your courses</h2>
 
                             <table class="course_choice">
+                            <tr>
+                            <td class="courses_1">Term:</td>
+                            <td class="courses_2">
+                                <?php
+                                    echo '<select name="YearTerm" id="term" onChange="populateCourses();" class="class_select">';
+                                    $options = getDropDownItems('YearTerm');
+                                    foreach($options as $option){
+                                        echo $dom->saveHTML($option);
+                                    }
+                                    echo '</select>';
+                                ?>
+
+                            </td>
+                            </tr>
+
                                 <tr>
                                     <td class="courses_1">Department:</td>
                                     <td class="courses_2">
                                         <?php
-                                            echo '<select name="Dept" id="dept" onChange="populateCourses(this.value)" class="class_select">';
+                                            echo '<select name="Dept" id="dept" onChange="populateCourses();" class="class_select">';
                                             $options = getDropDownItems('Dept');
                                             $optCount = 0;
                                             foreach($options as $option){
-                                                if ($optCount++>0) echo $dom->saveHTML($option);
+                                                if ($optCount++>0) echo preg_replace('((\W?[.]\W?)+)',': ',$dom->saveHTML($option));
                                             }
                                             echo '</select>';
                                             echo "<script>

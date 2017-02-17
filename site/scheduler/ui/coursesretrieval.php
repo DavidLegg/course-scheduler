@@ -34,13 +34,16 @@
 //        }
 
         switch($_GET['_action']){
+            case 'changeterm':
+                changeTerm($_GET['_param'], true);
+                break;
             case 'coursebydept':
-                $courses = getCoursesByDept($_GET['_param']);
+                $courses = getCoursesByDept($_GET['_param'], $_GET['_yt']);
 //                var_dump($courses);
                 foreach($courses as $name => $course){
                     echo '<option value="',$name,'">',$course->name,'</option>';
                 }
-                var_dump($_SESSION['availableCourses']);
+//                var_dump($_SESSION['availableCourses']);
                 break;
             case 'addcourse':
                 if (!isset($_SESSION['addedCourses'])) $_SESSION['addedCourses']  = array();

@@ -8,8 +8,9 @@
         
         public $name; // string
         public $sectionArr; // array(string => array(Section)) : Section->type => {Section}
+        public $yearTerm;
         
-        function __construct($courseName, array $sections = NULL) {
+        function __construct($courseName, $yearTerm, array $sections = NULL) {
             $sections = is_null($sections) ? array() : $sections;
             
             $this->sectionArr = array();
@@ -21,6 +22,7 @@
             }
             
             $this->name = (string)$courseName;
+            $this->yearTerm = (string)$yearTerm;
         }
         
         function addSection(Section $section) {
@@ -89,6 +91,10 @@
             
             return $output;
         }
+        public function __toString(){
+            return $this->name.' ['.$this->yearTerm.']';
+        }
+        
     }
     
     ?>

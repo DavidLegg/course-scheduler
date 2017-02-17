@@ -25,6 +25,7 @@
 //    if (!isset($_SESSION['availableCourses'])) $_SESSION['availableCourses']  = array();
 //    if (!isset($_SESSION['addedCourses'])) $_SESSION['addedCourses']  = array();
     
+    
    
     
     function getDropDownItems($name) {
@@ -43,18 +44,36 @@
         UCI_WebSoc::setYearTerm($termId);
     }
     
+    function changeTerm($str, $print = false){
+        UCI_WebSoc::setYearTerm($str);
+        if ($print) echo UCI_WebSoc::getYearTerm($str);
+    }
+    
     appendTerm();
     
-    function getCoursesByDept($dept){
+    function getCoursesByDept($dept, $yearTerm){
 //        $courses = array();
-        list($courses,$len) = UCI_WebSoc::getCoursesByDept($dept);
+        changeTerm($yearTerm);
+        list($courses,$len) = UCI_WebSoc::getCoursesByDept($dept,$yearTerm);
         if (!isset($_SESSION['availableCourses'])) $_SESSION['availableCourses']  = array();
-        $_SESSION['availableCourses'] = array_merge($_SESSION['availableCourses'],$courses);
+        $intersect = array_intersect($_SESSION['availableCourses'], $courses);
+//        var_dump($intersect);
+//        $_SESSION['availableCourses'] = $_SESSION['availableCourses'] + $courses;
+        
 //        foreach($courses as $name => $course){
 //            $_SESSION['availableCourses'][$name] = $course;
 //        }
 //        var_dump($_SESSION['availableCourses']);
-        return array_slice($_SESSION['availableCourses'], $len*-1, $len, true);
+        if (!empty($intersect))
+        {
+            return $intersect;
+        }
+        else
+        {
+            $_SESSION['availableCourses'] = array_merge($_SESSION['availableCourses'],$courses);
+            return $intersect + array_slice($_SESSION['availableCourses'], $len*-1, $len, true);
+        }
+        
     }
     
     function generateSchedules(){

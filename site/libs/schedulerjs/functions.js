@@ -1,14 +1,17 @@
 var selectedSched = 0;
-        function populateCourses(str) {
+
+        function populateCourses() {
             jQuery(function($) {
                    $( document ).ready(function() {
+                                       $("#course").prop('disabled', true);
+                                       $("#course").html("<option>Loading</option>");
                                        $.ajax({
                                               type: "GET",
                                               url: "scheduler/ui/coursesretrieval.php",
-                                              data:{_action:'coursebydept', _param:str}, //name is a $_GET variable name here,
-                                              // and 'youwant' is its value to be passed
+                                              data:{_action:'coursebydept', _param:$("#dept").val(), _yt:$("#term").val()},
                                               success: function(data){
-                                              $("#course").html(data)
+                                                $("#course").html(data);
+                                                $("#course").prop('disabled', false);
                                               
                                               }
                                               });
@@ -19,11 +22,11 @@ var selectedSched = 0;
         function populateAddedCourses(str) {
             jQuery(function($) {
                    $( document ).ready(function() {
+                                       $("#addedCourses").html("Loading...");
                                        $.ajax({
                                               type: "GET",
                                               url: "scheduler/ui/coursesretrieval.php",
-                                              data:{_action:'addcourse', _param:str}, //name is a $_GET variable name here,
-                                              // and 'youwant' is its value to be passed 
+                                              data:{_action:'addcourse', _param:str},
                                               success: function(data){
                                               $("#addedCourses").html(data)
                                               
@@ -39,8 +42,7 @@ var selectedSched = 0;
                                        $.ajax({
                                               type: "GET",
                                               url: "scheduler/ui/coursesretrieval.php",
-                                              data:{_action:'delcourse', _param:str}, //name is a $_GET variable name here,
-                                              // and 'youwant' is its value to be passed
+                                              data:{_action:'delcourse', _param:str},
                                               success: function(data){
                                               $("#addedCourses").html(data)
                                               
@@ -54,8 +56,7 @@ var selectedSched = 0;
                        return $.ajax({
                               type: "GET",
                               url: "scheduler/ui/coursesretrieval.php",
-                              data:{_action:'schedule', _param:index.toString()}, //name is a $_GET variable name here,
-                              // and 'youwant' is its value to be passed
+                              data:{_action:'schedule', _param:index.toString()},
                               success: function(data){
                                 $(".fc-clear").html(data);
                                 return true;
@@ -78,8 +79,7 @@ var selectedSched = 0;
                                                       contentType: "application/json; charset=utf-8",
                                                       url: "scheduler/ui/coursesretrieval.php",
                                                       dataType:"json",
-                                                      data:{_action:'schedview', _param:'0'}, //name is a $_GET variable name here,
-                                                      // and 'youwant' is its value to be passed
+                                                      data:{_action:'schedview', _param:'0'},
                                                       success: function(data){
                                                       
                                                         $("#calendar").fullCalendar( 'addEventSource', data );
