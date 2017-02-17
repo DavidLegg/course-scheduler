@@ -132,12 +132,13 @@
         								// put your options and callbacks here
         								weekends: false,
         								defaultView: "agendaWeek",
-        								slotDuration:"00:20:00",
+        								slotDuration:"00:30:00",
         								minTime:"08:00:00",
         								defaultDate:"2017-01-02",
         								timezone:"America/Los_Angeles",
         								allDaySlot:false,
-                                        height:650,
+                                        height:700,
+                                                                contentHeight:800,
                                         columnFormat:'ddd',
         								header: {
              									left:"title",
