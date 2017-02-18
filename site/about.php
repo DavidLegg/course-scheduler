@@ -1,7 +1,7 @@
 <html>
 
 	<head>
-		<title>ZotScheduler</title>
+		<title>About - ZotScheduler</title>
 <meta name="theme-color" content="#eeee22">
 <meta name="viewport" content="width=device-width">
 
@@ -12,7 +12,7 @@
 	<body>
 		<header id="header">
 			<div id="head_container">
-				<div id="home"><a href="index.php">About - ZotScheduler</a></div>
+				<div id="home"><a href="index.php">ZotScheduler</a></div>
 				<div id="nav_bar">
 					<ul id="nav">
 						<li><a href="index.php">Home</a></li>
