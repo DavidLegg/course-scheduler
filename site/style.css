@@ -129,7 +129,7 @@ a {
 
 .left{
 	float:left;
-    width: 37%;
+    width: 49%;
 }
 
 .box{
@@ -142,11 +142,11 @@ a {
 
 .right{
 	float:right;
-	border:solid 1px #ccc;
-    width:61%;
+/*	border:solid 1px #ccc;*/
+    width:49%;
 }
 
-#home-right{
+#home-right, #home-left{
 	
 	padding:20px 0px 0px 0px;
 }
@@ -159,6 +159,10 @@ a {
 .columns h2{
 	padding-left:5px;
 	padding-right:5px;
+}
+
+.columns{
+    margin-bottom:10px;
 }
 
 .columns:after{
@@ -197,5 +201,5 @@ a {
 }
 
 .fc-title{
-    font-size:0.85em;
+    font-size:0.75em;
 }

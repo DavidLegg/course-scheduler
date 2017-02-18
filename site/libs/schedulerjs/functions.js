@@ -1,4 +1,5 @@
 var selectedSched = 0;
+var selectedSchedRight = 0;
 var schedMax = 0;
 var clickable = true;
 
@@ -56,25 +57,55 @@ function delPopCourses(str) {
            });
 }
 
-function getSchedText(div, prevNext){
-    if (prevNext == -1)
-    {
-        selectedSched = (selectedSched==0)?schedMax-1:selectedSched-1;
+function getSchedText(calChoice, prevNext){
+    var div = "";
+    
+    if (calChoice==0){
+        div = "#calendar div.fc-toolbar div.fc-clear";
+        if (prevNext == -1)
+        {
+            selectedSched = (selectedSched==0)?schedMax-1:selectedSched-1;
+        }
+        else if (prevNext == 1)
+        {
+            selectedSched = (selectedSched==schedMax-1)?0:selectedSched+1;
+        }
+        else if (prevNext == -2)
+        {
+            selectedSched = 0;
+        }
+        if (schedMax == 0 && selectedSched != 0)
+            selectedSched = 0;
     }
-    else if (prevNext == 1)
-    {
-        selectedSched = (selectedSched==schedMax-1)?0:selectedSched+1;
+    else if (calChoice==1){
+        div = "#calendar-right div.fc-toolbar div.fc-clear";
+        if (prevNext == -1)
+        {
+            selectedSchedRight = (selectedSchedRight==0)?schedMax-1:selectedSchedRight-1;
+        }
+        else if (prevNext == 1)
+        {
+            selectedSchedRight = (selectedSchedRight==schedMax-1)?0:selectedSchedRight+1;
+        }
+        else if (prevNext == -2)
+        {
+            selectedSchedRight = 0;
+        }
+        if (schedMax == 0 && selectedSchedRight != 0)
+            selectedSchedRight = 0;
     }
-    else if (prevNext == -2)
-    {
+    else{
+        div = ".fc-clear";
         selectedSched = 0;
+        selectedSchedRight = 0;
     }
-    if (schedMax == 0 && selectedSched != 0)
-        selectedSched = 0;
+    
+    
+    
     return $.ajax({
                   type: "GET",
                   url: "scheduler/ui/coursesretrieval.php",
-                  data:{_action:'schedule', _param:selectedSched.toString()},
+                  data:{_action:'schedule', _param:((calChoice==1)?selectedSchedRight:selectedSched).toString()},
                   success: function(data){
                   $(div).html(data);
                   console.log("Selected:", selectedSched);
@@ -98,7 +129,7 @@ function generateSchedules() {
                                $(".fc-next-button").addClass("fc-state-disabled");
                                $(".fc-clear").html('Loading schedules...');
                                $.when(
-                                      getSchedText(".fc-clear",-2)
+                                      getSchedText(-1,-2)
                                       ).then(
                                              $.ajax({
                                                     type: "GET",
@@ -120,7 +151,7 @@ function generateSchedules() {
                                                     })
                                              
                                              )
-                               .done( getSchedule("#calendar", -2));
+                               .done( getSchedule(-1, -2));
                                clickable = true;
                                $(".fc-prev-button").prop("disabled", false);
                                $(".fc-prev-button").removeClass('fc-state-disabled');
@@ -128,40 +159,85 @@ function generateSchedules() {
                                $(".fc-next-button").removeClass('fc-state-disabled');
                                });});}
 
-function getSchedule(div, prevNext){
-    if (prevNext == -1)
-    {
-        selectedSched = (selectedSched==0)?schedMax-1:selectedSched-1;
-    }
-    else if (prevNext == 1)
-    {
-        selectedSched = (selectedSched==schedMax-1)?0:selectedSched+1;
-    }
-    else if (prevNext == -2)
-    {
-        selectedSched = 0;
-    }
-    if (schedMax == 0 && selectedSched != 0)
-        selectedSched = 0;
+function getSchedule(calChoice, prevNext){
     
-    $(div).fullCalendar('removeEvents');
-    $(div).fullCalendar( 'gotoDate', '2017-01-02' );
+    
+    var div="";
+    var btnPath="";
+    
+    if (calChoice==0){
+        div = "#calendar";
+        btnPath = "#calendar div.fc-toolbar div.fc-right div.fc-button-group";
+        if (prevNext == -1)
+        {
+            selectedSched = (selectedSched==0)?schedMax-1:selectedSched-1;
+        }
+        else if (prevNext == 1)
+        {
+            selectedSched = (selectedSched==schedMax-1)?0:selectedSched+1;
+        }
+        else if (prevNext == -2)
+        {
+            selectedSched = 0;
+            selectedSchedRight = 0;
+        }
+        if (schedMax == 0 && selectedSched != 0)
+            selectedSched = 0;
+    }
+    else if (calChoice==1){
+        div = "#calendar-right";
+        btnPath = "#calendar-right div.fc-toolbar div.fc-right div.fc-button-group";
+        if (prevNext == -1)
+        {
+            selectedSchedRight = (selectedSchedRight==0)?schedMax-1:selectedSchedRight-1;
+        }
+        else if (prevNext == 1)
+        {
+            selectedSchedRight = (selectedSchedRight==schedMax-1)?0:selectedSchedRight+1;
+        }
+        else if (prevNext == -2)
+        {
+            selectedSched = 0;
+            selectedSchedRight = 0;
+        }
+        if (schedMax == 0 && selectedSchedRight != 0)
+            selectedSchedRight = 0;
+    } else {
+        selectedSched = 0;
+        selectedSchedRight = 0;
+    }
+    
+    if (div == ""){
+        $("#calendar").fullCalendar('removeEvents');
+        $("#calendar").fullCalendar( 'gotoDate', '2017-01-02' );
+        $("#calendar-right").fullCalendar('removeEvents');
+        $("#calendar-right").fullCalendar( 'gotoDate', '2017-01-02' );
+    }
+    else{
+            $(div).fullCalendar('removeEvents');
+            $(div).fullCalendar( 'gotoDate', '2017-01-02' );
+    }
+    
     return $.ajax({
                   
                   type: "GET",
                   contentType: "application/json; charset=utf-8",
                   url: "scheduler/ui/coursesretrieval.php",
                   dataType:"json",
-                  data:{_action:'schedview', _param:selectedSched.toString()},
+                  data:{_action:'schedview', _param:((calChoice==1)?selectedSchedRight:selectedSched).toString()},
                   success: function(data){
-                  
-                  $(div).fullCalendar( 'addEventSource', data );
+                  if (div != ""){
+                    $(div).fullCalendar( 'addEventSource', data );
+                  } else {
+                    $("#calendar").fullCalendar( 'addEventSource', data );
+                    $("#calendar-right").fullCalendar( 'addEventSource', data );
+                  }
                       console.log("derp");
                   
-                      $('.fc-prev-button').removeClass('fc-state-disabled');
-                      $('.fc-next-button').removeClass('fc-state-disabled');
-                      $('.fc-prev-button').prop("disabled", false);
-                      $('.fc-next-button').prop("disabled", false);
+                      $(btnPath+' .fc-prev-button').removeClass('fc-state-disabled');
+                      $(btnPath+' .fc-next-button').removeClass('fc-state-disabled');
+                      $(btnPath+' .fc-prev-button').prop("disabled", false);
+                      $(btnPath+' .fc-next-button').prop("disabled", false);
                   clickable = true;
                   }
                   }
