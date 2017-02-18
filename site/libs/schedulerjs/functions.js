@@ -151,7 +151,17 @@ function generateSchedules() {
                                                     })
                                              
                                              )
-                               .done( getSchedule(-1, -2));
+                               .done(
+                                     function(){
+                                     
+                                         if (schedMax > 1){
+                                            getSchedule(0, -2);
+                                             $.when(getSchedText(1,1)).then(getSchedule(1,0));
+                                         }else{
+                                            getSchedule(-1,0);
+                                         }
+                                     }
+                                    );
                                clickable = true;
                                $(".fc-prev-button").prop("disabled", false);
                                $(".fc-prev-button").removeClass('fc-state-disabled');
