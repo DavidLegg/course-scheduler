@@ -238,12 +238,6 @@
 						<!—- End Calendar —>
 
 					</div>
-                    <div class="left" id="help">
-                        <div class="box">
-                        <h2>How to use</h2>
-                        <p>Instructions coming soon!</p>
-                        </div>
-                    </div>
 				</div>
 			</div>
 
