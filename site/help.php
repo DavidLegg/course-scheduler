@@ -12,7 +12,7 @@
 	<body>
 		<header id="header">
 			<div id="head_container">
-				<div id="home"><a href="index.php">About - ZotScheduler</a></div>
+				<div id="home"><a href="index.php">Help - ZotScheduler</a></div>
 				<div id="nav_bar">
 					<ul id="nav">
 						<li><a href="index.php">Home</a></li>
@@ -25,10 +25,10 @@
 		</header>
 		<div id="content">
 			<div id="title">
-				About
+				Help
 			</div>
 			<div id="container">
-				<p>ZotScheduler is a tool that generates class schedules for students. Eventually, this about page will be more interesting. Developed by David Legg and Alex I. Ramirez.
+				<p>Instructions to come
 </p>
 			</div>
 		</div>
