@@ -146,17 +146,40 @@
              									right:"prev,next"
         								},
 									titleFormat:"[Your Possible Schedules]",
-									viewRender: function(currentView){
-										var minDate = moment('2017-01-02');
-										// Past
-										if (minDate >= currentView.start && minDate <= currentView.end) {
-											$(".fc-prev-button").prop('disabled', true); 
-											$(".fc-prev-button").addClass('fc-state-disabled'); 
-										}
-										else {
-											$(".fc-prev-button").removeClass('fc-state-disabled'); 
-											$(".fc-prev-button").prop('disabled', false); 
-										}
+                                    eventOverlap:false,
+                                    loading: function(isLoading, view){
+                                                                alert('loading');
+                                                                if (isLoading){
+                                                                    $(".fc-prev-button").prop("disabled", true);
+                                                                    $(".fc-prev-button").addClass("fc-state-disabled");
+                                                                    $(".fc-next-button").prop("disabled", true);
+                                                                    $(".fc-next-button").addClass("fc-state-disabled");
+                                                                }
+                                                                else
+                                                                {
+                                                                    $(".fc-prev-button").removeClass("fc-state-disabled");
+                                                                    $(".fc-prev-button").prop("disabled", false);
+                                                                    $(".fc-next-button").removeClass("fc-state-disabled");
+                                                                    $(".fc-next-button").prop("disabled", false);
+                                                                }
+                                                                
+                                        },
+									eventAfterAllRender: function(currentView){
+//                                                                $(".fc-prev-button").removeClass("fc-state-disabled");
+//                                                                $(".fc-prev-button").prop("disabled", false);
+//                                                                $(".fc-next-button").removeClass("fc-state-disabled");
+//                                                                $(".fc-next-button").prop("disabled", false);
+//                                                                clickable=true;
+//										var minDate = moment('2017-01-02');
+//										// Past
+//										if (minDate >= currentView.start && minDate <= currentView.end) {
+//											$(".fc-prev-button").prop('disabled', true); 
+//											$(".fc-prev-button").addClass('fc-state-disabled'); 
+//										}
+//										else {
+//											$(".fc-prev-button").removeClass('fc-state-disabled'); 
+//											$(".fc-prev-button").prop('disabled', false); 
+//										}
 										// Future
 										/*if (maxDate >= currentView.start && maxDate <= currentView.end) {
 											$(".fc-next-button").prop('disabled', true); 
@@ -166,18 +189,46 @@
 											$(".fc-next-button").prop('disabled', false); 
 										}*/
 									}
-								/*,
-								events:[{"title":"(20000) AC ENG 20A: ACADEMIC WRITING (School of Humanities) Lec","start":"2017-01-03T14:00:00-0800","end":"2017-01-03T15:20:00-0800"},{"title":"(20000) AC ENG 20A: ACADEMIC WRITING (School of Humanities) Lec","start":"2017-01-05T14:00:00-0800","end":"2017-01-05T15:20:00-0800"},{"title":"(20164) AC ENG 28: GRAMMAR (School of Humanities) Lec","start":"2017-01-03T09:30:00-0800","end":"2017-01-03T10:50:00-0800"},{"title":"(20164) AC ENG 28: GRAMMAR (School of Humanities) Lec","start":"2017-01-05T09:30:00-0800","end":"2017-01-05T10:50:00-0800"}]*/
 
                                     });
 
                               $('.fc-prev-button').click(function(){
-                                                         getSchedText(--selectedSched);
+                                                         console.log("Clickable", clickable);
+                                                         if (schedMax >0){
+                                                             if (clickable){
+                                                                 clickable = false;
+                                                         $('.fc-prev-button').prop("disabled", true);
+                                                         $('.fc-next-button').prop("disabled", true);
+                                                         $('.fc-prev-button').addClass('fc-state-disabled');
+                                                         $('.fc-next-button').addClass('fc-state-disabled');
+                                                         $.when(
+                                                                getSchedText(".fc-clear",-1),
+                                                                console.log("when")
+                                                                ).then(
+                                                                       getSchedule("#calendar",0),console.log("then")
+                                                                );
+                                                         }
+                                                        }
                                                          });
                               
                               $('.fc-next-button').click(function(){
-                                                         getSchedText(++selectedSched);
-                                                         });
+                                                         console.log("Clickable", clickable);
+                                                         if (schedMax > 0){
+                                                             if (clickable){
+                                                                 clickable = false;
+                                                         $('.fc-prev-button').prop("disabled", true);
+                                                         $('.fc-next-button').prop("disabled", true);
+                                                         $('.fc-prev-button').addClass('fc-state-disabled');
+                                                         $('.fc-next-button').addClass('fc-state-disabled');
+                                                         $.when(getSchedText(".fc-clear",1)
+                                                                ).then(
+                                                                       getSchedule("#calendar",0)
+                                                                       );
+                                                         
+
+                                                             }
+                                                         }
+                                    });
 							});
 
 						</script>

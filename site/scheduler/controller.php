@@ -78,9 +78,10 @@
     
     function generateSchedules(){
         $schedules = array();
-        foreach ($_SESSION['addedCourses'] as $course) {
-            $schedules = $course->buildSchedules($schedules); //build all possible schedules
-        }
+        if (isset($_SESSION['addedCourses']))
+            foreach ($_SESSION['addedCourses'] as $course) {
+                $schedules = $course->buildSchedules($schedules); //build all possible schedules
+            }
         return $schedules;
     }
     
@@ -92,7 +93,7 @@
                 echo '<li id="',$name,'" style="color:#0039ad;">',$course->name,' <a onclick="delPopCourses('.$name.');" href="javascript:void(0)">[X]</a></li>';
             }
             echo '<button type="button" onClick="generateSchedules();" >Schedule classes</button>';
-            if ($first) echo '<script>generateSchedules();</script>';
+            if ($first) echo '<script> generateSchedules();</script>';
         }
     }
     

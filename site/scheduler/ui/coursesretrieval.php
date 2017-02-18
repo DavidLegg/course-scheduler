@@ -73,9 +73,12 @@
                     if (empty($schedules))
                         echo "<span style='color:red'>No possible schedules.</span>";
                     else if (isset($schedules[$_GET['_param']])){
-                        echo count($schedules).$schedules[$_GET['_param']];
+                        echo $schedules[$_GET['_param']];
                     }
                 }
+                break;
+            case 'schedcount':
+                echo count($_SESSION['schedules']);
                 break;
             case 'schedview':
                 $date = new DateTime('2017-01-02 00:00');
@@ -89,7 +92,34 @@
                              'sunday'    => '6'
                              );
                 $master = array();
-                foreach($_SESSION['schedules'] as $sched) {
+                if ($_GET['_param']== -1){
+                    foreach($_SESSION['schedules'] as $sched) {
+                        foreach ($sched->sections as $section){
+                            foreach ($section->days as $day=>$valid){
+                                if ($valid) {
+                                    
+                                    $start = new DateTime(date('Y-m-d H:i:s', strtotime($date->format('Y-m-d H:i:s'). ' + '.$days[$day].' day')));
+                                    
+                                    $start->setTime($section->start->format('H'), $section->start->format('i'));
+                                    
+                                    $end = new DateTime(date('Y-m-d H:i:s', strtotime($date->format('Y-m-d H:i:s'). ' + '.$days[$day].' day')));
+                                    
+                                    $end->setTime($section->end->format('H'), $section->end->format('i'));
+                                    
+                                    $curr_sect = [
+                                    "title" => '('.$section->code.') ' . substr($section->course, 0, strpos($section->course, ":")) . ' ' . $section->type,
+                                    "start" => $start->format(DateTime::ISO8601),
+                                    "end"   => $end->format(DateTime::ISO8601)
+                                    ];
+                                    array_push($master, $curr_sect);
+                                }
+                            }
+                        }
+                        $date->modify('+7 day');
+                    }
+                }
+                else if (isset($_SESSION['schedules'][$_GET['_param']])){
+                    $sched = $_SESSION['schedules'][$_GET['_param']];
                     foreach ($sched->sections as $section){
                         foreach ($section->days as $day=>$valid){
                             if ($valid) {
@@ -103,16 +133,17 @@
                                 $end->setTime($section->end->format('H'), $section->end->format('i'));
                                 
                                 $curr_sect = [
-                                    "title" => '('.$section->code.') ' . substr($section->course, 0, strpos($section->course, ":")) . ' ' . $section->type,
-                                    "start" => $start->format(DateTime::ISO8601),
-                                    "end"   => $end->format(DateTime::ISO8601)
+                                "title" => '('.$section->code.') ' . substr($section->course, 0, strpos($section->course, ":")) . ' ' . $section->type,
+                                "start" => $start->format(DateTime::ISO8601),
+                                "end"   => $end->format(DateTime::ISO8601)
                                 ];
                                 array_push($master, $curr_sect);
                             }
                         }
                     }
-                    $date->modify('+7 day');
+
                 }
+                
                 echo json_encode($master);
                 break;
             default:
