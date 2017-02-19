@@ -33,7 +33,13 @@ function populateAddedCourses(str) {
                                       url: "scheduler/ui/coursesretrieval.php",
                                       data:{_action:'addcourse', _param:str},
                                       success: function(data){
-                                      $("#addedCourses").html(data)
+                                      console.log(data);
+                                      $("#addedCourses").html(data);
+                                      if (data != "<p>Select some courses first. Then they'll appear here.</p>"){
+                                        $("#genSched").prop("disabled", false);
+                                      }else {
+                                        $("#genSched").prop("disabled", true);
+                                      }
                                       
                                       }
                                       });
@@ -49,9 +55,16 @@ function delPopCourses(str) {
                                       url: "scheduler/ui/coursesretrieval.php",
                                       data:{_action:'delcourse', _param:str},
                                       success: function(data){
-                                      $("#addedCourses").html(data)
+                                      console.log(data);
+                                      $("#addedCourses").html(data);
+                                      if (data != "<p>Select some courses first. Then they'll appear here.</p>"){
+                                      $("#genSched").prop("disabled", false);
+                                      }else {
+                                      $("#genSched").prop("disabled", true);
+                                      }
                                       
                                       }
+                                      
                                       });
                                });
            });

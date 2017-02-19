@@ -104,6 +104,12 @@
                             </table>
                             
                         </div>
+                        <div class="box">
+                            <h2>Select your preferences</h2>
+                            
+                            <button disabled id="genSched" type="button" onClick="generateSchedules();" >Schedule classes</button>
+                        </div>
+                        
                     </div>
                     <div id="home-top-right" class="right">
                         <div class="box">
@@ -113,6 +119,8 @@
                                     echo listAddedCourses($first);
                                     $first = false;
                                     ?>
+                                
+                                
                                 
                             </ul>
                         </div>
@@ -224,43 +232,43 @@
                                               // page is now ready, initialize the calendar...
                                               
                                               $('#calendar-right').fullCalendar({
-                                                                          // put your options and callbacks here
-                                                                          weekends: false,
-                                                                          defaultView: "agendaWeek",
-                                                                          slotDuration:"00:30:00",
-                                                                          minTime:"08:00:00",
-                                                                          defaultDate:"2017-01-02",
-                                                                          timezone:"America/Los_Angeles",
-                                                                          allDaySlot:false,
-                                                                          height:700,
-                                                                          contentHeight:800,
-                                                                          columnFormat:'ddd',
-                                                                          header: {
-                                                                          left:"title",
-                                                                          center:"",
-                                                                          right:"prev,next"
-                                                                          },
-                                                                          titleFormat:"[Schedule #2]",
-                                                                          eventOverlap:false,
-                                                                          loading: function(isLoading, view){
-                                                                          alert('loading');
-                                                                          if (isLoading){
-                                                                          $(".fc-prev-button").prop("disabled", true);
-                                                                          $(".fc-prev-button").addClass("fc-state-disabled");
-                                                                          $(".fc-next-button").prop("disabled", true);
-                                                                          $(".fc-next-button").addClass("fc-state-disabled");
-                                                                          }
-                                                                          else
-                                                                          {
-                                                                          $(".fc-prev-button").removeClass("fc-state-disabled");
-                                                                          $(".fc-prev-button").prop("disabled", false);
-                                                                          $(".fc-next-button").removeClass("fc-state-disabled");
-                                                                          $(".fc-next-button").prop("disabled", false);
-                                                                          }
-                                                                          
-                                                                          }
-                                                                          
-                                                                          });
+                                                                                // put your options and callbacks here
+                                                                                weekends: false,
+                                                                                defaultView: "agendaWeek",
+                                                                                slotDuration:"00:30:00",
+                                                                                minTime:"08:00:00",
+                                                                                defaultDate:"2017-01-02",
+                                                                                timezone:"America/Los_Angeles",
+                                                                                allDaySlot:false,
+                                                                                height:700,
+                                                                                contentHeight:800,
+                                                                                columnFormat:'ddd',
+                                                                                header: {
+                                                                                left:"title",
+                                                                                center:"",
+                                                                                right:"prev,next"
+                                                                                },
+                                                                                titleFormat:"[Schedule #2]",
+                                                                                eventOverlap:false,
+                                                                                loading: function(isLoading, view){
+                                                                                alert('loading');
+                                                                                if (isLoading){
+                                                                                $(".fc-prev-button").prop("disabled", true);
+                                                                                $(".fc-prev-button").addClass("fc-state-disabled");
+                                                                                $(".fc-next-button").prop("disabled", true);
+                                                                                $(".fc-next-button").addClass("fc-state-disabled");
+                                                                                }
+                                                                                else
+                                                                                {
+                                                                                $(".fc-prev-button").removeClass("fc-state-disabled");
+                                                                                $(".fc-prev-button").prop("disabled", false);
+                                                                                $(".fc-next-button").removeClass("fc-state-disabled");
+                                                                                $(".fc-next-button").prop("disabled", false);
+                                                                                }
+                                                                                
+                                                                                }
+                                                                                
+                                                                                });
                                               
                                               $('.fc-prev-button').click(function(){
                                                                          console.log("Clickable", clickable);
@@ -308,7 +316,7 @@
                         <!—- End Calendar —>
                         
                     </div>
-
+                    
                 </div>
             </div>
             

@@ -92,7 +92,8 @@
             foreach($_SESSION['addedCourses'] as $name => $course){
                 echo '<li id="',$name,'" style="color:#0039ad;">',$course->name,' <a onclick="delPopCourses('.$name.');" href="javascript:void(0)">[X]</a></li>';
             }
-            echo '<button type="button" onClick="generateSchedules();" >Schedule classes</button>';
+            echo '<script>$("#genSched").prop("disabled", false);</script>';
+//            echo '<button type="button" onClick="generateSchedules();" >Schedule classes</button>';
             if ($first) echo '<script> generateSchedules();</script>';
         }
     }
