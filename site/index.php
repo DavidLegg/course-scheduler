@@ -107,7 +107,81 @@
                         <div class="box">
                             <h2>Select your preferences</h2>
                             
-                            <button disabled id="genSched" type="button" onClick="generateSchedules();" >Schedule classes</button>
+                            <table class="course_choice">
+                                <tr>
+                                    <td class="courses_1">
+                                    
+                                    </td>
+                                    <td class="courses_2" >
+                                        <span style="font-size:0.8em;">Higher ratings mean you want more of that category.</span>
+                                    </td>
+                                </tr>
+
+                                <tr>
+                                    <td class="courses_1">
+                                        Mornings:
+                                    </td>
+                                    <td class="courses_2" >
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="courses_1">
+                                         Evenings:
+                                    </td>
+                                    <td class="courses_2" >
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="courses_1">
+                                        Mondays:
+                                    </td>
+                                    <td class="courses_2" >
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="courses_1">
+                                        Fridays:
+                                    </td>
+                                    <td class="courses_2" >
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="courses_1">
+                                        Balanced Days:
+                                    </td>
+                                    <td class="courses_2" >
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="courses_1">
+                                         Gaps:
+                                    </td>
+                                    <td class="courses_2" >
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="courses_1">
+                                         Openings:
+                                    </td>
+                                    <td class="courses_2" >
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="courses_1">
+                                    </td>
+                                    <td class="courses_2" style="text-align:right">
+                                        <button disabled id="genSched" type="button" onClick="generateSchedules();" >Schedule classes</button>
+                                    </td>
+                                </tr>
+                            </table>
+                            
                         </div>
                         
                     </div>
