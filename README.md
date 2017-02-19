@@ -6,16 +6,16 @@ Course Scheduler is a web app to help students of UC Irvine schedule their class
 To-do List
 ----------
 - [x] Test the premise. (Develop scheduling algorithm)
-- [ ] Establish the basis. (Get basic functionality using algorithm)
+- [x] Establish the basis. (Get basic functionality using algorithm)
   - [x] Basic scheduling algorithm
   - [x] Basic preferences and schedule sorting
-  - [ ] Automatic access to schedule of classes
-  - [ ] GUI for adding courses
-  - [ ] GUI for displaying schedules
+  - [x] Automatic access to schedule of classes
+  - [x] GUI for adding courses
+  - [x] GUI for displaying schedules
 - [ ] Debugging the basis.
   - [x] Basic scheduling algorithm
   - [x] Basic preferences and schedule sorting
-  - [ ] Automatic access to schedule of classes
+  - [x] Automatic access to schedule of classes
   - [ ] GUI for adding courses
   - [ ] GUI for displaying schedules
 - [ ] Polish it and add any other features
