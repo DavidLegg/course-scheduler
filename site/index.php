@@ -110,7 +110,7 @@
                             <table class="course_choice">
                                 <tr>
                                     <td class="courses_1">
-                                    
+                                        
                                     </td>
                                     <td class="courses_2" >
                                         <span style="font-size:0.8em;">Higher ratings mean you want more of that category.</span>
@@ -122,7 +122,7 @@
                                         Mornings:
                                     </td>
                                     <td class="courses_2" >
-                                        
+                                        <input id="test" type="range" class="class_select"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -130,7 +130,7 @@
                                          Evenings:
                                     </td>
                                     <td class="courses_2" >
-                                        
+                                        <input id="test" type="range" class="class_select"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -138,7 +138,7 @@
                                         Mondays:
                                     </td>
                                     <td class="courses_2" >
-                                        
+                                        <input id="test" type="range" class="class_select"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -146,7 +146,7 @@
                                         Fridays:
                                     </td>
                                     <td class="courses_2" >
-                                        
+                                        <input id="test" type="range" class="class_select"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -154,7 +154,7 @@
                                         Balanced Days:
                                     </td>
                                     <td class="courses_2" >
-                                        
+                                        <input id="test" type="range" class="class_select"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -162,7 +162,7 @@
                                          Gaps:
                                     </td>
                                     <td class="courses_2" >
-                                        
+                                        <input id="test" type="range" class="class_select"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -170,7 +170,7 @@
                                          Openings:
                                     </td>
                                     <td class="courses_2" >
-                                        
+                                        <input id="test" type="range" class="class_select"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -201,7 +201,7 @@
                     </div>
                     
                 </div>
-                <div class="columns box">
+                <div class="columns box" id="schedules">
                     <h2>Compare possible schedules</h2>
                     <div id="home-left" class="left box">
                         <!—- Calendar —>

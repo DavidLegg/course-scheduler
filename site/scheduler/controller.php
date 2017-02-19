@@ -86,8 +86,10 @@
     }
     
     function listAddedCourses($first = false){
-        if (!isset($_SESSION['addedCourses']) || empty($_SESSION['addedCourses']))
+        if (!isset($_SESSION['addedCourses']) || empty($_SESSION['addedCourses'])){
             echo "<p>Select some courses first. Then they'll appear here.</p>";
+            echo '<script>$("#genSched").prop("disabled", true);</script>';
+        }
         else{
             foreach($_SESSION['addedCourses'] as $name => $course){
                 echo '<li id="',$name,'" style="color:#0039ad;">',$course->name,' <a onclick="delPopCourses('.$name.');" href="javascript:void(0)">[X]</a></li>';

@@ -35,11 +35,6 @@ function populateAddedCourses(str) {
                                       success: function(data){
                                       console.log(data);
                                       $("#addedCourses").html(data);
-                                      if (data != "<p>Select some courses first. Then they'll appear here.</p>"){
-                                        $("#genSched").prop("disabled", false);
-                                      }else {
-                                        $("#genSched").prop("disabled", true);
-                                      }
                                       
                                       }
                                       });
@@ -57,11 +52,6 @@ function delPopCourses(str) {
                                       success: function(data){
                                       console.log(data);
                                       $("#addedCourses").html(data);
-                                      if (data != "<p>Select some courses first. Then they'll appear here.</p>"){
-                                      $("#genSched").prop("disabled", false);
-                                      }else {
-                                      $("#genSched").prop("disabled", true);
-                                      }
                                       
                                       }
                                       
@@ -249,6 +239,11 @@ function getSchedule(calChoice, prevNext){
                   dataType:"json",
                   data:{_action:'schedview', _param:((calChoice==1)?selectedSchedRight:selectedSched).toString()},
                   success: function(data){
+                  
+                  $('html,body').animate({
+                                         scrollTop: $("#schedules").offset().top},
+                                         'slow');
+//                  location.href = "#schedules";
                   if (div != ""){
                     $(div).fullCalendar( 'addEventSource', data );
                   } else {
@@ -262,6 +257,7 @@ function getSchedule(calChoice, prevNext){
                       $(btnPath+' .fc-prev-button').prop("disabled", false);
                       $(btnPath+' .fc-next-button').prop("disabled", false);
                   clickable = true;
+                  
                   }
                   }
                   
