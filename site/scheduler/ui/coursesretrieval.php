@@ -148,25 +148,26 @@
                 break;
                 
             case "updatemorning":
-                $_SESSION['prefMornings'] = $_GET['param'];
+                $_SESSION['prefMornings'] = $_GET['_param'];
+                echo  $_SESSION['prefMornings'];
                 break;
             case "updateevening":
-                $_SESSION['prefEvening'] = $_GET['param'];
+                $_SESSION['prefEvening'] = $_GET['_param'];
                 break;
             case "updatemonday":
-                $_SESSION['prefMondays'] = $_GET['param'];
+                $_SESSION['prefMondays'] = $_GET['_param'];
                 break;
             case "updatefriday":
-                $_SESSION['prefFridays'] = $_GET['param'];
+                $_SESSION['prefFridays'] = $_GET['_param'];
                 break;
             case "updatebalance":
-                $_SESSION['prefBalance'] = $_GET['param'];
+                $_SESSION['prefBalance'] = $_GET['_param'];
                 break;
             case "updategaps":
-                $_SESSION['prefGaps'] = $_GET['param'];
+                $_SESSION['prefGaps'] = $_GET['_param'];
                 break;
             case "updateopenings":
-                $_SESSION['prefOpenings'] = $_GET['param'];
+                $_SESSION['prefOpenings'] = $_GET['_param'];
                 break;
             default:
                 break;

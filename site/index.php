@@ -122,7 +122,12 @@
                                         Mornings:
                                     </td>
                                     <td class="courses_2" >
-                                        <input id="mornings" type="range" class="class_select pref_select"/>
+                                        <input id="mornings" type="range" class="class_select pref_select"
+                                            <?php
+                                                if (isset($_SESSION['prefMornings']))
+                                                    echo ' value="'.$_SESSION['prefMornings'].'"';
+                                            ?>
+                                        />
                                     </td>
                                 </tr>
                                 <tr>
@@ -130,7 +135,10 @@
                                          Evenings:
                                     </td>
                                     <td class="courses_2" >
-                                        <input id="evenings" type="range" class="class_select pref_select"/>
+                                        <input id="evenings" type="range" class="class_select pref_select"<?php
+                                            if (isset($_SESSION['prefEvening']))
+                                            echo ' value="'.$_SESSION['prefEvening'].'"';
+                                            ?>/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -138,7 +146,10 @@
                                         Mondays:
                                     </td>
                                     <td class="courses_2" >
-                                        <input id="mondays" type="range" class="class_select pref_select"/>
+                                        <input id="mondays" type="range" class="class_select pref_select"<?php
+                                            if (isset($_SESSION['prefMondays']))
+                                            echo ' value="'.$_SESSION['prefMondays'].'"';
+                                            ?>/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -146,7 +157,10 @@
                                         Fridays:
                                     </td>
                                     <td class="courses_2" >
-                                        <input id="fridays" type="range" class="class_select pref_select"/>
+                                        <input id="fridays" type="range" class="class_select pref_select"<?php
+                                            if (isset($_SESSION['prefFridays']))
+                                            echo ' value="'.$_SESSION['prefFridays'].'"';
+                                            ?>/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -154,7 +168,10 @@
                                         Balanced Days:
                                     </td>
                                     <td class="courses_2" >
-                                        <input id="balance" type="range" class="class_select pref_select"/>
+                                        <input id="balance" type="range" class="class_select pref_select"<?php
+                                            if (isset($_SESSION['prefBalance']))
+                                            echo ' value="'.$_SESSION['prefBalance'].'"';
+                                            ?>/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -162,7 +179,10 @@
                                          Gaps:
                                     </td>
                                     <td class="courses_2" >
-                                        <input id="gaps" type="range" class="class_select pref_select"/>
+                                        <input id="gaps" type="range" class="class_select pref_select"<?php
+                                            if (isset($_SESSION['prefGaps']))
+                                            echo ' value="'.$_SESSION['prefGaps'].'"';
+                                            ?>/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -170,7 +190,10 @@
                                          Openings:
                                     </td>
                                     <td class="courses_2" >
-                                        <input id="openings" type="range" class="class_select pref_select"/>
+                                        <input id="openings" type="range" class="class_select pref_select"<?php
+                                            if (isset($_SESSION['prefOpenings']))
+                                            echo ' value="'.$_SESSION['prefOpenings'].'"';
+                                            ?>/>
                                     </td>
                                 </tr>
                                 <script>
