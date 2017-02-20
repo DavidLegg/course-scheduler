@@ -146,6 +146,28 @@
                 
                 echo json_encode($master);
                 break;
+                
+            case "updatemorning":
+                $_SESSION['prefMornings'] = $_GET['param'];
+                break;
+            case "updateevening":
+                $_SESSION['prefEvening'] = $_GET['param'];
+                break;
+            case "updatemonday":
+                $_SESSION['prefMondays'] = $_GET['param'];
+                break;
+            case "updatefriday":
+                $_SESSION['prefFridays'] = $_GET['param'];
+                break;
+            case "updatebalance":
+                $_SESSION['prefBalance'] = $_GET['param'];
+                break;
+            case "updategaps":
+                $_SESSION['prefGaps'] = $_GET['param'];
+                break;
+            case "updateopenings":
+                $_SESSION['prefOpenings'] = $_GET['param'];
+                break;
             default:
                 break;
         }

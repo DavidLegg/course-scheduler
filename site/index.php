@@ -43,7 +43,7 @@
         </header>
         <div id="content">
             <div id="container">
-                <div class="columns">
+                <div class="columns box">
                     <div id="home-top-left" class="left">
                         <div class="box">
                             <h2>Select your courses</h2>
@@ -122,7 +122,7 @@
                                         Mornings:
                                     </td>
                                     <td class="courses_2" >
-                                        <input id="test" type="range" class="class_select"/>
+                                        <input id="mornings" type="range" class="class_select pref_select"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -130,7 +130,7 @@
                                          Evenings:
                                     </td>
                                     <td class="courses_2" >
-                                        <input id="test" type="range" class="class_select"/>
+                                        <input id="evenings" type="range" class="class_select pref_select"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -138,7 +138,7 @@
                                         Mondays:
                                     </td>
                                     <td class="courses_2" >
-                                        <input id="test" type="range" class="class_select"/>
+                                        <input id="mondays" type="range" class="class_select pref_select"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -146,7 +146,7 @@
                                         Fridays:
                                     </td>
                                     <td class="courses_2" >
-                                        <input id="test" type="range" class="class_select"/>
+                                        <input id="fridays" type="range" class="class_select pref_select"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -154,7 +154,7 @@
                                         Balanced Days:
                                     </td>
                                     <td class="courses_2" >
-                                        <input id="test" type="range" class="class_select"/>
+                                        <input id="balance" type="range" class="class_select pref_select"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -162,7 +162,7 @@
                                          Gaps:
                                     </td>
                                     <td class="courses_2" >
-                                        <input id="test" type="range" class="class_select"/>
+                                        <input id="gaps" type="range" class="class_select pref_select"/>
                                     </td>
                                 </tr>
                                 <tr>
@@ -170,9 +170,16 @@
                                          Openings:
                                     </td>
                                     <td class="courses_2" >
-                                        <input id="test" type="range" class="class_select"/>
+                                        <input id="openings" type="range" class="class_select pref_select"/>
                                     </td>
                                 </tr>
+                                <script>
+                                    $(".pref_select").on("input change", function(){
+                                                         var id = $(this).attr("id");
+                                                         updateWeight(id);
+                                                         
+                                    });
+                                </script>
                                 <tr>
                                     <td class="courses_1">
                                     </td>

@@ -11,6 +11,7 @@
     require_once  ROOT_PATH.'course.php';
     require_once  ROOT_PATH.'schedule.php';
     require_once  ROOT_PATH.'standardPreferences.php';
+    require_once  ROOT_PATH.'preferences.php';
     session_start();
     
     global $xpath, $baseQueryUrl, $addedCourses, $availableCourses;
@@ -77,11 +78,31 @@
     }
     
     function generateSchedules(){
+        global $standardPreferences;
         $schedules = array();
+        
         if (isset($_SESSION['addedCourses']))
             foreach ($_SESSION['addedCourses'] as $course) {
                 $schedules = $course->buildSchedules($schedules); //build all possible schedules
             }
+        if (!isset($_SESSION['prefMornings'])) $_SESSION['prefMornings'] = 50;
+        if (!isset($_SESSION['prefEvening'])) $_SESSION['prefEvening'] = 50;
+        if (!isset($_SESSION['prefMondays'])) $_SESSION['prefMondays'] = 50;
+        if (!isset($_SESSION['prefFridays'])) $_SESSION['prefFridays'] = 50;
+        if (!isset($_SESSION['prefBalance'])) $_SESSION['prefBalance'] = 50;
+        if (!isset($_SESSION['prefGaps'])) $_SESSION['prefGaps'] = 50;
+        if (!isset($_SESSION['prefOpenings'])) $_SESSION['prefOpenings'] = 50;
+        
+        $standardPreferences->changeWeight("mornings", $_SESSION['prefMornings']);
+        $standardPreferences->changeWeight("evenings", $_SESSION['prefEvening']);
+        $standardPreferences->changeWeight("mondays", $_SESSION['prefMondays']);
+        $standardPreferences->changeWeight("fridays", $_SESSION['prefFridays']);
+        $standardPreferences->changeWeight("balance", $_SESSION['prefBalance']);
+        $standardPreferences->changeWeight("gaps", $_SESSION['prefGaps']);
+        $standardPreferences->changeWeight("openings", $_SESSION['prefOpenings']);
+        
+        $standardPreferences.sort($schedules);
+        
         return $schedules;
     }
     
