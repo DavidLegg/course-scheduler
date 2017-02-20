@@ -9,6 +9,8 @@
         public $name; // string
         public $sectionArr; // array(string => array(Section)) : Section->type => {Section}
         public $yearTerm;
+        private $combos;
+        private $combosChanged;
         
         function __construct($courseName, $yearTerm, array $sections = NULL) {
             $sections = is_null($sections) ? array() : $sections;
@@ -23,6 +25,7 @@
             
             $this->name = (string)$courseName;
             $this->yearTerm = (string)$yearTerm;
+            $this->combosChanged = True;
         }
         
         function addSection(Section $section) {
@@ -30,6 +33,19 @@
                 $this->sectionArr[$section->type] = array();
             }
             $this->sectionArr[$section->type][] = $section;
+        }
+
+        public function numCombos() {
+            // calculate on demand, but cache answer.
+            if ($this->combosChanged) {
+                // simple combinatorial calculation: (over)estimate the number of possibilities for this course
+                // by assuming we pick one each of any type of section.
+                $this->combos = array_reduce($this->sectionArr, function ($total, $sections) {
+                    return $total * sizeof($sections);
+                }, 1);
+                $this->combosChanged = False;
+            }
+            return $this->combos;
         }
         
         /**

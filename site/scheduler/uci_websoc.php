@@ -62,7 +62,6 @@
             $depts   = $xml->xpath('//department'); //which cannot dereference function result
             $schools = $xml->xpath('//school'); //which cannot dereference function result
             
-            echo '<br/>';
             if ($courses === FALSE) {
               throw new Exception("No listings for this course.");
             }
