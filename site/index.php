@@ -89,13 +89,13 @@
                                         Course:
                                     </td>
                                     <td class="courses_2">
-                                        <select name="Course" id="course" class="class_select">
+                                        <select name="Course" id="course" onChange="hideAdded();" class="class_select">
                                         </select>
                                     </td>
                                 </tr>
                                 
                                 <tr>
-                                    <td class="courses_1">
+                                <td class="courses_1"  id="addConfirm" style="color:#0039ad;">
                                     </td>
                                     <td class="courses_2" style="text-align:right">
                                         <button type="button" onClick="populateAddedCourses(document.getElementById('course').value)">Select Course</button>

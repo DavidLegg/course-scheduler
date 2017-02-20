@@ -4,10 +4,15 @@ var schedMax = 0;
 var clickable = true;
 
 
+function hideAdded(){
+    
+    $("#addConfirm").html("");
+}
 
 function populateCourses() {
     jQuery(function($) {
            $( document ).ready(function() {
+                               hideAdded();
                                $("#course").prop('disabled', true);
                                $("#course").html("<option>Loading</option>");
                                $.ajax({
@@ -28,6 +33,7 @@ function populateAddedCourses(str) {
     jQuery(function($) {
            $( document ).ready(function() {
                                $("#addedCourses").html("Loading...");
+                               $("#addConfirm").html("Adding...");
                                $.ajax({
                                       type: "GET",
                                       url: "scheduler/ui/coursesretrieval.php",
@@ -35,7 +41,7 @@ function populateAddedCourses(str) {
                                       success: function(data){
                                       console.log(data);
                                       $("#addedCourses").html(data);
-                                      
+                                      $("#addConfirm").html("Added");
                                       }
                                       });
                                });
@@ -45,6 +51,7 @@ function populateAddedCourses(str) {
 function delPopCourses(str) {
     jQuery(function($) {
            $( document ).ready(function() {
+                               hideAdded();
                                $.ajax({
                                       type: "GET",
                                       url: "scheduler/ui/coursesretrieval.php",
