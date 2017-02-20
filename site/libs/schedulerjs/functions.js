@@ -4,10 +4,61 @@ var schedMax = 0;
 var clickable = true;
 
 
+function hideAdded(){
+    
+    $("#addConfirm").html("");
+}
+
+function updateWeight(category){
+    var action = "";
+    var weight = "";
+    switch(category){
+        case "mornings":
+            action = "morning";
+            weight = $("#mornings").val().toString();
+            break;
+        case "evenings":
+            action = "evening";
+            weight = $("#evenings").val().toString();
+            break;
+        case "mondays":
+            action = "monday";
+            weight = $("#mondays").val().toString();
+            break;
+        case "fridays":
+            action = "friday";
+            weight = $("#fridays").val().toString();
+            break;
+        case "balance":
+            action = "balance";
+            weight = $("#balance").val().toString();
+            break;
+        case "gaps":
+            action = "gaps";
+            weight = $("#gaps").val().toString();
+            break;
+        case "openings":
+            action = "openings";
+            weight = $("#openings").val().toString();
+            break;
+        default:
+            break;
+    }
+    $.ajax({
+           type: "GET",
+           url: "scheduler/ui/coursesretrieval.php",
+           data:{_action:'update'+action, _param:weight},
+           success: function(data){
+               console.log(action, ": ", weight);
+           }
+       });
+    
+}
 
 function populateCourses() {
     jQuery(function($) {
            $( document ).ready(function() {
+                               hideAdded();
                                $("#course").prop('disabled', true);
                                $("#course").html("<option>Loading</option>");
                                $.ajax({
@@ -28,6 +79,7 @@ function populateAddedCourses(str) {
     jQuery(function($) {
            $( document ).ready(function() {
                                $("#addedCourses").html("Loading...");
+                               $("#addConfirm").html("Adding...");
                                $.ajax({
                                       type: "GET",
                                       url: "scheduler/ui/coursesretrieval.php",
@@ -35,7 +87,7 @@ function populateAddedCourses(str) {
                                       success: function(data){
                                       console.log(data);
                                       $("#addedCourses").html(data);
-                                      
+                                      $("#addConfirm").html("Added");
                                       }
                                       });
                                });
@@ -45,6 +97,7 @@ function populateAddedCourses(str) {
 function delPopCourses(str) {
     jQuery(function($) {
            $( document ).ready(function() {
+                               hideAdded();
                                $.ajax({
                                       type: "GET",
                                       url: "scheduler/ui/coursesretrieval.php",
