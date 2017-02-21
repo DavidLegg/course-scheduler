@@ -131,7 +131,8 @@
             $course = new Course($courseName, $term);
             $coreqs = array(); //code => coreq's code
             foreach($courseXml->section as $sectionXml) {
-                $course->addSection(UCI_WebSoc::_makeSection($sectionXml,$courseName,$coreqs));
+                $sec = UCI_WebSoc::_makeSection($sectionXml,$courseName,$coreqs);
+                if ($sec) $course->addSection($sec);
             }
             UCI_WebSoc::_addCoreqs($course,$coreqs);
             return $course;
@@ -145,6 +146,7 @@
             $secFinal  = $secXml->xpath('sec_final');
 
             list($start,$end) = UCI_WebSoc::_makeTimes((string)($secTimes[0]));
+            if ($start === False || $end === False) return False; //Fail early
             $coreqCode = (string)($coreqCode[0]);
             if ((int)$coreqCode != 0) {
                 $coreqs[(string)($secXml->course_code)] = $coreqCode;
@@ -172,7 +174,7 @@
         private static function _makeTimes($timeStr) {
 //            var_dump($timeStr);
             if (!isset($timeStr)||$timeStr == "TBA"||$timeStr == "")
-                return array(new Time(""), new Time(""));
+                return array(False, False); // signal failure
             list($startStr,$endStr) = explode('-', $timeStr);
             if (substr($endStr,-1) === 'p') $endStr .= 'm'; // make p into pm
             $start = new Time($startStr);

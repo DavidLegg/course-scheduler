@@ -5,8 +5,9 @@ if (!defined('ROOT_PATH')) define('ROOT_PATH',__DIR__.'/');
 require_once ROOT_PATH.'preferences.php';
 require_once ROOT_PATH.'time.php';
 
-$standardPreferences = new Preferences(array(
-  array('mornings', function($sched) {
+function buildStandardPreferences() {
+  // need to declare each function individually to allow the preference object to be serialized.
+  function mornings ($sched) {
     $cutoff = new Time(11,00);
     $score  = 0.0;
     foreach ($sched->sections as $s) {
@@ -17,8 +18,8 @@ $standardPreferences = new Preferences(array(
     }
     // score should be in the 0-20 range
     return $score;
-  }),
-  array('evenings', function($sched) {
+  }
+  function evenings ($sched) {
     $cutoff = new Time(16,00);
     $score  = 0.0;
     foreach ($sched->sections as $s) {
@@ -29,8 +30,8 @@ $standardPreferences = new Preferences(array(
     }
     // score should be in the 0-20 range
     return $score;
-  }),
-  array('mondays', function($sched) {
+  }
+  function mondays($sched) {
     $score = 0.0;
     foreach ($sched->sections as $s) {
       if ($s->days['monday']) {
@@ -40,8 +41,8 @@ $standardPreferences = new Preferences(array(
     }
     // score should be in the 0-12 range, double to keep in line with other scores
     return $score * 2;
-  }),
-  array('fridays', function($sched) {
+  }
+  function fridays ($sched) {
     $score = 0.0;
     foreach ($sched->sections as $s) {
       if ($s->days['friday']) {
@@ -51,8 +52,8 @@ $standardPreferences = new Preferences(array(
     }
     // score should be in the 0-12 range, double to keep in line with other scores
     return $score * 2;
-  }),
-  array('balance', function($sched) {
+  }
+  function balance($sched) {
     $score = 0.0;
     $hoursByDay = array(
       'monday'    => 0.0,
@@ -76,8 +77,8 @@ $standardPreferences = new Preferences(array(
     }
     // score should be in the 0-25 or 0-30 range, estimated
     return $score;
-  }),
-  array('gaps', function($sched) {
+  }
+  function gaps ($sched) {
     $score = 0.0;
     $sectionsByDay = array(
       'monday'    => array(),
@@ -109,14 +110,26 @@ $standardPreferences = new Preferences(array(
       }
     }
     return $score;
-  }),
-  array('openings', function($sched) {
+  }
+  function openings ($sched) {
     $score = 0.0;
     foreach ($sched->sections as $s) {
       $score += $s->openings;
     }
     return $score;
-  })
-));
+  }
+
+  return new Preferences(array(
+    array('mornings', 'mornings'),
+    array('evenings', 'evenings'),
+    array('mondays' , 'mondays' ),
+    array('fridays' , 'fridays' ),
+    array('balance' , 'balance' ),
+    array('gaps'    , 'gaps'    ),
+    array('openings', 'openings')
+  ));
+}
+
+$standardPreferences = buildStandardPreferences();
 
 ?>

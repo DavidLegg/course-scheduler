@@ -16,7 +16,6 @@ function smartSchedule($courses, &$preferences, $n, $marginFactor = 2) {
   usort($courses, function($c1, $c2) {
     return $c1->numCombos() - $c2->numCombos();
   });
-  echo "DEBUG: courses: array("; foreach($courses as $v) echo $v,","; echo ")<br>"; //DEBUG
 
   $schedules = array();
   foreach ($courses as $course) {
@@ -48,6 +47,22 @@ function smartSchedule2($courses, &$preferences, $n) {
   //       Then, we do a greedy selection at that level.
   //       When a schedule is created, look at a global list of top n schedules, with a globally cached "best of worst" score. If over that score, push into list.
   //       Alternatively, just push the first n to 2n onto a list, then terminate.
+}
+
+/**
+ * Brute force algorithm, for comparison.
+ * 
+ * @param courses The array of Courses to be scheduled.
+ * @param preferences The Preferences object used to score schedules.
+ * @param n The number of top-scoring schedules to be returned.
+ */
+function bruteSchedule($courses, &$preferences, $n) {
+  $schedules = array();
+  foreach ($courses as $c) {
+    $schedules = $c->buildSchedules($schedules);
+  }
+  $preferences->sort($schedules);
+  return array_slice($schedules, 0, $n);
 }
 
 ?>

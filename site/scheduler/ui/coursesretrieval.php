@@ -55,6 +55,13 @@
                 listAddedCourses();
                 break;
             case 'schedule':
+                $_SESSION['preferences'] = $standardPreferences;
+                if (isset($_GET['_prefs'])) {
+                    foreach ($_GET['_prefs'] as $category => $weight) {
+                        $prefs = $_SESSION['preferences'];
+                        $prefs->changeWeight($category, $weight);
+                    }
+                }
                 $schedules = generateSchedules();
                 $_SESSION['schedules'] = $schedules;
                 if ($_GET['_param'] == -1){

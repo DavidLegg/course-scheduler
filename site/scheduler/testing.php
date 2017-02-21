@@ -9,32 +9,71 @@ function instrument($callback, $n) {
   echo 'Starting...<br>';
   $start = microtime(true);
   for ($i=0; $i < $n; $i++) {
-    echo $i.',';
+    echo $i, ',';
     $result = $callback();
   }
   $end = microtime(true);
-  echo '<br>Finished. Execution time: '.($end - $start).' s.<br>';
+  echo '<br>Finished. Execution time: ', ($end - $start), ' s.<br>';
   return $result;
 }
 
 echo 'Loaded.<br>';
 
-$writing39B = UCI_WebSoc::getCourse('WRITING 39B');
-$writing39C = UCI_WebSoc::getCourse('WRITING 39C');
-$math2B     = UCI_WebSoc::getCourse('MATH 2B');
+$courses = array(
+  UCI_WebSoc::getCourse('MUSIC H80'),
+  UCI_WebSoc::getCourse('MATH 9'),
+  UCI_WebSoc::getCourse('PHYSICS 7E'),
+  UCI_WebSoc::getCourse('MATH 130A'),
+);
 
-echo 'Sizes:<br>39B: ', $writing39B->numCombos(),
-     '<br>39C: ', $writing39C->numCombos(),
-     '<br>2B: ', $math2B->numCombos(), '<br>';
+$standardPreferences->changeWeight('mornings', -10);
+$standardPreferences->changeWeight('evenings', -20);
+$standardPreferences->changeWeight('gaps', -40);
 
-$courses = array($writing39B, $writing39C, $math2B);
-$standardPreferences->changeWeight('mornings', -1);
-$standardPreferences->changeWeight('evenings', -2);
+$n = 20;
 
-$schedules = instrument(function() use ($courses, $standardPreferences) {
-  return smartSchedule($courses, $standardPreferences, 10);
+
+echo "<table><tr><td>";
+echo "--- Smart Algorithm ---<br>";
+
+$smart_schedules = instrument(function() use ($courses, $standardPreferences, $n) {
+  return smartSchedule($courses, $standardPreferences, $n);
 }, 1);
 
-echo sizeof($schedules), ' schedules produced.<br>';
+echo sizeof($smart_schedules), ' schedules produced.<br><br>';
+
+foreach ($smart_schedules as $sched) {
+  foreach ($sched->sections as $s) {
+    echo $s->code, ',';
+  }
+  echo '<br>';
+}
+
+
+echo "</td><td>";
+echo "--- Brute Force algorithm ---<br>";
+
+$brute_schedules = instrument(function() use ($courses, $standardPreferences, $n) {
+  return bruteSchedule($courses, $standardPreferences, $n);
+}, 1);
+
+echo sizeof($brute_schedules), ' schedules produced.<br><br>';
+
+$i = 0;
+$all_same = True;
+foreach ($brute_schedules as $sched) {
+  $same = True;
+  $smart = $smart_schedules[$i++]->sections;
+  foreach ($sched->sections as $s) {
+    echo $s->code, ',';
+    $same = $same && in_array($s,$smart);
+  }
+  echo ($same ? '' : ' ---!!!'), '<br>';
+  $all_same = $all_same && $same;
+}
+
+echo "</td></tr></table><br>";
+
+echo ($all_same) ? 'All same.' : 'Some different.' ;
 
 ?>
