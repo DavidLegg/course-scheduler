@@ -2,7 +2,7 @@
 
 <head>
     <title><?php echo ($pageTitle != '')?$pageTitle.' - ': ''; ?>ZotScheduler</title>
-    <meta name="theme-color" content="#eeee22">
+    <meta name="theme-color" content="#ffd200">
     <meta name="viewport" content="width=device-width">
 
     <link rel="stylesheet" type="text/css" href="style.css">
