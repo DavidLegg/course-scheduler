@@ -17,6 +17,7 @@
     ?>
 
             <div id="container">
+                <span>No need to fiddle around with WebSOC. Let us make your schedule for you.</span>
                 <div class="columns box">
                     <div id="home-top-left" class="left">
                         <div class="box">
