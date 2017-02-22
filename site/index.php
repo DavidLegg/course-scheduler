@@ -207,6 +207,7 @@
                 </div>
                 <div class="columns box" id="schedules">
                     <h2>Compare possible schedules</h2>
+                    <p style="text-align:center;"><a href="javascript:void(0)" onClick="window.open('http://webreg1.reg.uci.edu:8889/cgi-bin/wramia?page=startUp&call=', 'WebReg UCI', 'width=700,height=400,scrollbars=yes'); ">Like what you see? Click to go to WebReg.</a></p>
                     <div id="home-left" class="left box">
                         <!—- Calendar —>
                         <script src='libs/fullcalendar/lib/moment.min.js'></script>
