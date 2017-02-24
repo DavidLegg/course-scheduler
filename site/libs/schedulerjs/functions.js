@@ -3,6 +3,30 @@ var selectedSchedRight = 0;
 var schedMax = 0;
 var clickable = true;
 
+var keepSessionAlive = function(){
+	var time = 600000; //1 min delay
+	setInterval(
+		function(){
+			$.post('scheduler/ui/keep_alive.php');
+		},time
+	
+	);
+    /* setTimeout(
+        function ()
+        {
+			$.ajax({
+			   url: 'scheduler/ui/keep_alive.php',
+			   cache: false,
+			   complete: function () {
+					keepSessionAlive();
+				}
+			});
+		},
+		time
+	); */
+};
+
+keepSessionAlive();
 
 function hideAdded(){
     
