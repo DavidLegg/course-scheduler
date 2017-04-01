@@ -17,7 +17,7 @@ class Section {
   public $openings;      // int
   public $coreqs;        // array(Section)
 
-  public function __construct(array $meetDays = NULL, Time $meetStart = NULL, Time $meetEnd = NULL, DateTime $final = NULL, $courseName = NULL, $meetType = NULL, $sectionCode = NULL, $secOpenings = NULL) {
+  public function __construct(array &$meetDays = NULL, Time $meetStart = NULL, Time $meetEnd = NULL, DateTime $final = NULL, $courseName = NULL, $meetType = NULL, $sectionCode = NULL, $secOpenings = NULL) {
     $meetDays    = is_null($meetDays)    ? array() : $meetDays;
     $courseName  = is_null($courseName)  ? ""      : $courseName;
     $meetType    = is_null($meetType)    ? ""      : $meetType;
@@ -57,9 +57,10 @@ class Section {
     $this->type          = (string)$meetType;
     $this->code          = (string)$sectionCode;
     $this->openings      = (int)$secOpenings;
+    $this->coreqs        = array();
   }
 
-  public function conflictsWith($sectionOrSchedule) {
+  public function conflictsWith(&$sectionOrSchedule) {
     if ($sectionOrSchedule instanceof Section) {
       return $this->_conflictsWithSection($sectionOrSchedule);
     } else if ($sectionOrSchedule instanceof Schedule) {
@@ -69,7 +70,7 @@ class Section {
     }
   }
 
-  private function _conflictsWithSection(Section $section) {
+  private function _conflictsWithSection(Section &$section) {
     foreach ($section->days as $day => $meets) {
       if ($meets && $this->days[$day]) {
         // Meets on the same day. Need to check the time
@@ -86,7 +87,7 @@ class Section {
     return false;
   }
 
-  private function _conflictsWithSchedule(Schedule $schedule) {
+  private function _conflictsWithSchedule(Schedule &$schedule) {
     foreach ($schedule->sections as $section) {
       if ($this->conflictsWith($section)) return true;
     }

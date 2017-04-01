@@ -14,7 +14,7 @@
         //static const not allowed
         //const can only be public
         private static $url = 'https://www.reg.uci.edu/perl/WebSoc';
-        private static $yearTerm = '2017-03'; //TODO: figure out how this number is calculated, and automate it. Alternatively, retrieve this from a web-scrape on the webSoc search page, either on page start-up or once per some time period.
+        private static $yearTerm = '2017-14'; //TODO: figure out how this number is calculated, and automate it. Alternatively, retrieve this from a web-scrape on the webSoc search page, either on page start-up or once per some time period.
         private static $dayCodes = array(
           "M"  => "monday",
           "Tu" => "tuesday",
@@ -151,8 +151,9 @@
             if ((int)$coreqCode != 0) {
                 $coreqs[(string)($secXml->course_code)] = $coreqCode;
             }
-            return new Section(
-                               UCI_WebSoc::_makeDays((string)($secDays[0])), // array meetDays
+            $meetDays = UCI_WebSoc::_makeDays((string)($secDays[0]));
+            
+            return new Section($meetDays, // array meetDays
                                $start, // Time meetStart
                                $end, // Time meetEnd
                                UCI_WebSoc::_makeFinal((!$secFinal)?'':$secFinal[0]), // DateTime final
